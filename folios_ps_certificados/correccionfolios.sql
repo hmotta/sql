@@ -1,0 +1,10 @@
+update foliops set vigente='N' where socioid=855 and vigente='S' and exists (select sucid from empresa where sucid='002-');
+update foliops set vigente='N' where socioid=1456 and vigente='S' and folioid=11500 and exists (select sucid from empresa where sucid='002-');
+update foliops set vigente='N' where socioid=5049 and vigente='S' and folioid=8099 and exists (select sucid from empresa where sucid='003-');
+update foliops set vigente='N' where socioid=2911 and vigente='S' and exists (select sucid from empresa where sucid='005-');
+update foliops set vigente='N' where socioid=434 and vigente='S' and folioid=8548 and exists (select sucid from empresa where sucid='005-');
+update foliops set vigente='N' where socioid=5398 and vigente='S' and folioid=8605 and exists (select sucid from empresa where sucid='005-');
+update foliops set vigente='N' where socioid=1186 and vigente='S' and exists (select sucid from empresa where sucid='006-');
+update foliops set vigente='N' where socioid=1347 and vigente='S' and exists (select sucid from empresa where sucid='006-');
+update foliops set vigente='N' where socioid=287 and vigente='S' and exists (select sucid from empresa where sucid='007-');
+update foliops set vigente='N' where socioid=665 and vigente='S' and exists (select sucid from empresa where sucid='008-');

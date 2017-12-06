@@ -1,0 +1,1 @@
+delete from burointerno where fechadegeneracion < '2013-06-01';

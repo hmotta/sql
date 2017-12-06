@@ -1,0 +1,1 @@
+SELECT * FROM cortecaja('','2013-06-18',0) limit 1;

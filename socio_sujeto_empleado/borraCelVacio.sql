@@ -1,0 +1,1 @@
+delete from extensionsujeto where celular = '';

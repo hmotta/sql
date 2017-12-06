@@ -1,0 +1,1 @@
+alter table domicilio ALTER COLUMN calle TYPE character varying(50);

@@ -1,0 +1,1 @@
+select setval('parametros_parametroid_seq',max(parametroid)) from parametros;

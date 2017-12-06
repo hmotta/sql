@@ -1,0 +1,168 @@
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'LATIN9';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+SET search_path = pg_catalog;
+
+SET default_tablespace = pg_global;
+
+SET default_with_oids = true;
+
+--
+-- Name: pg_authid; Type: TABLE; Schema: pg_catalog; Owner: postgres; Tablespace: pg_global
+--
+
+CREATE TABLE pg_authid (
+    rolname name NOT NULL,
+    rolsuper boolean NOT NULL,
+    rolinherit boolean NOT NULL,
+    rolcreaterole boolean NOT NULL,
+    rolcreatedb boolean NOT NULL,
+    rolcatupdate boolean NOT NULL,
+    rolcanlogin boolean NOT NULL,
+    rolconnlimit integer NOT NULL,
+    rolpassword text,
+    rolvaliduntil timestamp with time zone,
+    rolconfig text[]
+);
+
+
+ALTER TABLE pg_catalog.pg_authid OWNER TO postgres;
+
+--
+-- Data for Name: pg_authid; Type: TABLE DATA; Schema: pg_catalog; Owner: postgres
+--
+
+COPY pg_authid (rolname, rolsuper, rolinherit, rolcreaterole, rolcreatedb, rolcatupdate, rolcanlogin, rolconnlimit, rolpassword, rolvaliduntil, rolconfig) FROM stdin;
+postgres	t	t	t	t	t	t	-1	\N	\N	\N
+crediweb	t	t	t	t	t	t	-1	md524e9cf418d6521c21c19652a115e984f	\N	\N
+CLAUDIA	t	t	t	t	t	t	-1	md535187d4436eacaf7d07ffd90cfa5ca1f	\N	\N
+ENRIQUE	t	t	t	t	t	t	-1	md50491aa74c2d4d9d24f4efc9730101f4f	\N	\N
+TAPIA	t	t	t	t	t	t	-1	md5e5cbc77fdab19a19680ecedc601825ae	\N	\N
+PATRICIA	t	t	t	t	t	t	-1	md5ef5a9588e64d7801b434a4c1de7bd7a9	\N	\N
+MONTES	t	t	t	t	t	t	-1	md58ef387116e3e57204f9b34aed0510825	\N	\N
+FRANCISCA	t	t	t	t	t	t	-1	md5414ff620a5d43648d63398cd0e77ff0a	\N	\N
+montes	t	t	t	t	t	t	-1	md5628cbae318216217f6b06f44b54ac99d	2010-12-31 00:00:00-06	\N
+MARTIN	t	t	t	t	t	t	-1	md52d1736209dfd8323bcc4362d2b93059d	\N	\N
+OLIVIA	t	t	t	t	t	t	-1	md5d12b1b74a36a6f0ad0d556e6e988383e	\N	\N
+mraquel	f	t	f	f	f	t	-1	\N	\N	\N
+ejecutivocontable	t	t	t	t	t	t	-1	md54d8b496135317466eb3684478f92f7be	\N	\N
+subgerente	t	t	t	t	t	t	-1	md58eb27c06a7ffb580e00cf2d44291ccd5	\N	\N
+mrsanjuan	f	t	f	f	f	t	-1	\N	\N	\N
+afelix	t	t	f	f	t	t	-1	md5159e33f11a9a2c3cdffe86f5d9eb185e	2012-09-19 00:00:00-05	\N
+bmendez	t	t	f	f	t	t	-1	md53838a410efd16fa76a616e644b2a6505	2012-09-03 00:00:00-05	\N
+erobledo	t	t	t	t	t	t	-1	md5bf7b0a9dcd4933dbc5a2a62bb31b03b7	2012-09-03 00:00:00-05	\N
+erivera	t	t	t	t	t	t	-1	md5e6052ec4d132cbb7b1e7d17e359c215f	2012-09-03 00:00:00-05	\N
+etapia	f	t	f	f	f	t	-1	md55420851db3cd710a724963b8680fa618	2012-09-03 00:00:00-05	\N
+hcruz	t	t	t	t	t	t	-1	md5848b7e82f00eb12dccf3292695a047a1	2012-09-04 00:00:00-05	\N
+gerente	t	t	t	t	t	t	-1	md5ab087a8753d654a17b633081a21acac7	2012-04-15 00:00:00-05	\N
+ejecutivocredito	t	t	t	t	t	t	-1	md547222eb48d7a0985df1c22007268d1c0	2012-04-15 00:00:00-05	\N
+operez	t	t	t	t	t	t	-1	md5ace8a17fcc47ac6160a8875d37d10b12	2012-09-06 00:00:00-05	\N
+agaitan	t	t	t	t	t	t	-1	md596bac5aa492463c0eeb8294e149bf88a	2012-09-04 00:00:00-05	\N
+aguzman	t	t	f	f	t	t	-1	md547e65e800a9b427e27aa5c80beab7867	2012-09-07 00:00:00-05	\N
+brian	t	t	f	f	t	t	-1	md50c9dfd269e6ecdc5b79a490cbc35e47f	2012-09-07 00:00:00-05	\N
+rlazaro	t	t	t	t	t	t	-1	md57a23323901eb4f3229e81c8d50094dae	2012-09-14 00:00:00-05	\N
+rflores	t	t	f	f	t	t	-1	md58a7be4ab15be5b9e13ca1ab72911514e	2012-07-06 00:00:00-05	\N
+shjimenez	f	t	f	f	f	t	-1	md5adec3bea99b922319037570834b9265f	2012-09-03 00:00:00-05	\N
+malonso	t	t	t	t	t	t	-1	md5830bf0e59254e398458998719f044050	2012-09-03 00:00:00-05	\N
+claudia	t	t	t	t	t	t	-1	md53b62d1ace3fe37b812d60370005c491a	2012-09-03 00:00:00-05	\N
+rperez	t	t	f	f	t	t	-1	md56bc68f42419f215778d72c0dd7e0914e	2012-09-03 00:00:00-05	\N
+gtapia	t	t	f	f	t	t	-1	md5c18855d52bb9763e5b87912fedce2da5	2012-09-03 00:00:00-05	\N
+acruz	f	t	f	f	f	t	-1	md59ad611ce8c15d846da21998f2c903016	2012-09-03 00:00:00-05	\N
+freyes	t	t	f	f	t	t	-1	md5c87c45e3f016e794f280f6b425a7fe65	2012-09-03 00:00:00-05	\N
+jgreyes	f	t	f	f	f	t	-1	md5bebcadeea1338b1c86dd8b85c0d1b058	2012-09-03 00:00:00-05	\N
+knavarro	t	t	t	t	t	t	-1	md5031ffd4a02c5546365a2dbece26f251a	2012-09-04 00:00:00-05	\N
+apablo	t	t	t	t	t	t	-1	md5c0bc9fe733289194134de04a451f83f4	2012-09-04 00:00:00-05	\N
+oflorian	t	t	t	t	t	t	-1	md565fdfdd6e70d17ba030232869c10cf0e	2012-09-04 00:00:00-05	\N
+ygarcia	t	t	t	t	t	t	-1	md5f08bae134665adda03d5d18598bd4a04	2012-09-07 00:00:00-05	\N
+hmota	t	t	f	f	t	t	-1	md5b7479ee0653010a926584d9573085f51	2012-09-03 00:00:00-05	\N
+esantiago	t	t	f	f	t	t	-1	md51b85265d1fb72d45c607ea6add98cd73	2012-09-03 00:00:00-05	\N
+mherrera	t	t	t	t	t	t	-1	md56f0c570d90fc8ab8322afd26f332b7c7	2012-09-03 00:00:00-05	\N
+caja	t	t	t	t	t	t	-1	md5911e67d07e8cf4e3feaae6f76bb41e7c	2012-12-31 00:00:00-06	\N
+supervisor	t	t	t	t	t	t	-1	md571cb351358721065c364955ad3f4b4f7	2012-12-31 00:00:00-06	\N
+stapia	t	t	t	t	t	t	-1	md5e082b7e5b8ce0db37128f5bc50d82546	2012-09-03 00:00:00-05	\N
+arsanchez	f	t	f	f	f	t	-1	md54208858b1632900acd09e83be0515014	2012-09-07 00:00:00-05	\N
+msanjuan	t	t	t	t	t	t	-1	md5e9e5e4369913e841541585f5fe73b2d7	2012-09-04 00:00:00-05	\N
+rsantiago	t	t	f	f	t	t	-1	md526c4a4cda9b27f39f1be38aaef5474af	2012-09-03 00:00:00-05	\N
+rsalazar	t	t	t	t	t	t	-1	md501822719b817bd4b24c0c46928974204	2012-09-04 00:00:00-05	\N
+rcalderon	t	t	t	t	t	t	-1	md5789adcb729afa188bf8cb94de43eb939	2012-09-12 00:00:00-05	\N
+sistema	t	t	t	t	t	t	-1	md5e68f75016bf6be8cd5423407021878cc	\N	\N
+ahsanchez	t	t	f	f	t	t	-1	md520d8fe2afa11e20fa83852cca40474fb	2012-09-03 00:00:00-05	\N
+macruz	t	t	f	f	t	t	-1	md5ca39a13f8db57c0f84ef0b3395c935b6	2012-09-03 00:00:00-05	\N
+ezuniga	t	t	t	t	t	t	-1	md5d643827b86e4c698ab43310f97c5a3b2	2012-09-04 00:00:00-05	\N
+dvazquez	t	t	t	t	t	t	-1	md5ebe93bd6a4e8fcd7b654a6638be96f9a	2012-09-02 00:00:00-05	\N
+vgarcia	f	t	f	f	f	t	-1	md56c52879ae869644a73805b49bfb075cf	2012-09-03 00:00:00-05	\N
+fleon	t	t	t	t	t	t	-1	md5d143e04267dbba71bbc259f8ed7889ae	2012-09-03 00:00:00-05	\N
+jreyes	t	t	t	t	t	t	-1	md5b49227e1aefde03e292cbe0165d25c06	2012-09-04 00:00:00-05	\N
+calvarez	t	t	f	f	t	t	-1	md5a5032c28ac82b58c955dad16c524bc9a	2012-09-03 00:00:00-05	\N
+jsanchez	f	t	f	f	f	t	-1	md5189470373e8c76802fcd2c9423e0d7aa	2012-09-03 00:00:00-05	\N
+therrera	t	t	f	f	t	t	-1	md54c8be872477f66c15d8ba6774e505139	2012-09-04 00:00:00-05	\N
+rlvelasco	t	t	t	t	t	t	-1	md53d3d27f39385b7812afd32bc7e9d8e2e	2012-09-04 00:00:00-05	\N
+lflores	f	t	f	f	f	t	-1	md549f84e1dd32e8bb15c430502b88a8f2d	2012-09-04 00:00:00-05	\N
+ajimenez	f	t	f	f	f	t	-1	md5b58fc6e009a245fa98d53e0bd7d5c2b7	2012-09-03 00:00:00-05	\N
+lgaleote	f	t	f	f	f	t	-1	md5ec7d954d563bc5d3649f8a4468f30dd2	2012-09-04 00:00:00-05	\N
+vgenis	f	t	f	f	f	t	-1	md5db391b94142c34ac1178a61ca57d641a	2012-09-03 00:00:00-05	\N
+plopez	t	t	t	t	t	t	-1	md52c5ef84ecfb7733e9e02263aaed802f8	2012-09-04 00:00:00-05	\N
+amendoza	t	t	f	f	t	t	-1	md55182852e904a19752ed5a2aa60733f92	2012-09-04 00:00:00-05	\N
+ecarrillo	t	t	f	f	t	t	-1	md58ba1a20f162fcf7618fe85fbec1ac2df	2012-09-04 00:00:00-05	\N
+jmendoza	t	t	t	t	t	t	-1	md5f1b4b0d11d6849a9c243d34ac14fd1c6	2012-09-04 00:00:00-05	\N
+scastellanos	t	t	t	t	t	t	-1	md52764b9d949061fdb75ea9de12b30bc60	2012-09-03 00:00:00-05	\N
+rvelazco	t	t	f	f	t	t	-1	md5b561e391bc205e140985b21ae1e3b2f2	2012-09-04 00:00:00-05	\N
+lmora	t	t	t	t	t	t	-1	md539fe3a67ff9ed875dffaade959f9b38f	2012-09-11 00:00:00-05	\N
+cperez	t	t	f	f	t	t	-1	md51bbb2dddd6133b73459a500de7418edc	2012-07-20 00:00:00-05	\N
+smora	t	t	f	f	t	t	-1	md508bad6309165dc27a21a1c1c5f4d8af7	2012-09-17 00:00:00-05	\N
+omartinez	t	t	f	f	t	t	-1	md575f69fd6150e8ebab8b8edc2a1742dd2	2012-09-21 00:00:00-05	\N
+jortiz	t	t	f	f	t	t	-1	md5561ee667bc05e2b88b4a97f26f83484a	2012-07-20 00:00:00-05	\N
+rvillarreal	f	t	f	f	f	t	-1	md501c7b7a2963ec7a0420483229e401057	2012-09-22 00:00:00-05	\N
+mtapia	t	t	t	t	t	t	-1	md5ce3f69a96b57e398436830bdf80fe384	2012-08-02 00:00:00-05	\N
+mscruz	t	t	f	f	t	t	-1	md500515afdbe9e157ab0472472d1310f56	2012-09-03 00:00:00-05	\N
+jmontes	t	t	t	t	t	t	-1	md54f48e749b553c6e7725c2ff47bc7717b	2015-12-31 00:00:00-06	\N
+ocruz	t	t	f	f	t	t	-1	md5948307674a4894430ecc7a60cfb99cb7	2012-09-03 00:00:00-05	\N
+mavendano	t	t	f	f	t	t	-1	md5dfccaca7da947cde872210ffd665df1b	2012-09-03 00:00:00-05	\N
+atoledo	t	t	t	t	t	t	-1	md5a0ff479a56e40ad2ebb430d1954e74b2	2012-09-04 00:00:00-05	\N
+\.
+
+
+--
+-- Name: pg_authid_oid_index; Type: INDEX; Schema: pg_catalog; Owner: postgres; Tablespace: pg_global
+--
+
+CREATE UNIQUE INDEX pg_authid_oid_index ON pg_authid USING btree (oid);
+
+
+--
+-- Name: pg_authid_rolname_index; Type: INDEX; Schema: pg_catalog; Owner: postgres; Tablespace: pg_global
+--
+
+CREATE UNIQUE INDEX pg_authid_rolname_index ON pg_authid USING btree (rolname);
+
+
+--
+-- Name: pg_sync_pg_authid; Type: TRIGGER; Schema: pg_catalog; Owner: postgres
+--
+
+CREATE TRIGGER pg_sync_pg_authid
+    AFTER INSERT OR DELETE OR UPDATE ON pg_authid
+    FOR EACH STATEMENT
+    EXECUTE PROCEDURE flatfile_update_trigger();
+
+
+--
+-- Name: pg_authid; Type: ACL; Schema: pg_catalog; Owner: postgres
+--
+
+REVOKE ALL ON TABLE pg_authid FROM PUBLIC;
+REVOKE ALL ON TABLE pg_authid FROM postgres;
+GRANT ALL ON TABLE pg_authid TO postgres;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

@@ -1,0 +1,38 @@
+alter table matrizriesgo drop column riesgo;
+alter table matrizriesgo drop column valor;
+alter table matrizriesgo add column valor numeric;
+alter table matrizriesgo alter column respuesta type text;
+delete from matrizriesgo ;
+delete from preguntasmatrizriesgo;
+
+insert into preguntasmatrizriesgo values (1,'Qué tipo de operaciones realizará en la Cooperativa');
+insert into preguntasmatrizriesgo values (2,'Qué tipo de servicios va a utilizar de la Cooperativa');
+insert into preguntasmatrizriesgo values (3,'Zona Geográfica. Lugar de Nacimiento');
+insert into preguntasmatrizriesgo values (4,'Nacionalidad');
+insert into preguntasmatrizriesgo values (5,'Edad');
+insert into preguntasmatrizriesgo values (6,'Estado Civil');
+insert into preguntasmatrizriesgo values (7,'Tiempo laborando en su actual empleo');
+insert into preguntasmatrizriesgo values (8,'Monto aproximado mensual de las Operaciones');
+insert into preguntasmatrizriesgo values (9,'Actividad principal');
+insert into preguntasmatrizriesgo values (10,'Sector Económico');
+insert into preguntasmatrizriesgo values (11,'Estado(s) de cobertura de la actividad económica');
+insert into preguntasmatrizriesgo values (12,'Cobertura Geográfica de la Actividad Económica desarrollada');
+insert into preguntasmatrizriesgo values (13,'Ingreso Total Mensual');
+insert into preguntasmatrizriesgo values (14,'Instrumento Monetario');
+insert into preguntasmatrizriesgo values (15,'Frecuencia de Operaciones al mes');
+insert into preguntasmatrizriesgo values (16,'Periodicidad de las operaciones');
+insert into preguntasmatrizriesgo values (17,'Propiedad de los Recursos');
+insert into preguntasmatrizriesgo values (18,'Origen de los Recursos');
+insert into preguntasmatrizriesgo values (19,'Mecanismos de comprobación de ingresos');
+insert into preguntasmatrizriesgo values (20,'Posible destino de los recursos');
+insert into preguntasmatrizriesgo values (21,'Tipo de Residencia');
+insert into preguntasmatrizriesgo values (22,'Ingreso del Conyuge');
+insert into preguntasmatrizriesgo values (23,'Antigüedad de la relación comercial con el socio');
+insert into preguntasmatrizriesgo values (24,'¿Tiene algún puesto público?/PEP´s');
+insert into preguntasmatrizriesgo values (25,'¿Algún familiar de usted, hasta segundo grado, ocupa algún puesto público?');
+insert into preguntasmatrizriesgo values (26,'Tipo de Personalidad Jurídica');
+insert into preguntasmatrizriesgo values (27,'Tiempo de Residencia en el Estado');
+insert into preguntasmatrizriesgo values (28,'Antigüedad domiciliaria');
+insert into preguntasmatrizriesgo values (29,'Se encuentra en la Lista de la OFAC');
+insert into preguntasmatrizriesgo values (30,'Actividades vulnerables');
+

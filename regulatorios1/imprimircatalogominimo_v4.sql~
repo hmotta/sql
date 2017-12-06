@@ -1,0 +1,95 @@
+--delete from catalogominimo2;
+
+--alter table catalogominimo2 add tipo_cta char(1);
+--alter table catalogominimo2 add saldo numeric;
+--alter table catalogominimo2 add saldocalculado numeric;
+
+----update catalogominimo2 set cmacumulable ='1' where cmcuenta in ('1301','1302','1303');
+
+----update catalogominimo2 set cmacumulable =substring(cmcuenta,1,length(cmcuenta)-2) where length(cmcuenta)>3;
+
+----update catalogominimo2 set cmacumulable =substring(cmcuenta,1,1) where length(cmcuenta)=2;
+
+
+--update catalogominimo2 set tipo_cta='A';
+--update catalogominimo2 set tipo_cta='C' where cmcuenta in (select cmacumulable from catalogominimo2);
+--update catalogominimo2 set tipo_cta='C' where cmcuenta in ('1','2','3','4','5','6','7','8');
+
+drop TYPE rcatalogominimo cascade;
+CREATE TYPE rcatalogominimo AS (
+	cmcuenta character(24),
+    cmacumulable character (24),    
+	c1 character varying,
+	c2 character varying,
+	c3 character varying,
+	c4 character varying,
+	c5 character varying,
+	saldo numeric,
+	naturaleza character(1),
+	rubro character(10),
+    cuentasiti character(24),
+	ordenpresentacion integer
+);
+
+
+
+CREATE or replace FUNCTION imprimircatalogominimo(integer, integer, integer) RETURNS SETOF rcatalogominimo
+    AS $_$
+declare
+  r rcatalogominimo%rowtype;
+  f record;
+  ejercicio alias for $1;
+  periodo alias for $2;
+  consolidado alias for $3;
+  fsaldo numeric;
+  ilargo integer;
+
+begin
+
+update catalogominimo2 set saldo=0,saldocalculado=0;
+ 
+if consolidado=0 then
+   update catalogominimo2 set saldo=coalesce(saldocuenta(cuentaid,ejercicio,periodo),0),saldocalculado=coalesce(saldocuenta(cuentaid,ejercicio,periodo),0);
+else
+   update catalogominimo2 set saldo=coalesce(saldocuentac(cuentaid,ejercicio,periodo),0),saldocalculado=coalesce(saldocuentac(cuentaid,ejercicio,periodo),0);
+end if;
+
+--Poner el saldo en negativo o positivo segun corresponda
+update catalogominimo2 set saldo=saldo*(signo) where signo=-1;
+
+--Parche por redondeo 2014/02/28
+--update catalogominimo2 set saldo=round(saldo)-1 where cuentasiti='640800000000';
+--update catalogominimo2 set saldo=round(saldo)-1 where cuentasiti='110100000000';
+
+--Parche por redondeo 2014/03/31
+--update catalogominimo2 set saldo=round(saldo)-2 where cuentasiti='110100000000';
+
+
+--Parche por redondeo 2014/04/30
+update catalogominimo2 set saldo=round(saldo)-1 where cuentasiti='640800000000';
+
+
+for f in
+	select cmcuenta from catalogominimo2 where tipo_cta='C' group by cmcuenta,cuentasiti order by cuentasiti
+loop
+	select saldocatmin into fsaldo from saldocatmin(f.cmcuenta);
+	--fsaldo:=fsaldo*(select signo from catalogominimo2 where cmcuenta=f.cmcuenta limit 1);
+	update catalogominimo2 set saldo=fsaldo where cmcuenta=f.cmcuenta;
+end loop;
+
+    
+for r in
+select cmcuenta,cmacumulable,c1,c2,c3,c4,c5,saldo,naturaleza,rubro,cuentasiti,ordenpresentacion from catalogominimo2 group by cmcuenta,cmacumulable,c1,c2,c3,c4,c5,saldo,naturaleza,rubro,cuentasiti,ordenpresentacion order by cuentasiti
+  
+    loop
+         
+      return next r;
+
+    end loop;
+
+return;
+end
+$_$
+    LANGUAGE plpgsql;-- SECURITY DEFINER;
+
+

@@ -1,0 +1,1 @@
+update autorizabonificacion set aplicado=1;

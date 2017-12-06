@@ -1,0 +1,1 @@
+update colonia set cp='69954' where coloniaid=54460;

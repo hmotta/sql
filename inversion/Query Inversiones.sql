@@ -1,0 +1,5 @@
+--Para las inv que no tiene el 100 en porcetanje
+select S.clavesocioint,B.*,I.depositoinversion,I.fechainversion,I.fechavencimiento,I.serieinversion from beneficiario B,inversion I,socio S where B.inversionid=I.inversionid and I.socioid = S.socioid and I.depositoinversion <> I.retiroinversion and B.inversionid in (select inversionid from (select  inversionid, sum(porcentajebeneficiario) AS porcentaje from beneficiario  group by inversionid) AS foo  where foo.porcentaje <> 100.000000);
+ --Para las inv que no tienen beneficiario
+select S.clavesocioint,I.inversionid,I.tipoinversionid,I.serieinversion,I.depositoinversion,I.retiroinversion,I.fechainversion, I.fechavencimiento from inversion I,socio S where  I.socioid = S.socioid and I.depositoinversion <> I.retiroinversion and I.inversionid not in (select inversionid from beneficiario);
+ 

@@ -1,0 +1,1 @@
+update tipoprestamo set estatus=0 where tipoprestamoid in ('C1','C4','C9');

@@ -1,0 +1,7 @@
+CREATE TABLE respuestaburo
+(
+	respuestaid serial not null,
+	consultaid integer references consultaburo(consultaid),
+	cadena txt,
+	PRIMARY KEY (respuestaid)
+);

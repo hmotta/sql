@@ -1,0 +1,3 @@
+select * from domicilio where sujetoid in (select sujetoid from domicilio where (sujetoid in (select sujetoid from socio)) or (sujetoid in (select sujetoid from avales)) group by sujetoid having (count(*)>1)) order by sujetoid;
+
+select * from sujeto where sujetoid not in (select sujetoid from domicilio) and (sujetoid in (select sujetoid from socio) or sujetoid in (select sujetoid from avales)) and sujetoid in (select sujetoid from socio where estatussocio<>2);

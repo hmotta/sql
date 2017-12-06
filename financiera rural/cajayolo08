@@ -1,0 +1,16 @@
+set search_path to public,sucursal8;
+\i disposicion.sql
+\i carteradisposicion.sql
+\i spsfinancierarural2_V1.sql
+\i spsfinancierarural_V1.sql
+\i datosfinancierarural.sql
+\i datosfinancierarural_disp003.sql
+\i datosfinancierarural_disp003_130617.sql
+\i datosfinancierarural_disp003_130624.sql
+\i datosfinancierarural_disp005_130723.sql
+\i datosfinancierarural_disp005_260713.sql
+\i datosfinancierarural_disp007_081013.sql
+\i datosfinancierarural_disp007_211013.sql
+\i datosfinancierarural_Disp008_231213.sql
+\i datosfinancierarural_Disp010_180114.sql
+\i datosfinancierarural_Disp011_240314.sql

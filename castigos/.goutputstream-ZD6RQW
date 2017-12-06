@@ -1,0 +1,196 @@
+alter table autorizabonificacion add referenciaprestamo character(18);
+
+CREATE or replace FUNCTION  castigoprestamo(integer,character) RETURNS integer
+    AS $_$
+declare
+  pprestamoid alias for $1;
+  pusuarioid alias for $2;
+  
+  r record;
+  f record;
+    
+  fcapital numeric;
+  pfecha date;
+  pnumero_poliza int4;
+  preferencia int4;
+  pserie_user char(2);
+  sreferenciaprestamo char(18);
+  scuentaactivo char(24);
+  scuentariesgocred char(24);
+  scuentaactivovencida char(24);
+  scuentaintnormal char(24);
+  scuentaintmora char(24);
+  scuentaiva char(24);
+  scuentadeudornormal char(24);
+  scuentaacrenormal char(24);
+  scuentadeudormora char(24);
+  scuentaacremora char(24);
+  scuentaintdevnocobres char(24);
+  scuentaordeninteres char(24);
+  sordeninteresacreedor char(24);
+  
+  susuarioid1 char(20);
+  scuentacaja char(24);
+  
+  
+  scuentaretiro char(24);
+  
+  stipoprestamoid char(3);
+  ispiprestamoscas integer;
+
+  ppolizaid int4;
+  pmovipolizaidcaja int4;
+  pmovipolizaid int4;
+  pmovipolizaid2 int4;
+  pmovipolizaid3 int4;
+  pmovipolizaid4 int4;
+  pmovipolizaid5 int4;
+  pmovipolizaid6 int4;
+  pmovipolizaid7 int4;
+  pmovipolizaid8 int4;
+  pmovipolizaid9 int4;
+  pmovipolizaid10 int4;
+  pmovipolizaid11 int4;
+  pmovipolizaid12 int4;
+  
+  lreferenciacaja integer;
+  pmovicajaid int4;
+  lsocioid integer;
+  dfechaultimopago date;
+  pmontoprestamo numeric;
+  pcapitalpagado numeric;  
+
+  veint integer;
+  veamo integer;
+
+  sreferenciaprestamocas  char(18);
+
+  fcapitalsaldo numeric;
+  finteres numeric;
+  finteresmayor90d numeric;
+  finteresmenor90d numeric;
+  fiva numeric;
+  fmoratorio numeric;
+  finormal numeric;
+  fimoratorio numeric;
+  ftotalhaberes numeric;
+  giva numeric;
+  fivaaplicado  numeric;
+  finteresaplicado  numeric; 
+
+begin
+
+  select iva into giva from empresa;
+  
+  pfecha:=current_date;
+  susuarioid1:='caja';
+  
+  select  p.montoprestamo-sum(m.haber) into fcapital  from prestamos p, tipoprestamo tp, movicaja mc, movipolizas m where p.prestamoid = pprestamoid and tp.tipoprestamoid = p.tipoprestamoid and mc.prestamoid = p.prestamoid and m.polizaid = mc.polizaid and m.cuentaid = tp.cuentaactivo group by p.saldoprestamo,p.montoprestamo;
+
+  fcapital:=coalesce(fcapital,(select montoprestamo from prestamos where prestamoid = pprestamoid));
+  
+  select interes,moratorio,iva into finteres,fmoratorio,fiva from spscalculopago(pprestamoid);
+ 
+  if fcapital=0 then
+     raise exception 'El crédito no tiene adeudo de capital';
+  end if;
+        
+  select referenciaprestamo,tipoprestamoid,socioid,fechaultimopago,montoprestamo into sreferenciaprestamo,stipoprestamoid,lsocioid,dfechaultimopago,pmontoprestamo from prestamos where prestamoid=pprestamoid;
+
+  pcapitalpagado:=pmontoprestamo-fcapital;
+  
+  select cuentaactivo,cuentariesgocred,cuentaintnormal,cuentaintmora,cuentaiva,OrdenDeudorNormalBonificado,OrdenAcredorNormalBonificado,CuentaIntMoraDevNoCobRes,CuentaIntMoraNoCobAct,cuentaintdevnocobres,cuentaordeninteres,ordeninteresacreedor into scuentaactivo,scuentariesgocred,scuentaintnormal,scuentaintmora,scuentaiva,scuentadeudornormal,scuentaacrenormal,scuentadeudormora,scuentaacremora,scuentaintdevnocobres,scuentaordeninteres,sordeninteresacreedor from tipoprestamo where tipoprestamoid = stipoprestamoid;
+  
+  select serie_user,cuentacaja into pserie_user,scuentacaja from parametros where usuarioid=susuarioid1;   
+
+--Realizar el retiro de haberes y cubrir el capital
+select *
+    into pnumero_poliza,preferencia
+    from rconspoliza(cast(date_part('year',pfecha) as int),cast(date_part('month',pfecha) as int),'D',pserie_user,'A');
+    
+ 
+-- ********************* Encabezado de la poliza 1 ***************************** --
+  select * 
+    into ppolizaid
+    from spipolizasfecha(preferencia,pserie_user,'A',pnumero_poliza,cast(date_part('year',pfecha) as int),cast(date_part('month',pfecha) as int),' ',pfecha,'D',' ',' ','CASTIGO DE PRESTAMO:'||sreferenciaprestamo,pfecha);
+	
+
+select coalesce(max(referenciacaja),0)
+     into lreferenciacaja
+     from movicaja
+     where seriecaja = pserie_user;
+
+    lreferenciacaja := lreferenciacaja+1;   
+	
+	raise notice 'Voy a retirar haberes'; 
+    -- Retirar Haberes
+	if ftotalhaberes>0 then
+		for r in SELECT * FROM spssaldosmov(lsocioid)
+		loop
+			if r.saldo>0 then 
+				select cuentaretiro into scuentaretiro from tipomovimiento where tipomovimientoid = r.tipomovimientoid;
+			
+				select * into pmovipolizaidcaja
+					from spimovipoliza(ppolizaid,scuentacaja,' ','A',0,r.saldo,' ',' ','CASTIGO PRESTAMO');
+				
+				select * into pmovipolizaid11
+					from spimovipoliza(ppolizaid,scuentaretiro,' ','A',r.saldo,0,' ',' ','CASTIGO PRESTAMO');
+			
+				--Realizar los Movimientos de Caja
+				select * into pmovicajaid
+					from spimovicajaseguro(lsocioid,r.tipomovimientoid,ppolizaid,lreferenciacaja,pserie_user,pmovipolizaidcaja,NULL,'A',NULL);
+			end if;
+		end loop;
+		
+		if ftotalhaberes < fcapital then
+			select * into pmovipolizaidcaja
+				from spimovipoliza(ppolizaid,scuentacaja,' ','A',ftotalhaberes,0,' ',' ','CASTIGO PRESTAMO');
+				
+			select * into pmovipolizaid12
+				from spimovipoliza(ppolizaid,scuentaactivo,' ','A',0,ftotalhaberes,' ',' ','CASTIGO PRESTAMO');
+		else
+			select * into pmovipolizaidcaja
+				from spimovipoliza(ppolizaid,scuentacaja,' ','A',fcapital,0,' ',' ','CASTIGO PRESTAMO');
+				
+			select * into pmovipolizaid12
+				from spimovipoliza(ppolizaid,scuentaactivo,' ','A',0,fcapital,' ',' ','CASTIGO PRESTAMO');
+			finteresaplicado:= ftotalhaberes - fcapital;
+
+			if fiva <> 0 then 
+		            --fiva:=(finteres+fmoratorio)*giva;  
+			    fivaaplicado:=finteresaplicado-(finteresaplicado/(1+giva));
+			    finteresaplicado:=finteresaplicado-fivaaplicado;
+			else
+			    fivaaplicado:=0;
+			end if;
+			select * into pmovipolizaid3
+          			from spimovipoliza(ppolizaid,scuentaintnormal,' ','A',0,finteresaplicado,' ',' ','CASTIGO PRESTAMO');
+		        select * into pmovipolizaid5
+			          from spimovipoliza(ppolizaid,scuentaiva,' ','A',0,fivaaplicado,' ',' ','CASTIGO PRESTAMO');
+		end if;
+			
+		select * into pmovicajaid
+			from spimovicajaseguro(lsocioid,'00',ppolizaid,lreferenciacaja,pserie_user,pmovipolizaidcaja,pprestamoid,'A',NULL);
+			
+	end if;		
+
+
+
+  -- Aplicar el descuento por el capital a la reserva
+
+  select *
+    into pnumero_poliza,preferencia
+  from rconspoliza(cast(date_part('year',pfecha) as int),cast(date_part('month',pfecha) as int),'D',pserie_user,'A');
+  
+  --
+  -- Dar de alta la poliza contable
+  --
+
+  select *
+    into pnumero_poliza,preferencia
+    from rconspoliza(cast(date_part('year',pfecha) as int),cast(date_part('month',pfecha) as int),'D',pserie_user,'A');
+    
+ 
+-- ********************* Encabezado de la poliza 2 ***************************** --
+      	--Se vuelve a calcular el capital despues de aplicar los haberes
+	  select  p.montoprestamo-sum(m.haber) into fcapitalap

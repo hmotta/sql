@@ -1,0 +1,4 @@
+\i update_precorte_frecuencia_04102016.sql
+\i update_precorte_frecuencia_31082016.sql
+\i update_prestamos_dias_cobro_04102016.sql
+\i update_prestamos_dias_cobro_26092016.sql

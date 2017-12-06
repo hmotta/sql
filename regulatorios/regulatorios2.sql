@@ -1,0 +1,14 @@
+\i porcreserva.sql
+\i reservastabla417.sql
+\i carterab0417.sql
+\i carterab0417.sql
+\i regulatorio0417.sql
+\i regulatorio0411.sql
+\i regulatorio0811.sql
+\i regulatorio0815.sql
+\i regulatorio0821.sql
+\i coeficienteliquidez.sql
+\i requerimientodecapital.sql
+--Catalogo Mínimo.
+\i imprimircatalogominimo.sql
+\i catalogominimoSITI.sql

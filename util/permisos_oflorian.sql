@@ -1,0 +1,1 @@
+update permisosmodulos set permiso='S' where clavemodulo='POLANT' and usuarioid='oflorian';

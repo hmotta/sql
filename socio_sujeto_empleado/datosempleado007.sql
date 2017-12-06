@@ -1,0 +1,1 @@
+insert into empleado (sujetoid, socioid, puesto, sucursalpertenece , activo) values ((select sujetoid from socio where clavesocioint='007-00062-02'),(select socioid from socio where clavesocioint='007-00062-02'),'VOCAL CONSEJO ADMON','015-','S');

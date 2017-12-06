@@ -1,0 +1,12 @@
+\i disposicion.sql
+\i carteradisposicion.sql
+\i spsclientefinafim_V1.sql
+\i spscreditosfinafim_V1.sql
+\i datosdisposicion01.sql
+\i Listado_FINAFIM_Definitivo_300913.sql
+\i ocupacion_actividad_finafim.sql
+\i datos_ocupacion_actividad_finafim.sql
+\i finalidad_actividad_finafim.sql
+\i finalidad_destino_finafim.sql
+\i Listado_FINAFIM_Definitivo_311013.sql
+\i Listado_FINAFIM_Definitivo_301113.sql

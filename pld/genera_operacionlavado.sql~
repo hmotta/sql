@@ -1,0 +1,2 @@
+update monedas set monedavalor=11.000000 where monedaid='DL';
+SELECT * from generalavado('2014-01-01',current_date);

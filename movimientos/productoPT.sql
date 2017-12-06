@@ -1,0 +1,3 @@
+COPY tipomovimiento (tipomovimientoid, cuentadeposito, cuentaretiro, cuentaintpagado, cuentaintcobrado, cuentaivamovimiento, cuentaisr, desctipomovimiento, aplicasaldo, tipopoliza, aceptadeposito, aceptaretiro, tasainteres, cuentaordenacredor, cuentaordendeudor, cuentaorden, cuentaprovisionisr, comision, porcomision, porivacomision, cuentacomision, cuentaivacomision, desglosaiva) FROM stdin;
+PT	1901020103              	1901020103              	99                      	99                      	99                      	99                      	ANTICIPO PATMIR        	N	Y	S	S	0.000000	99                      	99                      	N	99                      	\N	\N	\N	\N	\N	\N
+\.

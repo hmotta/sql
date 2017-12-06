@@ -1,0 +1,1 @@
+select * from precierre('2016-08-31');

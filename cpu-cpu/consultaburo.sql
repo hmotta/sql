@@ -1,0 +1,33 @@
+drop table consultaburo cascade;
+CREATE TABLE consultaburo
+(
+	consultaid serial NOT NULL,
+	numerodecontrol character(9),
+	producto character(3),
+	responsabilidad character(1),
+	contrato character(2),
+	paterno character varying(20),
+	materno character varying(20),
+	primer_nombre character varying(26),
+	segundo_nombre character varying(26),
+	fecha_nacimiento date,
+	rfc character varying(13),
+	edo_civil char(1),
+	genero char(1),
+	no_ife character varying(20),
+	curp character (18),
+	direccion1 character varying(40),
+	direccion2 character varying(40),
+	colonia character varying(40),
+	ciudad character varying(40),
+	estado character varying(4),
+	cp character(5),
+	fecha_residencia date,
+	telefono character varying(10),
+	tipo_domicilio char(1),
+	fecha date not null,
+	hora time not null,
+	usuarioid character(20) references usuarios(usuarioid),
+	cadena text,
+	PRIMARY KEY (consultaid)
+);

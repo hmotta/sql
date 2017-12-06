@@ -1,0 +1,1 @@
+insert into modulos(clavemodulo,descripcionmodulos) values (‘AUTPREANAL','Autoriza Preanalisis');

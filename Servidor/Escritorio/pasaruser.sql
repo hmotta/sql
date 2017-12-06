@@ -1,0 +1,1 @@
+select * from traspasausuario('ksaenz','sucursal11.yolomecatl.com','cajayolo11','sucursal11');

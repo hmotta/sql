@@ -1,0 +1,1 @@
+update tipomovimiento set cuentacomision='99',cuentaivacomision='99' where tipomovimientoid='SQ';

@@ -1,0 +1,9 @@
+\i consultaburo.sql
+\i respuestaburo.sql
+\i spiconsultaburo.sql
+\i spirespuestaburo.sql
+\i verificaconsultaburo.sql
+\i spsconsultaburo.sql
+\i datosconsultaburo.sql
+--\i permisos.sql
+--\i permisos1.sql

@@ -1,0 +1,1 @@
+select * from traspasacatalogo_ctas('sucursal15.cyolomecatl.com','cajayolo15','sucursal15');

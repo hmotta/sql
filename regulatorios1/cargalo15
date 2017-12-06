@@ -1,0 +1,15 @@
+#!/bin/bash
+export PGPASSWORD=1sc4pslu2
+
+echo "set search_path to public,sucursal15;" > cajayolo15
+
+
+cat $1 >> cajayolo15
+psql -h oficinas.yolomecatl.com -U sistema cajayolo15 < cajayolo15
+if [ $? -ne 0  ]; then
+        echo "sucursal15 error" >> cargaloreal.log
+else
+        echo "sucursal15 bien" >> cargaloreal.log
+fi
+
+rm cajayolo15

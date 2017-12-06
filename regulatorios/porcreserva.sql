@@ -1,0 +1,13 @@
+--
+delete from porcreserva;
+
+COPY porcreserva (porcentajereservaid, fechainicial, fechafinal, porcentaje) FROM stdin;
+1	2011-01-01	2011-03-31	58
+2	2011-04-01	2011-06-30	64
+3	2011-07-01	2011-09-30	70
+4	2011-10-01	2011-12-31	76
+5	2012-01-01	2012-03-31	82
+6	2012-04-01	2012-06-30	88
+7	2012-07-01	2012-09-30	94
+8	2012-10-01	2012-12-31	100
+\.

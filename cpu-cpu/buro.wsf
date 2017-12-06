@@ -1,0 +1,60 @@
+<job>
+<script language="VBScript">
+Option Explicit
+'On Error Resume Next
+Dim WshShell
+'Dim A
+'Declare variables
+Dim objFSO, objReadFile, contents, id
+set WshShell=CreateObject("WScript.Shell")
+'Set Objects
+Set objFSO = CreateObject("Scripting.FileSystemObject") 
+Set objReadFile = objFSO.OpenTextFile("consultaid.txt", 1, False) 
+id = objReadFile.ReadAll
+Wscript.Echo id
+objReadFile.close 
+Set objReadFile = objFSO.OpenTextFile("INTL_Consulta_"+id+"_PF.txt", 1, False) 
+'Mirar que por lo menos exista un parámetro
+'If Not Wscript.Arguments.Count() = 1 Then
+'Wscript.Echo "Syntax error, argument required"
+''Wscript.Quit
+'else
+'A = Wscript.Arguments(0)
+'Wscript.Echo A
+'End If
+
+'Read file contents 
+contents = objReadFile.ReadAll 
+'Close file 
+objReadFile.close 
+
+WshShell.run "cmd.exe"
+'WshShell.run "C:\Prueba.txt")
+
+WScript.Sleep 50
+'Send commands to the window as needed - IP and commands need to be customized
+'Step 1 - Telnet to remote IP'
+'WshShell.echo Wscript.Arguments(0)
+WshShell.SendKeys "telnet -f INTL_Respuesta_"+id+"_PF.txt 128.9.55.102 25000"
+WshShell.SendKeys ("{Enter}")
+WScript.Sleep 400
+'Step 2 - Issue Commands with pauses'
+'WshShell.SendKeys ("{Enter}")
+'WScript.Sleep 1000
+WshShell.SendKeys contents
+WshShell.SendKeys ("^(S)")
+WshShell.SendKeys ("{Enter}")
+WScript.Sleep 14000
+
+WshShell.SendKeys ("^{}}")
+'WshShell.SendKeys ("{Enter}")
+WshShell.SendKeys "quit"
+WshShell.SendKeys ("{Enter}")
+WshShell.SendKeys ("exit")
+WshShell.SendKeys ("{Enter}")
+'Cleanup objects 
+Set objFSO = Nothing 
+Set objReadFile = Nothing 
+WScript.Quit 
+</script>
+</job>

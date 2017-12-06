@@ -1,0 +1,1 @@
+select count(*) as depositos_vista from (select socioid,min(fechapoliza),tipomovimientoid from movicaja mc natural join polizas p natural join socio s where tipomovimientoid in ('P3') and seriecaja not in ('ZA','WW') and estatussocio in (1,3) group by socioid,tipomovimientoid having min(fechapoliza) between '2013-01-01' and '2013-03-31' order by socioid) as depositosvista;

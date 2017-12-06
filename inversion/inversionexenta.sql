@@ -1,0 +1,1 @@
+update empresa set inversionexenta=109171.50 where empresaid=1;

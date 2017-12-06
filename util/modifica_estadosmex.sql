@@ -1,0 +1,1 @@
+alter table estadosmex alter column abre_estado type character(4);

@@ -1,0 +1,1 @@
+alter table monedas add fecha date;

@@ -1,0 +1,23 @@
+update tasastipoprestamo set tasanormal=37.05, tasamoratoria=44.46 where tipoprestamoid='N1 ';
+update tasastipoprestamo set tasanormal=33.35, tasamoratoria=40.02 where tipoprestamoid='N1 ';
+update tasastipoprestamo set tasanormal=31.5, tasamoratoria=37.79 where tipoprestamoid='N1 ';
+update tasastipoprestamo set tasanormal=29.64, tasamoratoria=35.57 where tipoprestamoid='N1 ';
+update tasastipoprestamo set tasanormal=27.79, tasamoratoria=33.35 where tipoprestamoid='N1 ';
+update tasastipoprestamo set tasanormal=25.94, tasamoratoria=31.13 where tipoprestamoid='N1 ';
+update tasastipoprestamo set tasanormal=24.83, tasamoratoria=29.79 where tipoprestamoid='N1 ';
+update tasastipoprestamo set tasanormal=26.05, tasamoratoria=31.25 where tipoprestamoid='N4 ';
+update tasastipoprestamo set tasanormal=23.44, tasamoratoria=28.13 where tipoprestamoid='N4 ';
+update tasastipoprestamo set tasanormal=22.14, tasamoratoria=26.57 where tipoprestamoid='N4 ';
+update tasastipoprestamo set tasanormal=20.84, tasamoratoria=25 where tipoprestamoid='N4 ';
+update tasastipoprestamo set tasanormal=19.53, tasamoratoria=23.44 where tipoprestamoid='N4 ';
+update tasastipoprestamo set tasanormal=18.23, tasamoratoria=21.88 where tipoprestamoid='N4 ';
+update tasastipoprestamo set tasanormal=17.45, tasamoratoria=20.94 where tipoprestamoid='N4 ';
+update tasastipoprestamo set tasanormal=40.17, tasamoratoria=60.26 where tipoprestamoid='N5 ';
+update tasastipoprestamo set tasanormal=40.17, tasamoratoria=60.26 where tipoprestamoid='N5 ';
+update tasastipoprestamo set tasanormal=40.17, tasamoratoria=60.26 where tipoprestamoid='N5 ';
+update tasastipoprestamo set tasanormal=40.17, tasamoratoria=60.26 where tipoprestamoid='N5 ';
+update tasastipoprestamo set tasanormal=40.17, tasamoratoria=60.26 where tipoprestamoid='N5 ';
+update tasastipoprestamo set tasanormal=40.17, tasamoratoria=60.26 where tipoprestamoid='N5 ';
+update tasastipoprestamo set tasanormal=5.74, tasamoratoria=6.89 where tipoprestamoid='N7 ';
+update tasastipoprestamo set tasanormal=9.36, tasamoratoria=11.27 where tipoprestamoid='N8 ';
+

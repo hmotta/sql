@@ -1,0 +1,9 @@
+select *,(select clave from localidadessiti where localidad=cd.nombreciudadmex limit 1 ),(select localidad from localidadessiti where localidad=cd.nombreciudadmex limit 1 ),(select count(*) from localidadessiti where localidad=cd.nombreciudadmex limit 1 ) from ciudadesmex cd where localidadcnbv is null;
+
+select *,(select clave from localidadessiti where localidad ilike '%'||cd.nombreciudadmex||'%' limit 1 ),(select localidad from localidadessiti where localidad ilike '%'||cd.nombreciudadmex||'%' limit 1 ),(select count(*) from localidadessiti where localidad ilike '%'||cd.nombreciudadmex||'%' limit 1 ) from ciudadesmex cd where localidadcnbv is null;
+
+select *,(select clave from localidadessiti where localidad ilike '%'||cd.nombreciudadmex||'%' limit 1 ),(select localidad from localidadessiti where localidad ilike '%'||cd.nombreciudadmex||'%' limit 1 ),(select count(*) from localidadessiti where localidad ilike '%'||cd.nombreciudadmex||'%' limit 1 ) from ciudadesmex cd;
+
+select s.clavesocioint,cd.ciudadmexid,cd.nombreciudadmex,cd.localidadcnbv,(select localidad from localidadessiti where clave=cd.localidadcnbv),(select nombreestadomex from estadosmex where estadomexid=cd.estadomexid),cp.tipomovimientoid,(select desctipomovimiento from tipomovimiento where tipomovimientoid=cp.tipomovimientoid) from captaciontotal cp, socio s, sujeto su, domicilio d, ciudadesmex cd where fechadegeneracion ='2013-12-31' and cp.socioid=s.socioid and s.sujetoid=su.sujetoid and d.sujetoid=su.sujetoid and cd.ciudadmexid=d.ciudadmexid group by cd.nombreciudadmex,cd.estadomexid, cp.tipomovimientoid,cd.localidadcnbv,cd.ciudadmexid,s.clavesocioint;
+
+select cd.ciudadmexid,cd.estadomexid,ed.nombreestadomex,cd.claveciudadmex,cd.nombreciudadmex,cd.claveconapo,cd.localidadcnbv,ls.clave,ls.localidad,ls.estado from ciudadesmex cd, localidadessiti ls, estadosmex ed where cd.localidadcnbv=ls.clave and cd.estadomexid=ed.estadomexid;

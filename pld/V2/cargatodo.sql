@@ -1,0 +1,12 @@
+\i apoderadolegal.sql
+\i denunciaspersonal.sql
+\i depositotransferencia.sql
+\i destinorecursos.sql
+\i modificaciones.sql
+\i operacionesrelevantes_V2.sql
+\i origenrecursos.sql
+\i paises.sql
+\i propietarioreal.sql
+\i proveedorderecurso.sql
+\i remesa.sql
+\i solicitudtransferencia.sql

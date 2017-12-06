@@ -1,0 +1,31 @@
+Procedimiento para fusionar sucursales
+
+1. Dar de alta un usuario con serie WW en las 2 sucursales a fusionar, Se puede llamar "usuario de fusión" y con una cuenta contable de caja única.
+
+2. Borrar los devengamientos de ahorro para no tener las pólizas del día 1ro. de septiembre.
+
+3. Dentro de la carpeta yolome/traspaso (Adjunta en el correo)
+
+psql cajayolo09
+set search_path to public,sucursal9;
+
+\i cargatraspaso.sql
+
+update periodo set estatus='A' where ejercicio=2011 and periodo=8;
+
+Esto a las 2 bases
+
+4. Conectarse a la base donde se van a fusionar las sucursales, en este caso la sucursal 8. Poner el servidor con fecha 31 a medio día.
+
+psql cajayo08
+set search_path to public,sucursal8;
+select * from
+spstraspasasucursalx('0','ZZZ','cajayolo09','sucursal9','localhost');
+
+
+Volver a realizar los devengamientos de movimientos, de cartera y de inversión al termino del proceso.
+
+
+Eso es todo ya esta validado el proceso.
+
+Lic. Juan José Salgado M.

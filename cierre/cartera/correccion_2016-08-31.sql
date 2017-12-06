@@ -1,0 +1,19 @@
+update precorte set diascapital=1,diasvencidos=1,pagosvencidos=1 where prestamoid=11336 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='001-');
+update precorte set diascapital=1,diasvencidos=1,pagosvencidos=1 where prestamoid=11337 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='001-');
+update precorte set diascapital=1,diasvencidos=1,pagosvencidos=1 where prestamoid=11338 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='001-');
+update precorte set diascapital=1,diasvencidos=1,pagosvencidos=1 where prestamoid=11339 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='001-');
+update precorte set diascapital=1,diasvencidos=1,pagosvencidos=1 where prestamoid=11340 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='001-');
+update precorte set diascapital=1,diasvencidos=1,pagosvencidos=1 where prestamoid=11344 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='001-');
+update precorte set diascapital=1,diasvencidos=1,pagosvencidos=1 where prestamoid=11445 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='001-');
+update precorte set diascapital=1,diasvencidos=1,pagosvencidos=1 where prestamoid=11446 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='001-');
+update precorte set diascapital=1,diasvencidos=1,pagosvencidos=1 where prestamoid=11447 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='001-');
+update precorte set diascapital=1,diasvencidos=1,pagosvencidos=1 where prestamoid=11448 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='001-');
+update precorte set diascapital=1,diasvencidos=1,pagosvencidos=1 where prestamoid=11449 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='001-');
+update precorte set diascapital=1,diasvencidos=1,pagosvencidos=1 where prestamoid=10900 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='002-');
+update precorte set diascapital=1,diasvencidos=1,pagosvencidos=1 where prestamoid=12947 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='003-');
+update precorte set diascapital=1,diasvencidos=1,pagosvencidos=1 where prestamoid=13840 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='003-');
+update precorte set diascapital=1,diasvencidos=1,pagosvencidos=1 where prestamoid=14146 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='003-');
+update precorte set diascapital=1,diasvencidos=1,pagosvencidos=1 where prestamoid=3207 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='008-');
+update precorte set diasvencidos=59,pagosvencidos=1 where prestamoid=13704 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='003-');
+update precorte set diasvencidos=59,pagosvencidos=1 where prestamoid=18141 and fechacierre='2016-08-31' and exists (select sucid from empresa where sucid='005-');
+ 

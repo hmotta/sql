@@ -1,0 +1,25 @@
+<job>
+<script language="VBScript">
+Option Explicit 
+On Error Resume Next
+Dim WshShell
+set WshShell=CreateObject("WScript.Shell")
+'Const conForReading = 1
+'Declare variables
+Dim objFSO, objReadFile, contents
+'Set Objects
+Set objFSO = CreateObject("Scripting.FileSystemObject") 
+Set objReadFile = objFSO.OpenTextFile("testfile.txt", 1, False) 
+'Read file contents 
+contents = objReadFile.ReadAll 
+'Close file 
+objReadFile.close 
+'Display results 
+wscript.echo contents 
+'Cleanup objects 
+Set objFSO = Nothing 
+Set objReadFile = Nothing 
+'Quit script 
+WScript.Quit 
+</script>
+</job>

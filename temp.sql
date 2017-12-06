@@ -1,0 +1,3 @@
+select tipoprestamoid from tipocreditofinalidad where finalidadid in (select finalidadid from catalogofinalidad where finalidad = 'GASTOS DE CONSTRUCCION' and subfinalidad1 = 'CASA NUEVA' and subfinalidad2 = 'CIMIENTOS');
+
+select trim(tipoprestamoid),desctipoprestamo,tantos,tasa_normal,tasa_mora,aplicaivaprestamo,calculonormalid,calculomoraid,clavefinalidad,montomaximo,plazomaximo,montominimo ,avalesminimos,periododiasdefault,nivelautorizacion,reciprocidad,prestamogrupal from tipoprestamo where estatus=1 and tipoprestamoid in (select tipoprestamoid from tipocreditofinalidad where finalidadid="+gnFinalidadid+") order by tipoprestamoid;

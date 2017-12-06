@@ -1,0 +1,20 @@
+CREATE TABLE moviservicio (
+    moviservicioid serial NOT NULL,
+	sucid character (3),
+    clavesocioint character(15) NOT NULL,
+    tipomovimientoid character(2) NOT NULL,
+    polizaid integer NOT NULL,
+    referenciacaja integer NOT NULL,
+    seriecaja character(2) NOT NULL,
+    capital numeric,
+	interes numeric,
+	moratorio numeric,
+	gastoscobranza numeric,
+	ivaisr numeric,
+	deposito numeric,
+	retiro numeric,
+    estatusmovicaja character(1) NOT NULL,
+    efectivo integer,
+    fechahora timestamp without time zone DEFAULT now(),
+	PRIMARY KEY (moviservicioid)
+);

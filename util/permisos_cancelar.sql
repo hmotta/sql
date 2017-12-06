@@ -1,0 +1,1 @@
+update permisosmodulos set permiso='N' where clavemodulo='CANCMOV';

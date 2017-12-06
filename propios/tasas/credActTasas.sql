@@ -1,0 +1,58 @@
+-- dejar inactivos estos productos de crédito apartir del 01 de Julio de 2010 
+update tipoprestamo set estatus=0 where tipoprestamoid='C1 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='C10';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='C11';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='C12';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='C2 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='C3 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='C4 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='C5 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='C6 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='C7 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='C8 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='C9 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='N10';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='N11';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='N12';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='N2 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='N3 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='N6 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='R1 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='R2 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='R3 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='R5 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='R6 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='T1 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='T2 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='T3 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='T5 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='T6 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='V1 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='V10';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='V11';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='V12';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='V2 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='V3 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='V4 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='V5 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='V6 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='V7 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='V8 ';	   
+update tipoprestamo set estatus=0 where tipoprestamoid='V9 ';	 
+
+
+-- Cambio de tasa para estos productos de crédito apartir del 01 de Julio de 2010  
+update tipoprestamo set  tasa_normal=37.05, tasa_mora=44.46 where tipoprestamoid='N1 ';	   
+update tipoprestamo set  tasa_normal=23.52, tasa_mora=28.22 where tipoprestamoid='N13';	   
+update tipoprestamo set  tasa_normal=23.52, tasa_mora=28.22 where tipoprestamoid='N14';	   
+update tipoprestamo set  tasa_normal=00.00, tasa_mora=50.40 where tipoprestamoid='N15';	   
+update tipoprestamo set  tasa_normal=16.00, tasa_mora=19.20 where tipoprestamoid='N16';	   
+update tipoprestamo set  tasa_normal=23.40, tasa_mora=28.16 where tipoprestamoid='N17';	   
+update tipoprestamo set  tasa_normal=23.40, tasa_mora=28.16 where tipoprestamoid='N18';	   
+update tipoprestamo set  tasa_normal=00.00, tasa_mora=50.40 where tipoprestamoid='N20';	   
+update tipoprestamo set  tasa_normal=26.05, tasa_mora=31.25 where tipoprestamoid='N4 ';	   
+update tipoprestamo set  tasa_normal=40.17, tasa_mora=60.26 where tipoprestamoid='N5 ';	   
+update tipoprestamo set  tasa_normal=05.74, tasa_mora=06.89 where tipoprestamoid='N7 ';	   
+update tipoprestamo set  tasa_normal=09.36, tasa_mora=11.27 where tipoprestamoid='N8 ';	   
+update tipoprestamo set  tasa_normal=21.92, tasa_mora=26.31 where tipoprestamoid='N9 ';	   
+update tipoprestamo set  tasa_normal=12.00, tasa_mora=14.40 where tipoprestamoid='P1 ';	 

@@ -1,0 +1,367 @@
+ clasificacion | localidadcnbv |                localidad                | count |   sum   
+---------------+---------------+-----------------------------------------+-------+---------
+ 211190000000  | 1001002       | CIUDAD DE MEXICO                        |    43 | 3030904
+ 210101000000  | 1001002       | CIUDAD DE MEXICO                        |   302 |  602965
+ 210101000000  | 1214005       | CELAYA MUNICIPIO DE                     |     2 |    1157
+ 210101000000  | 1240004       | LEON                                    |     1 |     247
+ 210101000000  | 1709005       | AMECAMECA                               |     3 |       5
+ 210101000000  | 1713003       | ATIZAPAN DE ZARAGOZA                    |     2 |      15
+ 210101000000  | 1720001       | COACALCO                                |    20 |   28218
+ 211190000000  | 1720001       | COACALCO                                |     6 |  213982
+ 210101000000  | 1725006       | CUAUTITLAN IZCALLI                      |     8 |    5931
+ 210101000000  | 1726007       | CHALCO                                  |    10 |    9236
+ 211190000000  | 1726007       | CHALCO                                  |     1 |    6423
+ 211190000000  | 1730008       | CHICOLOAPAN                             |     7 |  764769
+ 210101000000  | 1730008       | CHICOLOAPAN                             |    14 |   39767
+ 211190000000  | 1732001       | CHIMALHUACAN                            |     3 |  113040
+ 210101000000  | 1732001       | CHIMALHUACAN                            |    37 |   15288
+ 210101000000  | 1734006       | ECATEPEC MUNICIPIO DE                   |    71 |   85645
+ 211190000000  | 1734006       | ECATEPEC MUNICIPIO DE                   |    12 |  112183
+ 210101000000  | 1736005       | HUEHUETOCA                              |     2 |     286
+ 211190000000  | 1740003       | IXTAPALUCA MUNICIPIO DE                 |     2 |  137195
+ 210101000000  | 1740003       | IXTAPALUCA MUNICIPIO DE                 |    21 |   33548
+ 210101000000  | 1743006       | IXTLAHUACA                              |     2 |   13735
+ 210101000000  | 1746009       | JILOTEPEC                               |     1 |     133
+ 210101000000  | 1758003       | NAUCALPAN MUNICIPIO DE                  |     1 |       3
+ 211190000000  | 1759004       | NETZAHUALCOYOTL                         |    16 |  869051
+ 210101000000  | 1759004       | NETZAHUALCOYOTL                         |   165 |  355163
+ 211190000000  | 1771001       | PAZ LA                                  |     6 |  661526
+ 210101000000  | 1771001       | PAZ LA                                  |     8 |   40308
+ 210101000000  | 1806006       | TLALNEPANTLA MUNICIPIO DE               |     9 |     919
+ 211190000000  | 1806006       | TLALNEPANTLA MUNICIPIO DE               |     1 |   22989
+ 210101000000  | 1811008       | TULTITLAN                               |     2 |      27
+ 210101000000  | 1934008       | HIDALGO                                 |     1 |     125
+ 210101000000  | 2111004       | CUAUTLA MUNICIPIO DE                    |     8 |   25021
+ 210101000000  | 2113005       | CUERNAVACA MUNICIPIO DE                 |     7 |     716
+ 211190000000  | 2113005       | CUERNAVACA MUNICIPIO DE                 |     1 |    8669
+ 210101000000  | 2121003       | JIUTEPEC                                |     5 |      49
+ 210101000000  | 2404005       | ASUNCION CUYOTEPEJI                     |    28 |    5977
+ 210101000000  | 2405004       | ASUNCION IXTALTEPEC                     |     4 |     579
+ 211190000000  | 2406006       | ASUNCION NOCHIXTLAN                     |   242 | 9216498
+ 210101000000  | 2406006       | ASUNCION NOCHIXTLAN                     |  2833 | 3208209
+ 210101000000  | 2413002       | CIENEGA LA                              |     1 |       0
+ 211190000000  | 2418003       | CONCEPCION BUENAVISTA                   |    17 |  432365
+ 210101000000  | 2418003       | CONCEPCION BUENAVISTA                   |   152 |   80008
+ 210101000000  | 2419005       | CONCEPCION PAPALO                       |     6 |    2933
+ 210101000000  | 2420004       | CONSTANCIA DEL ROSARIO                  |     1 |    2083
+ 210101000000  | 2422008       | COSOLTEPEC                              |    25 |   40939
+ 210101000000  | 2423001       | CUILAPAN DE GUERRERO                    |   102 |   74286
+ 211190000000  | 2423001       | CUILAPAN DE GUERRERO                    |     4 |   16351
+ 210101000000  | 2425005       | CHALCATONGO DE HIDALGO                  |     1 |     307
+ 210101000000  | 2431005       | FRESNILLO DE TRUJANO                    |    29 |    2519
+ 210101000000  | 2432004       | GUADALUPE ETLA                          |     8 |    3064
+ 211190000000  | 2438007       | HUAJUAPAN DE LEON                       |    87 | 3692175
+ 210101000000  | 2438007       | HUAJUAPAN DE LEON                       |  2467 | 1680371
+ 210101000000  | 2442006       | JUCHITAN DE ZARAGOZA MUNICIPIO DE       |     1 |    5798
+ 210101000000  | 2444004       | MAGDALENA APASCO                        |    30 |    3130
+ 211190000000  | 2444004       | MAGDALENA APASCO                        |     1 |    4112
+ 211190000000  | 2445003       | MAGDALENA JALTEPEC                      |    12 |  358699
+ 210101000000  | 2445003       | MAGDALENA JALTEPEC                      |   276 |  119734
+ 210101000000  | 2446005       | MAGDALENA JICOTLAN                      |     3 |       0
+ 210101000000  | 2450001       | MAGDALENA TEITIPAC                      |     2 |     431
+ 210101000000  | 2453007       | MAGDALENA ZAHUATLAN                     |    19 |    5900
+ 211190000000  | 2453007       | MAGDALENA ZAHUATLAN                     |     5 |  239025
+ 210101000000  | 2454003       | MARISCAL DE JUAREZ                      |    59 |    7241
+ 211190000000  | 2454003       | MARISCAL DE JUAREZ                      |     3 |   12321
+ 210101000000  | 2458008       | MIAHUATLAN DE PORFIRIO DIAZ             |     2 |      91
+ 210101000000  | 2462001       | NAZARENO ETLA                           |    12 |   13789
+ 211190000000  | 2462001       | NAZARENO ETLA                           |     1 |    3491
+ 211190000000  | 2466009       | OAXACA DE JUAREZ                        |    66 | 4649312
+ 210101000000  | 2466009       | OAXACA DE JUAREZ                        |  2589 | 1911217
+ 210101000000  | 2467005       | OCOTLAN DE MORELOS                      |    20 |    2012
+ 210101000000  | 2472003       | PUTLA DE GUERRERO                       |     8 |    7821
+ 210101000000  | 2476002       | REYES ETLA                              |     1 |     180
+ 210101000000  | 2477007       | ROJAS DE CUAUHTEMOC                     |     4 |     829
+ 210101000000  | 2478006       | SALINA CRUZ                             |     1 |       7
+ 210101000000  | 2480007       | SAN AGUSTIN ATENANGO                    |     2 |    1263
+ 210101000000  | 2482002       | SAN AGUSTIN DE LAS JUNTAS               |    44 |   39037
+ 211190000000  | 2482002       | SAN AGUSTIN DE LAS JUNTAS               |     1 |    4172
+ 210101000000  | 2483004       | SAN AGUSTIN ETLA                        |    12 |    2548
+ 210101000000  | 2486001       | SAN AGUSTIN YATARENI                    |     5 |    1180
+ 211190000000  | 2488005       | SAN ANDRES DINICUITI                    |     3 |   11684
+ 210101000000  | 2488005       | SAN ANDRES DINICUITI                    |    43 |   14270
+ 211190000000  | 2490003       | SAN ANDRES HUAYAPAN                     |     3 |   12315
+ 210101000000  | 2490003       | SAN ANDRES HUAYAPAN                     |    16 |    4181
+ 211190000000  | 2491008       | SAN ANDRES IXTLAHUACA                   |     1 |    4115
+ 210101000000  | 2491008       | SAN ANDRES IXTLAHUACA                   |     5 |    1150
+ 210101000000  | 2492007       | SAN ANDRES LAGUNAS                      |    10 |   30956
+ 211190000000  | 2492007       | SAN ANDRES LAGUNAS                      |     6 |   38851
+ 210101000000  | 2493009       | SAN ANDRES NUXIÑO                       |    36 |    7488
+ 211190000000  | 2493009       | SAN ANDRES NUXIÑO                       |     2 |   21149
+ 210101000000  | 2495004       | SAN ANDRES SINAXTLA                     |   182 |  286504
+ 211190000000  | 2495004       | SAN ANDRES SINAXTLA                     |    16 |  521138
+ 210101000000  | 2502009       | SAN ANDRES ZAUTLA                       |     1 |     105
+ 210101000000  | 2503008       | SAN ANTONIO CASTILLO VELASCO            |     1 |     221
+ 211190000000  | 2505006       | SAN ANTONIO MONTEVERDE                  |    49 | 1402463
+ 210101000000  | 2505006       | SAN ANTONIO MONTEVERDE                  |   161 |   64277
+ 211190000000  | 2507007       | SAN ANTONIO DE LA CAL                   |     9 |  236639
+ 210101000000  | 2507007       | SAN ANTONIO DE LA CAL                   |   139 |  254115
+ 210101000000  | 2508003       | SAN ANTONIO HUITEPEC                    |     2 |   14873
+ 211190000000  | 2508003       | SAN ANTONIO HUITEPEC                    |     2 |  174866
+ 210101000000  | 2515002       | SAN BARTOLO COYOTEPEC                   |    38 |   12863
+ 211190000000  | 2515002       | SAN BARTOLO COYOTEPEC                   |     1 |    4023
+ 210101000000  | 2525004       | SAN CRISTOBAL AMATLAN                   |   241 |  186742
+ 211190000000  | 2528001       | SAN CRISTOBAL SUCHISTLAHUACA            |     9 |  270053
+ 210101000000  | 2528001       | SAN CRISTOBAL SUCHISTLAHUACA            |   266 |  124441
+ 211190000000  | 2534007       | SAN FELIPE TEJALAPAN                    |     1 |    4125
+ 210101000000  | 2534007       | SAN FELIPE TEJALAPAN                    |    80 |    7906
+ 210101000000  | 2539008       | SAN FRANCISCO CHINDUA                   |    69 |   52672
+ 211190000000  | 2539008       | SAN FRANCISCO CHINDUA                   |    14 |  433107
+ 210101000000  | 2543001       | SAN FRANCISCO JALTEPETONGO              |    29 |   41286
+ 211190000000  | 2544003       | SAN FRANCISCO LACHIGOLO                 |     1 |    4127
+ 210101000000  | 2544003       | SAN FRANCISCO LACHIGOLO                 |    14 |    2070
+ 210101000000  | 2546007       | SAN FRANCISCO NUXAÑO                    |    19 |    4296
+ 211190000000  | 2546007       | SAN FRANCISCO NUXAÑO                    |     2 |   19044
+ 210101000000  | 2548005       | SAN FRANCISCO SOLA                      |     2 |     634
+ 211190000000  | 2549004       | SAN FRANCISCO TELIXTLAHUACA             |     1 |    4090
+ 210101000000  | 2549004       | SAN FRANCISCO TELIXTLAHUACA             |     7 |     963
+ 210101000000  | 2550006       | SAN FRANCISCO TEOPAN                    |    12 |    1394
+ 210101000000  | 2555001       | SAN ILDEFONSO VILLA ALTA                |     3 |     338
+ 211190000000  | 2555001       | SAN ILDEFONSO VILLA ALTA                |     1 |   55140
+ 210101000000  | 2556009       | SAN JACINTO AMILPAS                     |    65 |   14655
+ 211190000000  | 2556009       | SAN JACINTO AMILPAS                     |    10 |   49705
+ 211190000000  | 2559006       | SAN JERONIMO SILACAYOAPILLA             |     3 |   12401
+ 210101000000  | 2559006       | SAN JERONIMO SILACAYOAPILLA             |    52 |   10341
+ 211190000000  | 2560005       | SAN JERONIMO SOSOLA                     |     7 |  207452
+ 210101000000  | 2560005       | SAN JERONIMO SOSOLA                     |    64 |   51440
+ 210101000000  | 2563002       | SAN JORGE NUCHITA                       |     5 |      39
+ 210101000000  | 2564004       | SAN JOSE AYUQUILA                       |    25 |    4337
+ 211190000000  | 2573007       | SAN JUAN BAUTISTA ANIMAS TRUJANO        |    10 |   45604
+ 210101000000  | 2573007       | SAN JUAN BAUTISTA ANIMAS TRUJANO        |    62 |   31584
+ 210101000000  | 2574009       | SAN JUAN BAUTISTA ATATLAHUACA           |     1 |       7
+ 211190000000  | 2575005       | SAN JUAN BAUTISTA COIXTLAHUACA          |   111 | 4615740
+ 210101000000  | 2575005       | SAN JUAN BAUTISTA COIXTLAHUACA          |  1503 | 1386550
+ 210101000000  | 2576004       | SAN JUAN BAUTISTA CUICATLAN             |   512 |  134644
+ 211190000000  | 2576004       | SAN JUAN BAUTISTA CUICATLAN             |    24 |   99826
+ 210101000000  | 2577006       | SAN JUAN BAUTISTA GUELACHE              |    61 |   10123
+ 211190000000  | 2577006       | SAN JUAN BAUTISTA GUELACHE              |     2 |    8154
+ 210101000000  | 2579001       | SAN JUAN BAUTISTA 1o. DE SOTO           |    25 |     616
+ 211190000000  | 2580003       | SAN JUAN BAUTISTA SUCHITEPEC            |     1 |    4127
+ 210101000000  | 2580003       | SAN JUAN BAUTISTA SUCHITEPEC            |    53 |   21924
+ 210101000000  | 2583009       | SAN JUAN BAUTISTA TUXTEPEC MUNICIPIO DE |     2 |     404
+ 210101000000  | 2592009       | SAN JUAN DEL ESTADO                     |     2 |    1531
+ 211190000000  | 2594001       | SAN JUAN DIUXI                          |     3 |   31011
+ 210101000000  | 2594001       | SAN JUAN DIUXI                          |    63 |   23754
+ 211190000000  | 2606004       | SAN JUAN LOS CUES                       |     2 |    8370
+ 210101000000  | 2606004       | SAN JUAN LOS CUES                       |    25 |    2317
+ 210101000000  | 2612001       | SAN JUAN OZOLOTEPEC                     |     1 |   57091
+ 211190000000  | 2616003       | SAN JUAN SAYULTEPEC                     |    11 |  482350
+ 210101000000  | 2616003       | SAN JUAN SAYULTEPEC                     |   145 |   80352
+ 211190000000  | 2618004       | SAN JUAN TAMAZOLA                       |     8 |  138040
+ 210101000000  | 2618004       | SAN JUAN TAMAZOLA                       |    29 |   27963
+ 210101000000  | 2621004       | SAN JUAN TEPEUXILA                      |     2 |      19
+ 211190000000  | 2622006       | SAN JUAN TEPOSCOLULA                    |     3 |   31130
+ 210101000000  | 2622006       | SAN JUAN TEPOSCOLULA                    |    84 |   35264
+ 211190000000  | 2625003       | SAN JUAN YUCUITA                        |    14 |  331033
+ 210101000000  | 2625003       | SAN JUAN YUCUITA                        |   147 |  107888
+ 210101000000  | 2628009       | SAN LORENZO CACAOTEPEC                  |    42 |    9682
+ 211190000000  | 2628009       | SAN LORENZO CACAOTEPEC                  |     1 |    4077
+ 210101000000  | 2638002       | SAN MARCOS ARTEAGA                      |    66 |   13531
+ 210101000000  | 2640006       | SAN MARTIN HUAMELULPAN                  |   215 |  198229
+ 211190000000  | 2640006       | SAN MARTIN HUAMELULPAN                  |    24 |  757459
+ 210101000000  | 2644002       | SAN MARTIN TILCAJETE                    |     1 |      28
+ 210101000000  | 2645004       | SAN MARTIN TOXPALAN                     |     2 |     480
+ 211190000000  | 2649006       | SAN MATEO DEL MAR                       |     1 |    2474
+ 210101000000  | 2649006       | SAN MATEO DEL MAR                       |     1 |     892
+ 211190000000  | 2651001       | SAN MATEO ETLATONGO                     |    12 |  221535
+ 210101000000  | 2651001       | SAN MATEO ETLATONGO                     |    97 |  106154
+ 210101000000  | 2656005       | SAN MATEO SINDIHUI                      |    11 |    5433
+ 210101000000  | 2657004       | SAN MATEO TLAPILTEPEC                   |    14 |    2418
+ 211190000000  | 2657004       | SAN MATEO TLAPILTEPEC                   |     2 |   18149
+ 210101000000  | 2659002       | SAN MIGUEL ACHIUTLA                     |     3 |     581
+ 211190000000  | 2662005       | SAN MIGUEL AMATITLAN                    |     2 |    8320
+ 210101000000  | 2662005       | SAN MIGUEL AMATITLAN                    |    24 |    6353
+ 210101000000  | 2665002       | SAN MIGUEL CHICAHUA                     |   183 |   87358
+ 211190000000  | 2665002       | SAN MIGUEL CHICAHUA                     |    63 | 2133568
+ 210101000000  | 2670003       | SAN MIGUEL EL GRANDE                    |     1 |      56
+ 210101000000  | 2671002       | SAN MIGUEL HUAUTLA                      |    16 |   17493
+ 211190000000  | 2671002       | SAN MIGUEL HUAUTLA                      |     3 |   22713
+ 211190000000  | 2682009       | SAN MIGUEL TECOMATLAN                   |     4 |  183122
+ 210101000000  | 2682009       | SAN MIGUEL TECOMATLAN                   |    35 |   32777
+ 211190000000  | 2684004       | SAN MIGUEL TEQUISTEPEC                  |    20 |  399841
+ 210101000000  | 2684004       | SAN MIGUEL TEQUISTEPEC                  |   253 |   68832
+ 211190000000  | 2688003       | SAN MIGUEL TULANCINGO                   |     3 |   47703
+ 210101000000  | 2688003       | SAN MIGUEL TULANCINGO                   |    23 |    8515
+ 210101000000  | 2694006       | SAN PABLO ETLA                          |    61 |   30512
+ 211190000000  | 2694006       | SAN PABLO ETLA                          |     1 |   24083
+ 210101000000  | 2695008       | SAN PABLO HUITZO                        |    17 |    5090
+ 211190000000  | 2696004       | SAN PABLO HUIXTEPEC                     |     2 |  309724
+ 210101000000  | 2696004       | SAN PABLO HUIXTEPEC                     |    12 |   74238
+ 210101000000  | 2699001       | SAN PABLO VILLA DE MITLA                |    21 |    4204
+ 210101000000  | 2704002       | SAN PEDRO ATOYAC                        |    48 |    8260
+ 211190000000  | 2706003       | SAN PEDRO CANTAROS                      |     2 |   29406
+ 210101000000  | 2706003       | SAN PEDRO CANTAROS                      |    16 |    6164
+ 210101000000  | 2712006       | SAN PEDRO IXTLAHUACA                    |    24 |   11853
+ 211190000000  | 2712006       | SAN PEDRO IXTLAHUACA                    |     2 |    8171
+ 210101000000  | 2715003       | SAN PEDRO JOCOTIPAC                     |     1 |      31
+ 211190000000  | 2715003       | SAN PEDRO JOCOTIPAC                     |     1 |    1365
+ 210101000000  | 2719002       | SAN PEDRO MARTIR YUCUXACO               |   277 |   81141
+ 211190000000  | 2719002       | SAN PEDRO MARTIR YUCUXACO               |    24 |  452372
+ 210101000000  | 2730006       | SAN PEDRO TEOZACOALCO                   |     1 |     125
+ 211190000000  | 2732001       | SAN PEDRO TIDAA                         |     6 |  256214
+ 210101000000  | 2732001       | SAN PEDRO TIDAA                         |    31 |   69487
+ 210101000000  | 2733003       | SAN PEDRO TOPILTEPEC                    |    17 |    4653
+ 211190000000  | 2733003       | SAN PEDRO TOPILTEPEC                    |     5 |  140640
+ 210101000000  | 2738004       | SAN PEDRO Y SAN PABLO AYUTLA            |     6 |     651
+ 210101000000  | 2739734       | VILLA DE ETLA                           |    24 |    4865
+ 211190000000  | 2740008       | SAN PEDRO Y PABLO TEPOSCOLULA           |    78 | 1879065
+ 210101000000  | 2740008       | SAN PEDRO Y PABLO TEPOSCOLULA           |  1008 |  597105
+ 210101000000  | 2741004       | SAN PEDRO Y PABLO TEQUITEPEC            |   133 |   19443
+ 211190000000  | 2741004       | SAN PEDRO Y PABLO TEQUITEPEC            |     2 |    7404
+ 211190000000  | 2742003       | SAN PEDRO YUCUNAMA                      |     1 |    4090
+ 210101000000  | 2742003       | SAN PEDRO YUCUNAMA                      |    10 |    1288
+ 210101000000  | 2743005       | SAN RAYMUNDO JALPAN                     |     1 |       1
+ 210101000000  | 2747007       | SAN SEBASTIAN NICANANDUTA               |  1394 |  564028
+ 211190000000  | 2747007       | SAN SEBASTIAN NICANANDUTA               |   145 | 3574250
+ 211190000000  | 2750007       | SAN SEBASTIAN TEITIPAC                  |     1 |   10348
+ 210101000000  | 2750007       | SAN SEBASTIAN TEITIPAC                  |    19 |    4685
+ 211190000000  | 2751003       | SAN SEBASTIAN TUTLA                     |     4 |   16254
+ 210101000000  | 2751003       | SAN SEBASTIAN TUTLA                     |    47 |  183070
+ 210101000000  | 2760003       | SANTA ANA ZEGACHE                       |     4 |     338
+ 210101000000  | 2763009       | SANTA CATARINA IXTEPEJI                 |     2 |     300
+ 211190000000  | 2763009       | SANTA CATARINA IXTEPEJI                 |     1 |  125496
+ 210101000000  | 2768001       | SANTA CATARINA MINAS                    |     2 |       6
+ 210101000000  | 2770005       | SANTA CATARINA TAYATA                   |     8 |    2523
+ 211190000000  | 2775006       | SANTA CRUZ AMILPAS                      |     1 |    4115
+ 210101000000  | 2775006       | SANTA CRUZ AMILPAS                      |    33 |   28451
+ 210101000000  | 2781009       | SANTA CRUZ TACACHE DE MINA              |    57 |   11199
+ 210101000000  | 2783001       | SANTA CRUZ TAYATA                       |    58 |   47941
+ 211190000000  | 2783001       | SANTA CRUZ TAYATA                       |     5 |   48707
+ 210101000000  | 2785005       | SANTA CRUZ XOCOTLAN                     |   416 |  303162
+ 211190000000  | 2785005       | SANTA CRUZ XOCOTLAN                     |    61 |  711150
+ 211190000000  | 2790009       | SANTA LUCIA DEL CAMINO                  |    10 |   49936
+ 210101000000  | 2790009       | SANTA LUCIA DEL CAMINO                  |   109 |   29343
+ 210101000000  | 2795001       | SANTA MARIA APASCO                      |    38 |   40496
+ 211190000000  | 2795001       | SANTA MARIA APASCO                      |    11 |  269162
+ 211190000000  | 2797008       | SANTA MARIA ASUNCION TLAXIACO           |    11 |  131887
+ 210101000000  | 2797008       | SANTA MARIA ASUNCION TLAXIACO           |   378 |  173274
+ 211190000000  | 2801001       | SANTA MARIA AZOMPA                      |    14 |   65082
+ 210101000000  | 2801001       | SANTA MARIA AZOMPA                      |    90 |   46734
+ 210101000000  | 2802006       | SANTA MARIA CAMOTLAN                    |    33 |   11945
+ 211190000000  | 2802006       | SANTA MARIA CAMOTLAN                    |     2 |    4116
+ 210101000000  | 2805003       | SANTA MARIA COYOTEPEC                   |    18 |   11310
+ 211190000000  | 2806002       | SANTA MARIA CHACHOAPAN                  |    42 | 1701002
+ 210101000000  | 2806002       | SANTA MARIA CHACHOAPAN                  |   189 |  132713
+ 211190000000  | 2807004       | SANTA MARIA CHILAPA DE DIAZ             |     3 |   31647
+ 210101000000  | 2807004       | SANTA MARIA CHILAPA DE DIAZ             |    25 |    4450
+ 210101000000  | 2810004       | SANTA MARIA DEL ROSARIO                 |     2 |       2
+ 210101000000  | 2811006       | SANTA MARIA DEL TULE                    |    39 |   14423
+ 211190000000  | 2811006       | SANTA MARIA DEL TULE                    |     2 |   15109
+ 211190000000  | 2818005       | SANTA MARIA IXCATLAN                    |     1 |    4025
+ 210101000000  | 2818005       | SANTA MARIA IXCATLAN                    |    11 |    1262
+ 210101000000  | 2820006       | SANTA MARIA JALAPA DE MARQUES           |     3 |     643
+ 211190000000  | 2824005       | SANTA MARIA NATIVITAS                   |     8 |   87388
+ 210101000000  | 2824005       | SANTA MARIA NATIVITAS                   |    87 |   64065
+ 211190000000  | 2825001       | SANTA MARIA NDUAYACO                    |    18 |  844060
+ 210101000000  | 2825001       | SANTA MARIA NDUAYACO                    |   159 |   84096
+ 210101000000  | 2833002       | SANTA MARIA TECOMAYACA                  |    95 |   26007
+ 210101000000  | 2841003       | SANTA MARIA TONAMECA                    |     6 |    1570
+ 210101000000  | 2853009       | SANTIAGO APOALA                         |     9 |    2560
+ 210101000000  | 2857008       | SANTIAGO AYUQUILILLA                    |    72 |   14285
+ 210101000000  | 2861004       | SANTIAGO CHAZUMBA                       |    84 |   25545
+ 211190000000  | 2861004       | SANTIAGO CHAZUMBA                       |     2 |    7902
+ 211190000000  | 2864001       | SANTIAGO HUAJOLOTITLAN                  |     6 |   52982
+ 210101000000  | 2864001       | SANTIAGO HUAJOLOTITLAN                  |    94 |   20578
+ 211190000000  | 2865006       | SANTIAGO HUAUCLILLA                     |     5 |  107923
+ 210101000000  | 2865006       | SANTIAGO HUAUCLILLA                     |    20 |   53211
+ 211190000000  | 2866005       | SANTIAGO IGUITLAN PLUMAS                |    12 |  248590
+ 210101000000  | 2866005       | SANTIAGO IGUITLAN PLUMAS                |   175 |  109655
+ 210101000000  | 2871009       | SANTIAGO JUXTLAHUACA                    |     1 |     209
+ 210101000000  | 2877003       | SANTIAGO MATATLAN                       |     4 |     376
+ 211190000000  | 2878008       | SANTIAGO MILTEPEC                       |     2 |   64045
+ 210101000000  | 2878008       | SANTIAGO MILTEPEC                       |    43 |   10225
+ 210101000000  | 2881002       | SANTIAGO NEJAPILLA                      |     1 |     298
+ 210101000000  | 2884008       | SANTIAGO PINOTEPA NACIONAL              |    12 |    1365
+ 210101000000  | 2885004       | SANTIAGO SUCHILQUITONGO                 |    32 |    4065
+ 211190000000  | 2885004       | SANTIAGO SUCHILQUITONGO                 |     1 |    4022
+ 210101000000  | 2886003       | SANTIAGO TAMAZOLA                       |    99 |    7176
+ 210101000000  | 2888001       | SANTIAGO TEJUPAN                        |   220 |   62989
+ 211190000000  | 2888001       | SANTIAGO TEJUPAN                        |     8 |   81827
+ 210101000000  | 2889009       | SANTIAGO TENANGO                        |     2 |     107
+ 210101000000  | 2890008       | SANTIAGO TEPETLAPA                      |     1 |       5
+ 211190000000  | 2890008       | SANTIAGO TEPETLAPA                      |     1 |   95065
+ 211190000000  | 2894007       | SANTIAGO TILANTONGO                     |     8 |  302839
+ 210101000000  | 2894007       | SANTIAGO TILANTONGO                     |   111 |   53726
+ 211190000000  | 2895003       | SANTIAGO TILLO                          |     5 |  165883
+ 210101000000  | 2895003       | SANTIAGO TILLO                          |    73 |   28326
+ 210101000000  | 2902008       | SANTIAGO YOLOMECATL                     |  2000 | 2051595
+ 211190000000  | 2902008       | SANTIAGO YOLOMECATL                     |   177 | 8248155
+ 210101000000  | 2907009       | SANTIAGO ZOQUIAPAN                      |     1 |     200
+ 210101000000  | 2910006       | SANTO DOMINGO ARMENTA                   |   136 |       7
+ 210101000000  | 2914002       | SANTO DOMINGO NUXAA                     |    40 |   14463
+ 211190000000  | 2914002       | SANTO DOMINGO NUXAA                     |     2 |    8200
+ 210101000000  | 2921001       | SANTO DOMINGO TLATAYAPAN                |     8 |    1474
+ 210101000000  | 2922003       | SANTO DOMINGO TOMALTEPEC                |     3 |       6
+ 210101000000  | 2923008       | SANTO DOMINGO TONALA                    |    85 |   70633
+ 210101000000  | 2924007       | SANTO DOMINGO TONALTEPEC                |     2 |     284
+ 211190000000  | 2926005       | SANTO DOMINGO YANHUITLAN                |    20 |  584555
+ 210101000000  | 2926005       | SANTO DOMINGO YANHUITLAN                |   151 |  147167
+ 210101000000  | 2930004       | SANTOS REYES PAPALO                     |    40 |    8657
+ 211190000000  | 2930004       | SANTOS REYES PAPALO                     |     7 |   93062
+ 210101000000  | 2931003       | SANTOS REYES TEPEJILLO                  |     1 |     200
+ 211190000000  | 2932005       | SANTOS REYES YUCUNA                     |     1 |    4158
+ 210101000000  | 2933001       | SANTO TOMAS JALIEZA                     |     5 |     611
+ 210101000000  | 2934009       | SANTO TOMAS MAZALTEPEC                  |    14 |    7297
+ 210101000000  | 2935002       | SANTO TOMAS OCOTEPEC                    |     1 |     249
+ 210101000000  | 2937006       | SAN VICENTE COATLAN                     |     1 |      12
+ 210101000000  | 2939004       | SAN VICENTE NUÑO                        |    19 |    2854
+ 210101000000  | 2940003       | SILACAYOAPAN                            |     1 |      52
+ 210101000000  | 2942004       | SOLEDAD ETLA                            |    14 |    7391
+ 211190000000  | 2943009       | TAMAZULAPAN DEL PROGRESO                |     1 |    4182
+ 210101000000  | 2943009       | TAMAZULAPAN DEL PROGRESO                |   163 |   62387
+ 211190000000  | 2948007       | TEOTITLAN DEL CAMINO                    |     6 |   25020
+ 210101000000  | 2948007       | TEOTITLAN DEL CAMINO                    |    24 |    3527
+ 210101000000  | 2949003       | TEOTITLAN DEL VALLE                     |    10 |    3725
+ 211190000000  | 2950008       | TEOTONGO                                |     1 |    4073
+ 210101000000  | 2950008       | TEOTONGO                                |     4 |   25502
+ 210101000000  | 2951007       | TEPELMEME DE MORELOS                    |   965 |  556514
+ 211190000000  | 2951007       | TEPELMEME DE MORELOS                    |    56 | 1338065
+ 210101000000  | 2952009       | TEZOATLAN DE SEGURA Y LUNA              |   823 |  522895
+ 211190000000  | 2952009       | TEZOATLAN DE SEGURA Y LUNA              |    43 |  664944
+ 210101000000  | 2953005       | TLACOCHAHUAYA DE MORELOS                |    40 |   12035
+ 211190000000  | 2953005       | TLACOCHAHUAYA DE MORELOS                |     1 |    4148
+ 210101000000  | 2954004       | TLACOLULA DE MATAMOROS                  |    11 |   43140
+ 211190000000  | 2955006       | TLACOTEPEC PLUMAS                       |    49 | 1276714
+ 210101000000  | 2955006       | TLACOTEPEC PLUMAS                       |   409 |  249233
+ 210101000000  | 2956002       | TLALIXTAC DE CABRERA                    |    10 |    1732
+ 210101000000  | 2958003       | TRINIDAD DE ZAACHILA                    |     4 |       2
+ 210101000000  | 2961009       | VALERIO TRUJANO                         |   190 |   47254
+ 211190000000  | 2961009       | VALERIO TRUJANO                         |    11 |   45701
+ 210101000000  | 2965008       | YODOCONO DE PORFIRIO DIAZ               |    48 |   53946
+ 211190000000  | 2965008       | YODOCONO DE PORFIRIO DIAZ               |     2 |   75369
+ 210101000000  | 2967003       | YUTANDUCHI DE GUERRERO                  |     1 |     291
+ 211190000000  | 2968005       | ZAACHILA                                |    22 |  336494
+ 210101000000  | 2968005       | ZAACHILA                                |   130 |   57486
+ 211190000000  | 2971008       | ZAPOTITLAN PALMAS                       |     1 |    3251
+ 210101000000  | 2971008       | ZAPOTITLAN PALMAS                       |    64 |   13279
+ 210101000000  | 2973006       | ZARAGOZA CUYAMECALCO VILLA DE           |     4 |    2201
+ 211190000000  | 2974005       | ZIMATLAN DE ALVAREZ                     |     4 |   27990
+ 210101000000  | 2974005       | ZIMATLAN DE ALVAREZ                     |    29 |   29461
+ 211190000000  | 3003009       | ACATLAN                                 |     2 |    8306
+ 210101000000  | 3003009       | ACATLAN                                 |   228 |   47553
+ 210101000000  | 3010006       | AJALPAN                                 |     3 |      92
+ 210101000000  | 3035003       | COXCATLAN                               |     4 |    2878
+ 210101000000  | 3055003       | CHILA                                   |    62 |   25420
+ 210101000000  | 3115009       | PUEBLA MUNICIPIO DE                     |    11 |    9322
+ 211190000000  | 3115009       | PUEBLA MUNICIPIO DE                     |     1 |   16181
+ 210101000000  | 3140003       | SAN PABLO AMICANO                       |     3 |     516
+ 211190000000  | 3142009       | SAN PEDRO YELOIXTLAHUACAN               |     1 |    4153
+ 210101000000  | 3157006       | TEHUACAN                                |   107 |   21956
+ 211190000000  | 3157006       | TEHUACAN                                |     1 |    4007
+ 210101000000  | 3179003       | TLACOTEPEC DE BENITO JUAREZ             |     4 |    1156
+ 211190000000  | 3198009       | XAYACATLAN DE BRAVO                     |     1 |   15420
+ 210101000000  | 3198009       | XAYACATLAN DE BRAVO                     |     3 |     497
+ 210101000000  | 3212009       | ZAPOTITLAN                              |     2 |     934
+ 210101000000  | 4067005       | TLAXCO                                  |     2 |     161
+ 211190000000  | 407003        | CARMEN                                  |     3 |   32702
+ 210101000000  | 407003        | CARMEN                                  |     5 |   10380
+ 211190000000  | 4128006       | BOCA DEL RIO                            |     1 |   10287
+ 210101000000  | 4128006       | BOCA DEL RIO                            |     2 |      10
+ 211190000000  | 4145002       | COSAMALOAPAN MUNICIPIO DE               |     1 |    8708
+ 210101000000  | 4145002       | COSAMALOAPAN MUNICIPIO DE               |     2 |      33
+ 211190000000  | 4148005       | COSOLEACAQUE                            |     1 |   51541
+ 210101000000  | 4148005       | COSOLEACAQUE                            |     2 |    1768
+ 210101000000  | 4270356       | VILLA DE AZUETA                         |     8 |    4118
+ 211190000000  | 4270356       | VILLA DE AZUETA                         |     1 |    1921
+(363 filas)
+

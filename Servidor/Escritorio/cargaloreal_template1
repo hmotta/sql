@@ -1,0 +1,107 @@
+#!/bin/bash
+export PGPASSWORD=1sc4pslu2
+#echo "set search_path to public,sucursal1;" > template11
+#echo "set search_path to public,sucursal2;" > template12
+#echo "set search_path to public,sucursal3;" > template13
+#echo "set search_path to public,sucursal5;" > template15
+#echo "set search_path to public,sucursal6;" > template16
+#echo "set search_path to public,sucursal7;" > template17
+#echo "set search_path to public,sucursal8;" > template18
+#echo "set search_path to public,sucursal9;" > template19
+#echo "set search_path to public,sucursal15;" > yolo015
+
+
+cat $1 >> template1
+psql -h sucursal1.yolomecatl.com -U sistema template1 < template1
+if [ $? -ne 0  ]; then
+	echo "sucursal1 error" > cargaloreal.log
+else
+	echo "sucursal1 bien" > cargaloreal.log
+fi
+
+cat $1 >> template1
+psql -h sucursal2.yolomecatl.com -U sistema template1 < template1
+if [ $? -ne 0  ]; then
+	echo "sucursal2 error" >> cargaloreal.log
+else
+	echo "sucursal2 bien" >> cargaloreal.log
+fi
+
+cat $1 >> template1
+psql -h sucursal3.yolomecatl.com -U sistema template1 < template1
+if [ $? -ne 0  ]; then
+	echo "sucursal3 error" >> cargaloreal.log
+else
+	echo "sucursal3 bien" >> cargaloreal.log
+fi
+
+cat $1 >> template1
+psql -h sucursal5.yolomecatl.com -U sistema template1 < template1
+if [ $? -ne 0  ]; then
+	echo "sucursal5 error" >> cargaloreal.log
+else
+	echo "sucursal5 bien" >> cargaloreal.log
+fi
+
+cat $1 >> template1
+psql -h sucursal6.yolomecatl.com -U sistema template1 < template1
+if [ $? -ne 0  ]; then
+	echo "sucursal6 error" >> cargaloreal.log
+else
+	echo "sucursal6 bien" >> cargaloreal.log
+fi
+
+cat $1 >> template1
+psql -h sucursal7.yolomecatl.com -U sistema template1 < template1
+if [ $? -ne 0  ]; then
+	echo "sucursal7 error" >> cargaloreal.log
+else
+	echo "sucursal7 bien" >> cargaloreal.log
+fi
+
+cat $1 >> template1
+psql -h sucursal8.yolomecatl.com -U sistema template1 < template1
+if [ $? -ne 0  ]; then
+	echo "sucursal8 error" >> cargaloreal.log
+else
+	echo "sucursal8 bien" >> cargaloreal.log
+fi
+
+cat $1 >> template1
+psql -h sucursal9.yolomecatl.com -U sistema template1 < template1
+if [ $? -ne 0  ]; then
+	echo "sucursal9 error" >> cargaloreal.log
+else
+	echo "sucursal9 bien" >> cargaloreal.log
+fi
+
+
+
+cat $1 >> template1
+psql -h sucursal10.yolomecatl.com -U sistema template1 < template1
+if [ $? -ne 0  ]; then
+	echo "sucursal10 error" >> cargaloreal.log
+else
+	echo "sucursal10 bien" >> cargaloreal.log
+fi
+
+
+cat $1 >> template1
+psql -h sucursal11.yolomecatl.com -U sistema template1 < template1
+if [ $? -ne 0  ]; then
+	echo "sucursal11 error" >> cargaloreal.log
+else
+	echo "sucursal11 bien" >> cargaloreal.log
+fi
+
+#cat $1 >> template1
+#psql -h oficinas.yolomecatl.com -U sistema template1 < template1
+#if [ $? -ne 0  ]; then
+#	echo "Oficinas error" >> cargaloreal.log
+#else
+#	echo "Oficinas bien" >> cargaloreal.log
+#fi
+
+
+
+rm template1

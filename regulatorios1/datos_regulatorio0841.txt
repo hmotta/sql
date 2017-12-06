@@ -1,0 +1,24 @@
+AA
+AHORRO SOLUCION               
+AC
+CUENTA CORRIENTE              
+AF
+AHORRO FUTURO                 
+AH
+AHORRO PREMIO                 
+AI
+AHORRO PROMOCION INFANTIL     
+AM
+AHORRO FUTURO INFANTIL        
+AO
+AHORRO OPORTUNO               
+AP
+AHORRO PROMOCION SOCIO        
+CC
+AHORRO CONSTRUYE              
+PR
+PREMIA TU AHORRO              
+TA
+TANDA AHORRO
+
+select coalesce(sum(debe),0) from movicaja mc, polizas p, movipolizas mp where mc.polizaid=p.polizaid and mp.movipolizaid=mc.movipolizaid and mc.tipomovimientoid in ('AA','AC','AF','AH','AI','AM','AO','AP','CC','PR','TA') and p.fechapoliza between '2015-07-01' and '2015-07-31';

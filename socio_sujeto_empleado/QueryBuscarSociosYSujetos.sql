@@ -1,0 +1,1 @@
+select s.sujetoid,clavesocioint,paterno,materno,nombre from sujeto su left join socio s on su.sujetoid=s.sujetoid where clavesocioint like '%mota%' or (paterno||' '||materno||' '||nombre like '%mota%');

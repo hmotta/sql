@@ -1,0 +1,1 @@
+alter table foliops add inversionid integer REFERENCES inversion(inversionid);

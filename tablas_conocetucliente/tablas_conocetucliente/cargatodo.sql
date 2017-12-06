@@ -1,0 +1,10 @@
+\i vehiculossocio.sql
+\i trabajoconoceatucliente.sql
+\i socioeconomicosioef.sql
+\i preguntasmatrizriessgo.sql
+\i matrizriesgo.sql
+\i ingresoegresoconoceatucliente.sql
+\i generalconoceatucliente.sql
+\i depopromedioconoceatucliente.sql
+\i datosingresoconocetucliente.sql
+\i conyugeconocetucliente.sql

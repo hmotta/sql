@@ -1,0 +1,65 @@
+#!/bin/bash
+export PGPASSWORD="1sc4pslu2"
+echo "set search_path to public,sucursal1;" > cajayolo01
+echo "set search_path to public,sucursal2;" > cajayolo02
+echo "set search_path to public,sucursal3;" > cajayolo03
+#echo "set search_path to public,sucursal4;" > cajayolo04
+echo "set search_path to public,sucursal5;" > cajayolo05
+echo "set search_path to public,sucursal6;" > cajayolo06
+echo "set search_path to public,sucursal7;" > cajayolo07
+echo "set search_path to public,sucursal8;" > cajayolo08
+#echo "set search_path to public,sucursal9;" > cajayolo09
+echo "set search_path to public,sucursal10;" > cajayolo10
+echo "set search_path to public,sucursal11;" > cajayolo11
+echo "set search_path to public,sucursal15;" > cajayolo15
+
+echo "cajayolo01"
+cat $1 >> cajayolo01
+psql -h localhost -U sistema cajayolo01 < cajayolo01
+
+echo "cajayolo02"
+cat $1 >> cajayolo02
+psql -h localhost -U sistema cajayolo02 < cajayolo02
+
+echo "cajayolo03"
+cat $1 >> cajayolo03
+psql -h localhost -U sistema cajayolo03 < cajayolo03
+
+#echo "cajayolo04"
+#cat $1 >> cajayolo04
+#psql -h localhost -U sistema cajayolo04 < cajayolo04
+
+echo "cajayolo05"
+cat $1 >> cajayolo05
+psql -h localhost -U sistema cajayolo05 < cajayolo05
+
+echo "cajayolo06"
+cat $1 >> cajayolo06
+psql -h localhost -U sistema cajayolo06 < cajayolo06
+
+echo "cajayolo07"
+cat $1 >> cajayolo07
+psql -h localhost -U sistema cajayolo07 < cajayolo07
+
+echo "cajayolo08"
+cat $1 >> cajayolo08
+psql -h localhost -U sistema cajayolo08 < cajayolo08
+
+#echo "cajayolo09"
+#cat $1 >> cajayolo09
+#psql -h localhost -U sistema cajayolo09 < cajayolo09
+
+echo "cajayolo10"
+cat $1 >> cajayolo10
+psql -h localhost -U sistema cajayolo10 < cajayolo10
+
+echo "cajayolo11"
+cat $1 >> cajayolo11
+psql -h localhost -U sistema cajayolo11 < cajayolo11
+
+echo "cajayolo15"
+cat $1 >> cajayolo15
+psql -h localhost -U sistema cajayolo15 < cajayolo15
+
+
+rm cajayolo01 cajayolo02 cajayolo03 cajayolo04 cajayolo05  cajayolo06 cajayolo07 cajayolo08 cajayolo09 cajayolo10  cajayolo11 cajayolo15

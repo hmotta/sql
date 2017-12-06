@@ -1,0 +1,3 @@
+delete from catalogominimo2;
+COPY catalogominimo2 (cmcuenta, cmacumulable, c1, c2, c3, c4, c5, rubro, naturaleza, cuentaid, cuentasiti,tipo_cta,ordenpresentacion, signo) FROM stdin;
+

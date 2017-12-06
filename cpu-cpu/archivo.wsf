@@ -1,0 +1,49 @@
+<job>
+<script language="VBScript">
+Option Explicit
+'On Error Resume Next
+Dim WshShell,i,j
+set WshShell=CreateObject("WScript.Shell")
+Const ForReading = 1, ForWriting = 2, ForAppending = 8
+Const TristateUseDefault = -2, TristateTrue = -1, TristateFalse = 0
+Dim fso, MyFile, FileName, TextLine, contents
+
+Set fso = CreateObject("Scripting.FileSystemObject")
+
+' Open the file for output.
+FileName = "testfile.txt"
+
+Set MyFile = fso.OpenTextFile(FileName, ForWriting, True, TristateTrue)
+
+' Write to the file.
+MyFile.WriteLine "Hello world!"
+MyFile.WriteLine "The quick brown fox"
+MyFile.WriteLine "otra linea"
+MyFile.Close
+
+' Open the file for input.
+Set MyFile = fso.OpenTextFile(FileName, ForReading)
+
+' Read from the file and display the results.
+i=0
+Do While MyFile.AtEndOfStream <> True
+    MyFile.ReadLine
+    i=i+1
+Loop
+WScript.echo i
+j=i
+do while j=i
+	MyFile.close()
+	Set MyFile = fso.OpenTextFile(FileName, ForReading)
+	j=0
+	Do While MyFile.AtEndOfStream <> True
+		MyFile.ReadLine
+		j=j+1
+	Loop
+	WScript.echo j
+loop
+
+MyFile.Close
+WScript.Quit 
+</script>
+</job>

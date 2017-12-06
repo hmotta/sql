@@ -1,0 +1,3 @@
+delete from tablon where textotablon = '';
+delete from tablon where vigente='N';
+delete from tablon where (textotablon ilike 'SU AHORRO COMPROMISO ES DE%' or textotablon ilike 'AHORRO COMPROMISO%' or textotablon ilike 'COMPROMIOSO DE AHORRO%' or textotablon ilike 'COMPROMIOSO DE AHORRO%' or textotablon ilike 'AHORRO COMPROMETIDO%' or textotablon ilike 'AHORRO %' or textotablon ilike 'COMPRIMISO DE AHORRO%' or textotablon ilike 'COPROMISO DE AHORRO%' or textotablon ilike 'COMPROMIZO DE AHORRO%' or textotablon ilike 'COMP- DE AHORRO%' or textotablon ilike 'COPROMISO DE AHORRO%') and  socioid not in (select socioid from prestamos where claveestadocredito='001');

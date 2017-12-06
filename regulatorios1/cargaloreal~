@@ -1,0 +1,94 @@
+#!/bin/bash
+export PGPASSWORD=1sc4pslu2
+echo "set search_path to public,sucursal1;" > cajayolo01
+echo "set search_path to public,sucursal2;" > cajayolo02
+echo "set search_path to public,sucursal3;" > cajayolo03
+echo "set search_path to public,sucursal5;" > cajayolo05
+echo "set search_path to public,sucursal6;" > cajayolo06
+echo "set search_path to public,sucursal7;" > cajayolo07
+echo "set search_path to public,sucursal8;" > cajayolo08
+echo "set search_path to public,sucursal10;" > cajayolo10
+echo "set search_path to public,sucursal11;" > cajayolo11
+echo "set search_path to public,sucursal15;" > cajayolo15
+
+cat $1 >> cajayolo01
+psql -h sucursal1.yolomecatl.com -U sistema cajayolo01 < cajayolo01
+if [ $? -ne 0  ]; then
+	echo "sucursal1 error" > cargaloreal.log
+else
+	echo "sucursal1 bien" > cargaloreal.log
+fi
+
+cat $1 >> cajayolo02
+psql -h sucursal2.yolomecatl.com -U sistema cajayolo02 < cajayolo02
+if [ $? -ne 0  ]; then
+	echo "sucursal2 error" >> cargaloreal.log
+else
+	echo "sucursal2 bien" >> cargaloreal.log
+fi
+
+cat $1 >> cajayolo03
+psql -h sucursal3.yolomecatl.com -U sistema cajayolo03 < cajayolo03
+if [ $? -ne 0  ]; then
+	echo "sucursal3 error" >> cargaloreal.log
+else
+	echo "sucursal3 bien" >> cargaloreal.log
+fi
+
+cat $1 >> cajayolo05
+psql -h sucursal5.yolomecatl.com -U sistema cajayolo05 < cajayolo05
+if [ $? -ne 0  ]; then
+	echo "sucursal5 error" >> cargaloreal.log
+else
+	echo "sucursal5 bien" >> cargaloreal.log
+fi
+
+cat $1 >> cajayolo06
+psql -h sucursal6.yolomecatl.com -U sistema cajayolo06 < cajayolo06
+if [ $? -ne 0  ]; then
+	echo "sucursal6 error" >> cargaloreal.log
+else
+	echo "sucursal6 bien" >> cargaloreal.log
+fi
+
+cat $1 >> cajayolo07
+psql -h sucursal7.yolomecatl.com -U sistema cajayolo07 < cajayolo07
+if [ $? -ne 0  ]; then
+	echo "sucursal7 error" >> cargaloreal.log
+else
+	echo "sucursal7 bien" >> cargaloreal.log
+fi
+
+cat $1 >> cajayolo08
+psql -h sucursal8.yolomecatl.com -U sistema cajayolo08 < cajayolo08
+if [ $? -ne 0  ]; then
+	echo "sucursal8 error" >> cargaloreal.log
+else
+	echo "sucursal8 bien" >> cargaloreal.log
+fi
+
+cat $1 >> cajayolo10
+psql -h sucursal10.yolomecatl.com -U sistema cajayolo10 < cajayolo10
+if [ $? -ne 0  ]; then
+	echo "sucursal10 error" >> cargaloreal.log
+else
+	echo "sucursal10 bien" >> cargaloreal.log
+fi
+
+cat $1 >> cajayolo11
+psql -h sucursal11.yolomecatl.com -U sistema cajayolo11 < cajayolo11
+if [ $? -ne 0  ]; then
+	echo "sucursal11 error" >> cargaloreal.log
+else
+	echo "sucursal11 bien" >> cargaloreal.log
+fi
+
+cat $1 >> cajayolo15
+psql -h oficinas.yolomecatl.com -U sistema cajayolo15 < cajayolo15
+if [ $? -ne 0  ]; then
+        echo "sucursal15 error" >> cargaloreal.log
+else
+        echo "sucursal15 bien" >> cargaloreal.log
+fi
+
+rm cajayolo01 cajayolo02 cajayolo03 cajayolo05  cajayolo06 cajayolo07 cajayolo08 cajayolo10 cajayolo11 cajayolo15

@@ -1,0 +1,27 @@
+<job>
+<script language="VBScript">
+Option Explicit
+On Error Resume Next
+Dim WshShell
+set WshShell=CreateObject("WScript.Shell")
+WshShell.run "cmd.exe"
+WScript.Sleep 1000
+'Send commands to the window as needed - IP and commands need to be customized
+'Step 1 - Telnet to remote IP'
+WshShell.SendKeys "telnet 128.9.55.102 25000"
+WshShell.SendKeys ("{Enter}")
+WScript.Sleep 1000
+'Step 2 - Issue Commands with pauses'
+'WshShell.SendKeys ("{Enter}")
+WScript.Sleep 1000
+WshShell.SendKeys "INTL11                         501MX0000ZM55391001UpaaLmFLIPLMX000000000SP01S    0000000PN04MOTA0008MARTINEZ0204HUGO0305ARIEL0408280919820510MOMH820928PA253A CALLE CIRO FARRERA 5330110BUENAVISTA0216TUXTLA GUTIERREZ0403CHS05052902707109545820955ES05002470002**"
+WshShell.SendKeys ("^(S)")
+WshShell.SendKeys ("{Enter}")
+WScript.Sleep 6000
+WshShell.SendKeys ("{PRTSC}")
+'Step 3 - Exit Command Window
+'WshShell.SendKeys "exit"
+WshShell.SendKeys ("{Enter}")
+WScript.Quit 
+</script>
+</job>

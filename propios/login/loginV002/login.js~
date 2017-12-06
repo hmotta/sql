@@ -1,0 +1,161 @@
+Ext.onReady(function(){
+	var url = new String;
+	var string = new String;
+	var patron = /:3/;
+	var patron1 = /.y/;
+	url	= document.URL;
+	url = url.substr(7,url.search(patron)-7);
+	//Ext.Msg.alert('Status',url);
+	var patron1 = /.y/;
+	numserver = url.substr(8,url.search(patron1)-8);
+	
+	
+    var storeBase = new Ext.data.ArrayStore({
+        fields: ['id', 'base'],
+        data: [[1, 'cajayolo01'], [2, 'cajayolo02'], [3, 'cajayolo03'], [5, 'cajayolo05'],[6, 'cajayolo06'],[7, 'cajayolo07'],[8, 'cajayolo08'],[9, 'cajayolo09'],[10, 'cajayolo10'],[11, 'cajayolo11'],[15, 'cajayolo15']]
+    });
+	
+    var hiddenSucursal = new Ext.form.Hidden({
+				name: 'sucursal',
+				value: 'sucursal1'
+			});
+
+	var hiddenHost = new Ext.form.Hidden({
+				name: 'host',
+				value: localhost
+			});
+			
+	/*var base = new Ext.form.TextField({
+				fieldLabel:'Base de datos',
+				name:'database',
+				value: 'cajayoloXX',
+				allowBlank:false
+	});*/
+	
+	var username = new Ext.form.TextField({
+				fieldLabel:'Usuario',
+				name:'username',
+				allowBlank:false
+	});
+	
+	
+    var comboBase = new Ext.form.ComboBox({
+		store: storeBase,
+        displayField: 'base',
+		valueField: 'base',
+		hiddenValue: 'id',
+        fieldLabel: 'Base De Datos',
+        mode: 'local',
+        forceSelection: false,
+		allowBlank: false,
+        //triggerAction: 'all',
+        emptyText:'Base de datos...',
+        editable: true,
+		name: 'database',
+        //selectOnFocus: false,
+		/*listeners: {
+				select: function(cmb, record, index){
+						hiddenSucursal.setValue("sucursal"+record.get('id'));
+				}
+		},*/
+    });
+		
+	if(numserver.length > 0){
+		if(numserver.length > 1){
+			comboBase.setValue('cajayolo'+numserver);
+		}else{
+			comboBase.setValue('cajayolo0'+numserver);
+		}
+	}else
+	{
+		if(url='oficinas.yolomecatl.com')
+		{
+			comboBase.setValue('cajayolo15');
+		}
+	}
+		
+
+	var urlLogin = '/login/login_json';
+	var basestr = new String;
+	var login = new Ext.FormPanel({
+		labelWidth:100,
+		url: urlLogin,
+		bodyStyle:'background-color:#fff;padding: 10px',
+		//frame:false,
+		title:'Bienvenido',
+		defaultType:'textfield',
+		//monitorValid:true,
+		items:[username,{
+				fieldLabel:'Password',
+				name:'password',
+				inputType:'password',
+				allowBlank:false
+				},comboBase,hiddenSucursal,hiddenHost
+				
+		],
+		buttons:[{
+					text:'Aceptar',
+					formBind:true,
+					handler: function(){
+						basestr = comboBase.getValue();
+						basestr = basestr.substr(basestr.length-2,basestr.length);
+						if(basestr[0]=='0'){
+							hiddenSucursal.setValue('sucursal'+basestr[1]);
+						}
+						else{
+							hiddenSucursal.setValue('sucursal'+basestr);
+						}
+						
+						login.getForm().submit({
+							method:"POST",
+							waitTitle:'Conectando',
+							waitMsg:'Validando Usuario...',
+							success:function(form,action){
+								obj = Ext.util.JSON.decode(action.response.responseText);
+								//alert(obj.msg.diasrestantes);
+								if( obj.msg.diasrestantes > 10 )
+								{
+									Ext.Msg.alert('Status','Bienvenido '+username.getValue()+' Tu contraseña es valida hasta el '+obj.msg.fechavalida+' Dias Restantes:'+obj.msg.diasrestantes,function(btn,text){
+											if(btn=='ok'){
+												var redirect = '/opciones/menu';
+												window.location = redirect;
+											}
+									});	
+								}else{
+									Ext.Msg.alert('Status','Atención!! Tu contraseña esta proxima a expirar es necesario cambiarla, Dias restantes: '+obj.msg.diasrestantes,function(btn,text){
+											if(btn=='ok'){
+												var redirect = '/claveuser/elegir_cambiopassword';
+												window.location = redirect;
+											}
+									});
+								}
+							},
+							failure:function(form,action){
+								if(action.failureType == 'server'){
+									obj = Ext.util.JSON.decode(action.response.responseText);
+									Ext.Msg.alert('Fallo en Login!',obj.errors.reason);
+								}else{
+									Ext.Msg.alert('Warning','Servidor Responde: ' + action.response.responseText);
+								}
+								login.getForm().reset();
+							}
+						});
+					}
+				}
+		]
+	});
+	
+	var win = new Ext.Window({
+		layout:'fit',
+		width:310,
+		height:200,
+		closable: false,
+		resizable: false,
+		plain: true,
+		border: false,
+		items: [login]
+	});
+	
+	win.show();
+	
+});

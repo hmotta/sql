@@ -1,0 +1,23 @@
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (1,'Que tipo de operaciones relaiza en la cooperativa');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (2,'Zona geografica. Lugar de Nacimiento');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (3,'Nacionalidad');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (4,'Edad');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (5,'Estado civil');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (6,'Tiempo laborando en su actual empleo');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (7,'Monto aproximado mensual de las operaciones');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (8,'Actividad general');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (9,'Instrumento monetario');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (10,'Frecuencia de operaciones');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (11,'Propiedad de los recursos');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (12,'Tipo de residencia');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (13,'Ingreso del Conyuge');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (14,'Tiene algun puesto politico');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (15,'Algun familiar de usted, hasta segundo grado, ocupa algun puesto politico');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (16,'Tipo de personalidad juridica');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (17,'Tiempo de residencia en el estado');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (18,'Antiguedad domiciliaria');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (19,'Se encuentra en la lista de la OFAC');
+insert into preguntasmatrizriesgo (pregutaid,descripcion) values (20,'Total de ingresos');
+
+
+

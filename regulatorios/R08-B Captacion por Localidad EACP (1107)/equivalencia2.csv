@@ -1,0 +1,758 @@
+ ciudadmexid | estadomexid | claveciudadmex |                  nombreciudadmex                   | claveconapo | ?column? |                  ?column?                  | ?column? 
+-------------+-------------+----------------+----------------------------------------------------+-------------+----------+--------------------------------------------+----------
+        1501 |          20 | 1501           | SANTO DOMINGO CHIHUITAN                            | 205080001   |          |                                            |        0
+        1502 |          20 | 1502           | SANTO DOMINGO INGENIO                              | 205050001   |          |                                            |        0
+        1505 |          20 | 1505           | SANTO DOMINGO OZOLOTEPEC                           | 205120001   |          |                                            |        0
+        1511 |          20 | 1511           | SANTO DOMINGO TLATAYAPAM                           | 205180001   |          |                                            |        0
+        1564 |          21 | 1564           | ACAJETE                                            | 210010001   | 3001009  | ACAJETE                                    |        2
+        1566 |          21 | 1566           | ACATLAN                                            | 210030001   | 1353003  | SAN LUIS ACATLAN                           |       15
+        1569 |          21 | 1569           | AHUACATLAN                                         | 210060001   | 2204004  | AHUACATLAN                                 |        2
+        1581 |          21 | 1581           | ATEXCAL                                            | 210180001   | 3018009  | ATEXCAL SAN MARTIN                         |        1
+        1594 |          21 | 1594           | CAÑADA MORELOS                                     | 210290001   |          |                                            |        0
+        1597 |          21 | 1597           | CHIAUTLA                                           | 210470001   | 1729001  | CHIAUTLA                                   |        2
+        1606 |          21 | 1606           | CHILA DE LA SAL                                    | 210580001   |          |                                            |        0
+        1609 |          21 | 1609           | COATEPEC                                           | 210300001   | 1721005  | COATEPEC HARINAS                           |        3
+        1614 |          21 | 1614           | COXCATLAN                                          | 210350001   | 3035003  | COXCATLAN                                  |        2
+        1616 |          21 | 1616           | COYOTEPEC                                          | 210370001   | 1723004  | COYOTEPEC                                  |        4
+        1617 |          21 | 1617           | CUAPIAXTLA DE MADERO                               | 210380001   | 3038003  | CUAPIAXTLA DE MADERO MUNICIPIO DE          |        2
+        1618 |          21 | 1618           | CUAUTEMPAN                                         | 210390001   |          |                                            |        0
+        1621 |          21 | 1621           | CUAYUCA DE ANDRADE                                 | 210420001   |          |                                            |        0
+        1624 |          21 | 1624           | DOMINGO ARENAS                                     | 210600001   | 3060009  | DOMINGO ARENAS                             |        2
+        1625 |          21 | 1625           | ELOXOCHITLAN                                       | 210610001   | 1420007  | ELOXOCHITLAN                               |        4
+        1627 |          21 | 1627           | ESPERANZA                                          | 210630001   | 535059   | LA ESPERANZA (MUZQUIZ)                     |        3
+        1630 |          21 | 1630           | GUADALUPE                                          | 210660001   | 204252   | GUADALUPE VICTORIA                         |       14
+        1631 |          21 | 1631           | GUADALUPE VICTORIA                                 | 210670001   | 204252   | GUADALUPE VICTORIA                         |        3
+        1633 |          21 | 1633           | HONEY                                              | 210570001   | 3057009  | CHILA HONEY                                |        1
+        1637 |          21 | 1637           | HUEHUETLA                                          | 210720001   | 1371003  | XOCHIHUEHUETLAN                            |        7
+        1639 |          21 | 1639           | HUEHUETLAN EL GRANDE                               | 211500001   |          |                                            |        0
+        1651 |          21 | 1651           | JALPAN                                             | 210860001   | 2743005  | SAN RAYMUNDO JALPAN                        |        5
+        1655 |          21 | 1655           | JUAN C BONILLA                                     | 210900001   |          |                                            |        0
+        1658 |          21 | 1658           | LA MAGDALENA TLATLAUQUITEPEC                       | 210950001   |          |                                            |        0
+        1659 |          21 | 1659           | LAFRAGUA                                           | 210930001   |          |                                            |        0
+        1661 |          21 | 1661           | LOS REYES DE JUAREZ                                | 211180001   |          |                                            |        0
+        1668 |          21 | 1668           | NICOLAS BRAVO                                      | 211030001   | 940467   | NICOLAS BRAVO                              |        2
+        1676 |          21 | 1676           | PANTEPEC                                           | 211110001   | 767003   | PANTEPEC                                   |        4
+        1679 |          21 | 1679           | PUEBLA                                             | 211140001   | 204228   | EJIDO PUEBLA                               |        3
+        1685 |          21 | 1685           | SAN DIEGO LA MESA TOCHIMILTZI                      | 211210001   |          |                                            |        0
+        1700 |          21 | 1700           | SAN MIGUEL XOXTLA                                  | 211360001   |          |                                            |        0
+        1703 |          21 | 1703           | SAN PABLO ANICANO                                  | 211390001   |          |                                            |        0
+        1704 |          21 | 1704           | SAN PEDRO CHOLULA                                  | 211400001   |          |                                            |        0
+        1705 |          21 | 1705           | SAN PEDRO YELOIXTLAHUACA                           | 211410001   | 3142009  | SAN PEDRO YELOIXTLAHUACAN                  |        1
+        1730 |          21 | 1730           | TEPETZINTLA                                        | 211670001   | 3169003  | TEPETZINTLA                                |        2
+        1734 |          21 | 1734           | TEPEYAHUALCO DE CUAUHTEMOC                         | 211710001   |          |                                            |        0
+        1745 |          21 | 1745           | TLANEPANTLA                                        | 211820001   |          |                                            |        0
+        1750 |          21 | 1750           | TLAXCO                                             | 211870001   | 1474001  | TLAXCOAPAN                                 |        5
+        1757 |          21 | 1757           | VENUSTIANO CARRANZA                                | 211940001   | 807009   | VENUSTIANO CARRANZA (CHIAPAS)              |        5
+        1758 |          21 | 1758           | VICENTE GUERRERO                                   | 211950001   | 201408   | VICENTE GUERRERO                           |        5
+        1760 |          21 | 1760           | XICOTEPEC                                          | 211970001   | 3199003  | XICOTEPEC DE JUAREZ                        |        1
+        1766 |          21 | 1766           | XOCHITLAN DE VICENTE SUAREZ                        | 212030001   |          |                                            |        0
+        1774 |          21 | 1774           | ZARAGOZA                                           | 212110001   | 579009   | ZARAGOZA                                   |       17
+        1781 |          22 | 1781           | AMEALCO DE BONFIL                                  | 220010001   |          |                                            |        0
+        1783 |          22 | 1783           | CADEREYTA DE MONTES                                | 220040001   |          |                                            |        0
+        1786 |          22 | 1786           | EL MARQUES                                         | 220110001   |          |                                            |        0
+        1789 |          22 | 1789           | JALPAN DE SERRA                                    | 220090001   |          |                                            |        0
+        1793 |          22 | 1793           | PINAL DE AMOLES                                    | 220020001   |          |                                            |        0
+        1794 |          22 | 1794           | QUERETARO                                          | 220140001   | 3342009  | QUERETARO MUNICIPIO DE                     |        2
+        1796 |          22 | 1796           | SAN JUAN DEL RIO                                   | 220160001   | 1157008  | SAN JUAN DEL RIO                           |        3
+        1798 |          22 | 1798           | TOLIMAN                                            | 220180001   | 1602009  | TOLIMAN                                    |        2
+        1799 |          23 | 1799           | BENITO JUAREZ                                      | 230050001   | 204159   | BENITO JUAREZ                              |       10
+        1800 |          23 | 1800           | COZUMEL                                            | 230010001   | 3405009  | COZUMEL MUNICIPIO DE                       |        2
+        1801 |          23 | 1801           | FELIPE CARRILLO PUERTO                             | 230020001   | 3410003  | FELIPE CARRILLO PUERTO MUNICIPIO DE        |        2
+        1802 |          23 | 1802           | ISLA MUJERES                                       | 230030001   | 3415009  | ISLA MUJERES MUNICIPIO DE                  |        2
+        1804 |          23 | 1804           | LAZARO CARDENAS                                    | 230070001   | 945132   | LAZARO CARDENAS                            |        7
+        1811 |          24 | 1811           | AXTLA DE TERRAZAS                                  | 240530001   |          |                                            |        0
+        1812 |          24 | 1812           | CARDENAS                                           | 240050001   | 945132   | LAZARO CARDENAS                            |        9
+        1818 |          24 | 1818           | CIUDAD DEL MAIZ                                    | 240100001   | 3510009  | CIUDAD DEL MAIZ MUNICIPIO DE               |        2
+        1819 |          24 | 1819           | CIUDAD FERNANDEZ                                   | 240110001   | 3511003  | CIUDAD FERNANDEZ MUNICIPIO DE              |        2
+        1821 |          24 | 1821           | COXCATLAN                                          | 240140001   | 3035003  | COXCATLAN                                  |        2
+        1823 |          24 | 1823           | EL NARANJO                                         | 240580001   | 3510202  | EL NARANJO DE CARLOS SARABIA               |        1
+        1826 |          24 | 1826           | LAGUNILLAS                                         | 240190001   | 1948004  | LAGUNILLAS                                 |        3
+        1829 |          24 | 1829           | MEXQUITIC DE CARMONA                               | 240210001   |          |                                            |        0
+        1830 |          24 | 1830           | MOCTEZUMA                                          | 240220001   | 3522009  | MOCTEZUMA                                  |        2
+        1831 |          24 | 1831           | RAYON                                              | 240230001   | 773006   | RAYON                                      |        5
+        1832 |          24 | 1832           | RIOVERDE                                           | 240240001   |          |                                            |        0
+        1834 |          24 | 1834           | SAN ANTONIO                                        | 240260001   | 302309   | SAN ANTONIO                                |       14
+        1835 |          24 | 1835           | SAN CIRO DE ACOSTA                                 | 240270001   |          |                                            |        0
+        1840 |          24 | 1840           | SANTA CATARINA                                     | 240310001   | 1272003  | SANTA CATARINA                             |       17
+        1842 |          24 | 1842           | SANTO DOMINGO                                      | 240330001   | 2908002  | SANTO DOMINGO                              |       23
+        1845 |          24 | 1845           | TAMAZUNCHALE                                       | 240370001   | 3537009  | TAMAZUNCHALE MUNICIPIO DE                  |        2
+        1847 |          24 | 1847           | TAMPAMOLON CORONA                                  | 240390001   |          |                                            |        0
+        1849 |          24 | 1849           | TANCANHUITZ                                        | 240120001   | 3512009  | TANCANHUITZ CIUDAD SANTOS                  |        1
+        1852 |          24 | 1852           | TIERRA NUEVA                                       | 240430001   |          |                                            |        0
+        1855 |          24 | 1855           | VILLA HIDALGO                                      | 240560001   | 1619002  | VILLA HIDALGO                              |        6
+        1856 |          24 | 1856           | VILLA JUAREZ                                       | 240460001   | 3552009  | VILLA JUAREZ                               |        2
+        1857 |          24 | 1857           | VILLA DE ARISTA                                    | 240470001   |          |                                            |        0
+        1864 |          24 | 1864           | ZARAGOZA                                           | 240550001   | 579009   | ZARAGOZA                                   |       17
+        1865 |          25 | 1865           | AHOME                                              | 250010001   | 3601009  | AHOME MUNICIPIO DE                         |        2
+        1866 |          25 | 1866           | ANGOSTURA                                          | 250020001   | 3604009  | ANGOSTURA MUNICIPIO DE                     |        2
+        1871 |          25 | 1871           | CULIACAN                                           | 250060001   | 3616006  | CULIACAN MUNICIPIO DE                      |        2
+        1872 |          25 | 1872           | EL FUERTE                                          | 250100001   |          |                                            |        0
+        1873 |          25 | 1873           | ELOTA                                              | 250080001   | 3622003  | ELOTA MUNICIPIO DE                         |        2
+        1874 |          25 | 1874           | ESCUINAPA                                          | 250090001   | 3625003  | ESCUINAPA MUNICIPIO DE                     |        2
+        1875 |          25 | 1875           | GUASAVE                                            | 250110001   | 3631009  | GUASAVE MUNICIPIO DE                       |        2
+        1877 |          25 | 1877           | MOCORITO                                           | 250130001   | 3637009  | MOCORITO MUNICIPIO DE                      |        2
+        1879 |          25 | 1879           | ROSARIO                                            | 250140001   | 956003   | ROSARIO                                    |        6
+        1881 |          25 | 1881           | SAN IGNACIO                                        | 250160001   | 204579   | SAN IGNACIO                                |        4
+        1882 |          25 | 1882           | SINALOA                                            | 250170001   | 3601653  | SINALOA DE LEYVA                           |        3
+        1890 |          26 | 1890           | BACADEHUACHI                                       | 260080001   |          |                                            |        0
+        1898 |          26 | 1898           | BENITO JUAREZ                                      | 260710001   | 204159   | BENITO JUAREZ                              |       10
+        1901 |          26 | 1901           | CAJEME                                             | 260180001   | 3718009  | CAJEME MUNICIPIO DE                        |        2
+        1908 |          26 | 1908           | ETCHOJOA                                           | 260260001   | 3726009  | ETCHOJOA MUNICIPIO DE                      |        2
+        1909 |          26 | 1909           | FRONTERAS                                          | 260270001   | 3727006  | FRONTERAS MUNICIPIO DE                     |        2
+        1910 |          26 | 1910           | GENERAL PLUTARCO ELIAS CALLES                      | 260700001   |          |                                            |        0
+        1912 |          26 | 1912           | GUAYMAS                                            | 260290001   | 3729009  | GUAYMAS MUNICIPIO DE                       |        2
+        1913 |          26 | 1913           | HERMOSILLO                                         | 260300001   | 204279   | HERMOSILLO (EJIDO)                         |        3
+        1919 |          26 | 1919           | LA COLORADA                                        | 260210001   |          |                                            |        0
+        1920 |          26 | 1920           | MAGDALENA                                          | 260360001   | 1556008  | MAGDALENA                                  |       14
+        1922 |          26 | 1922           | MOCTEZUMA                                          | 260380001   | 3522009  | MOCTEZUMA                                  |        2
+        1927 |          26 | 1927           | NOGALES                                            | 260430001   | 3743003  | NOGALES                                    |        2
+        1932 |          26 | 1932           | PUERTO PEÑASCO                                     | 260480001   | 3748009  | PUERTO PEÑASCO MUNICIPIO DE                |        2
+        1934 |          26 | 1934           | RAYON                                              | 260500001   | 773006   | RAYON                                      |        5
+        1935 |          26 | 1935           | ROSARIO                                            | 260510001   | 956003   | ROSARIO                                    |        6
+        1937 |          26 | 1937           | SAN FELIPE DE JESUS                                | 260530001   |          |                                            |        0
+        1940 |          26 | 1940           | SAN LUIS RIO COLORADO                              | 260550001   | 3755006  | SAN LUIS RIO COLORADO MUNICIPIO            |        2
+        1943 |          26 | 1943           | SANTA ANA                                          | 260580001   | 1246154  | SANTA ANA PACUECO                          |       13
+        1952 |          26 | 1952           | VILLA HIDALGO                                      | 260670001   | 1619002  | VILLA HIDALGO                              |        6
+        1954 |          26 | 1954           | YECORA                                             | 260690001   | 3769003  | YECORA MUNICIPIO DE                        |        2
+        1956 |          27 | 1956           | CARDENAS                                           | 270020001   | 945132   | LAZARO CARDENAS                            |        9
+        1959 |          27 | 1959           | COMALCALCO                                         | 270050001   | 3817003  | COMALCALCO MUNICIPIO DE                    |        2
+        1961 |          27 | 1961           | EMILIANO ZAPATA                                    | 270070001   | 1421002  | EMILIANO ZAPATA                            |        5
+        1962 |          27 | 1962           | HUIMANGUILLO                                       | 270080001   | 3824003  | HUIMANGUILLO MUNICIPIO DE                  |        2
+        1963 |          27 | 1963           | JALAPA                                             | 270090001   | 2533005  | SAN FELIPE JALAPA DE DIAZ                  |        6
+        1964 |          27 | 1964           | JALPA DE MENDEZ                                    | 270100001   |          |                                            |        0
+        1968 |          27 | 1968           | PARAISO                                            | 270140001   | 3842009  | PARAISO MUNICIPIO DE                       |        3
+        1972 |          28 | 1972           | ABASOLO                                            | 280010001   | 503009   | ABASOLO                                    |        6
+        1973 |          28 | 1973           | ALDAMA                                             | 280020001   | 902006   | ALDAMA                                     |        9
+        1977 |          28 | 1977           | BUSTAMANTE                                         | 280060001   | 2308008  | BUSTAMANTE                                 |        2
+        1982 |          28 | 1982           | EL MANTE                                           | 280210001   |          |                                            |        0
+        1983 |          28 | 1983           | GOMEZ FARIAS                                       | 280110001   | 925009   | GOMEZ FARIAS                               |        3
+        1984 |          28 | 1984           | GONZALEZ                                           | 280120001   | 204309   | JESUS GONZALEZ ORTEGA                      |       10
+        1986 |          28 | 1986           | GUERRERO                                           | 280140001   | 201408   | VICENTE GUERRERO                           |       22
+        1988 |          28 | 1988           | HIDALGO                                            | 280160001   | 527006   | HIDALGO                                    |       29
+        1990 |          28 | 1990           | JIMENEZ                                            | 280180001   | 529006   | JIMENEZ                                    |        8
+        1996 |          28 | 1996           | MIGUEL ALEMAN                                      | 280250001   | 3730159  | MIGUEL ALEMAN                              |        2
+        2000 |          28 | 2000           | OCAMPO                                             | 280290001   | 547009   | OCAMPO                                     |       16
+        2004 |          28 | 2004           | RIO BRAVO                                          | 280330001   | 3965003  | RIO BRAVO MUNICIPIO DE                     |        2
+        2005 |          28 | 2005           | SAN CARLOS                                         | 280340001   | 2524008  | SAN CARLOS YAUTEPEC                        |        3
+        2006 |          28 | 2006           | SAN FERNANDO                                       | 280350001   | 779006   | SAN FERNANDO (CHIAPAS)                     |        3
+        2007 |          28 | 2007           | SAN NICOLAS                                        | 280360001   | 2347002  | SAN NICOLAS DE LOS GARZA                   |        8
+        2011 |          28 | 2011           | VALLE HERMOSO                                      | 280400001   | 3979006  | VALLE HERMOSO MUNICIPIO DE                 |        2
+        2012 |          28 | 2012           | VICTORIA                                           | 280410001   | 204252   | GUADALUPE VICTORIA                         |       10
+        2013 |          28 | 2013           | VILLAGRAN                                          | 280420001   | 1292008  | VILLAGRAN                                  |        2
+        2015 |          29 | 2015           | ACUAMANALA DE MIGUEL HIDALGO                       | 290220001   |          |                                            |        0
+        2016 |          29 | 2016           | ALTZAYANCA                                         | 290040001   |          |                                            |        0
+        2018 |          29 | 2018           | APETATITLAN DE A CARBAJAL                          | 290020001   |          |                                            |        0
+        2020 |          29 | 2020           | ATLANGATEPEC                                       | 290030001   |          |                                            |        0
+        2021 |          29 | 2021           | BENITO JUAREZ                                      | 290450001   | 204159   | BENITO JUAREZ                              |       10
+        2023 |          29 | 2023           | CHIAUTEMPAN                                        | 290100001   | 4021007  | CHIAUTEMPAN SANTA ANA                      |        1
+        2024 |          29 | 2024           | CONTLA DE JUAN CUAMATZI                            | 290180001   |          |                                            |        0
+        2027 |          29 | 2027           | EL CARMEN TEQUEXQUITLA                             | 290070001   |          |                                            |        0
+        2028 |          29 | 2028           | EMILIANO ZAPATA                                    | 290460001   | 1421002  | EMILIANO ZAPATA                            |        5
+        2032 |          29 | 2032           | IXTACUIXTLA DE M MATAMOROS                         | 290150001   |          |                                            |        0
+        2034 |          29 | 2034           | LA MAGDALENA TLALTELULCO                           | 290480001   |          |                                            |        0
+        2035 |          29 | 2035           | LAZARO CARDENAS                                    | 290470001   | 945132   | LAZARO CARDENAS                            |        7
+        2036 |          29 | 2036           | MAZATECOCHCO DE JOSE MA MORELOS                    | 290170001   |          |                                            |        0
+        2037 |          29 | 2037           | MUÑOZ DE DOMINGO ARENAS                            | 290110001   |          |                                            |        0
+        2038 |          29 | 2038           | NANACAMILPA DE MARIANO ARISTA                      | 290210001   |          |                                            |        0
+        2041 |          29 | 2041           | PAPALOTLA DE XICOHTENCATL                          | 290410001   |          |                                            |        0
+        2042 |          29 | 2042           | SAN DAMIAN TEXOLOC                                 | 290490001   |          |                                            |        0
+        2043 |          29 | 2043           | SAN FRANCISCO TETLANOHCAN                          | 290500001   |          |                                            |        0
+        2044 |          29 | 2044           | SAN JERONIMO ZACUALPAN                             | 290510001   |          |                                            |        0
+        2045 |          29 | 2045           | SAN JOSE TEACALCO                                  | 290520001   |          |                                            |        0
+        2046 |          29 | 2046           | SAN JUAN HUACTZINCO                                | 290530001   |          |                                            |        0
+        2047 |          29 | 2047           | SAN LORENZO AXOCOMANITLA                           | 290540001   |          |                                            |        0
+        2048 |          29 | 2048           | SAN LUCAS TECOPILCO                                | 290550001   |          |                                            |        0
+        2050 |          29 | 2050           | SANCTORUM DE LAZARO CARDENAS                       | 290200001   |          |                                            |        0
+        2051 |          29 | 2051           | SANTA ANA NOPALUCAN                                | 290560001   |          |                                            |        0
+        2052 |          29 | 2052           | SANTA APOLONIA TEACALCO                            | 290570001   |          |                                            |        0
+        2053 |          29 | 2053           | SANTA CATARINA AYOMETLA                            | 290580001   |          |                                            |        0
+        2054 |          29 | 2054           | SANTA CRUZ QUILEHTLA                               | 290590001   |          |                                            |        0
+        2056 |          29 | 2056           | SANTA ISABEL XILOXOXTLA                            | 290600001   |          |                                            |        0
+        2057 |          29 | 2057           | TENANCINGO                                         | 290270001   | 1789007  | TENANCINGO                                 |        2
+        2058 |          29 | 2058           | TEOLOCHOLCO                                        | 290280001   |          |                                            |        0
+        2059 |          29 | 2059           | TEPETITLA DE LARDIZABAL                            | 290190001   |          |                                            |        0
+        2061 |          29 | 2061           | TERRENATE                                          | 290300001   |          |                                            |        0
+        2062 |          29 | 2062           | TETLA DE LA SOLIDARIDAD                            | 290310001   |          |                                            |        0
+        2063 |          29 | 2063           | TETLATLAHUCA                                       | 290320001   |          |                                            |        0
+        2065 |          29 | 2065           | TLAXCO                                             | 290340001   | 1474001  | TLAXCOAPAN                                 |        5
+        2069 |          29 | 2069           | XALOZTOC                                           | 290390001   |          |                                            |        0
+        2071 |          29 | 2071           | XICOHTZINCO                                        | 290420001   |          |                                            |        0
+        2072 |          29 | 2072           | YAUHQUEMECAN                                       | 290430001   |          |                                            |        0
+        2073 |          29 | 2073           | Z DE TRINIDAD SANCHEZ SANTOS                       | 290370001   |          |                                            |        0
+        2075 |          30 | 2075           | ACAJETE                                            | 300010001   | 3001009  | ACAJETE                                    |        2
+        2076 |          30 | 2076           | ACATLAN                                            | 300020001   | 1353003  | SAN LUIS ACATLAN                           |       15
+        2078 |          30 | 2078           | ACTOPAN                                            | 300040001   | 1403005  | ACTOPAN                                    |        2
+        2082 |          30 | 2082           | ALPATLAHUAC                                        | 300080001   | 1370005  | XALPATLAHUAC                               |        1
+        2083 |          30 | 2083           | ALTO LUCERO DE GUTIERREZ BARRIOS                   | 300090001   |          |                                            |        0
+        2086 |          30 | 2086           | AMATITLAN                                          | 300120001   | 1505005  | AMATITLAN                                  |        3
+        2088 |          30 | 2088           | ANGEL R CABADA                                     | 300150001   | 4115008  | ANGEL R CABADA MUNICIPIO DE                |        2
+        2090 |          30 | 2090           | AQUILA                                             | 300180001   | 1908009  | AQUILA                                     |        2
+        2093 |          30 | 2093           | ATOYAC                                             | 300210001   | 1311006  | ATOYAC DE ALVAREZ                          |        5
+        2098 |          30 | 2098           | BENITO JUAREZ                                      | 300270001   | 204159   | BENITO JUAREZ                              |       10
+        2101 |          30 | 2101           | CAMARON DE TEJEDA                                  | 300070001   |          |                                            |        0
+        2104 |          30 | 2104           | CARRILLO PUERTO                                    | 300310001   | 1903103  | CARRILLO PUERTO                            |        4
+        2105 |          30 | 2105           | CASTILLO DE TEAYO                                  | 301570001   |          |                                            |        0
+        2107 |          30 | 2107           | CAZONES DE HERRERA                                 | 300330001   |          |                                            |        0
+        2116 |          30 | 2116           | CHOCAMAN                                           | 300620001   |          |                                            |        0
+        2119 |          30 | 2119           | CITLALTEPETL                                       | 300350001   |          |                                            |        0
+        2122 |          30 | 2122           | COATEPEC                                           | 300380001   | 1721005  | COATEPEC HARINAS                           |        3
+        2123 |          30 | 2123           | COATZACOALCOS                                      | 300390001   | 4139002  | COATZACOALCOS MUNICIPIO DE                 |        2
+        2128 |          30 | 2128           | CORDOBA                                            | 300440001   | 4144001  | CORDOBA MUNICIPIO DE                       |        2
+        2129 |          30 | 2129           | COSAMALOAPAN                                       | 300450001   | 4145002  | COSAMALOAPAN MUNICIPIO DE                  |        2
+        2130 |          30 | 2130           | COSAUTLAN DE CARVAJAL                              | 300460001   |          |                                            |        0
+        2139 |          30 | 2139           | EMILIANO ZAPATA                                    | 300650001   | 1421002  | EMILIANO ZAPATA                            |        5
+        2140 |          30 | 2140           | ESPINAL                                            | 300660001   | 2429004  | ESPINAL EL                                 |        3
+        2147 |          30 | 2147           | HUEYAPAN DE OCAMPO                                 | 300730001   | 4173006  | HUEYAPAN DE OCAMPO MUNICIPIO DE            |        2
+        2153 |          30 | 2153           | IXHUACAN DE LOS REYES                              | 300790001   |          |                                            |        0
+        2159 |          30 | 2159           | IXTACZOQUITLAN                                     | 300850001   |          |                                            |        0
+        2160 |          30 | 2160           | JALACINGO                                          | 300860001   |          |                                            |        0
+        2162 |          30 | 2162           | JALTIPAN                                           | 300890001   | 4189007  | JALTIPAN DE MORELOS                        |        1
+        2165 |          30 | 2165           | JILOTEPEC                                          | 300930001   | 1746009  | JILOTEPEC                                  |        2
+        2169 |          30 | 2169           | LA ANTIGUA                                         | 300160001   |          |                                            |        0
+        2171 |          30 | 2171           | LANDERO Y COSS                                     | 300960001   |          |                                            |        0
+        2172 |          30 | 2172           | LAS CHOAPAS                                        | 300610001   |          |                                            |        0
+        2173 |          30 | 2173           | LAS MINAS                                          | 301070001   |          |                                            |        0
+        2174 |          30 | 2174           | LAS VIGAS DE RAMIREZ                               | 301320001   |          |                                            |        0
+        2177 |          30 | 2177           | MAGDALENA                                          | 300980001   | 1556008  | MAGDALENA                                  |       14
+        2181 |          30 | 2181           | MARTINEZ DE LA TORRE                               | 301020001   | 4203009  | MARTINEZ DE LA TORRE MUNICIPIO DE          |        2
+        2186 |          30 | 2186           | MINATITLAN                                         | 301080001   | 617009   | MINATITLAN                                 |        2
+        2190 |          30 | 2190           | NANCHITAL DE LAZARO CARDENAS DEL RIO               | 302060001   |          |                                            |        0
+        2192 |          30 | 2192           | NARANJAL                                           | 301130001   | 4214005  | NARANJAL EL                                |        1
+        2193 |          30 | 2193           | NARANJOS AMATLAN                                   | 300130001   |          |                                            |        0
+        2195 |          30 | 2195           | NOGALES                                            | 301150001   | 3743003  | NOGALES                                    |        2
+        2201 |          30 | 2201           | OZULUAMA DE MASCAREÑAS                             | 301210001   |          |                                            |        0
+        2203 |          30 | 2203           | PANUCO                                             | 301230001   | 1141001  | PANUCO DE CORONADO MUNICIPIO DE            |        4
+        2209 |          30 | 2209           | PLAYA VICENTE                                      | 301300001   | 4231004  | PLAYA VICENTE MUNICIPIO DE                 |        2
+        2217 |          30 | 2217           | SAN ANDRES TENEJAPAN                               | 301400001   |          |                                            |        0
+        2219 |          30 | 2219           | SAN JUAN EVANGELISTA                               | 301420001   | 2595006  | SAN JUAN EVANGELISTA ANALCO                |        3
+        2221 |          30 | 2221           | SANTIAGO SOCHIAPAN                                 | 302120001   |          |                                            |        0
+        2223 |          30 | 2223           | SAYULA DE ALEMAN                                   | 301440001   |          |                                            |        0
+        2231 |          30 | 2231           | TAMPICO ALTO                                       | 301520001   |          |                                            |        0
+        2235 |          30 | 2235           | TATAHUICAPAN DE JUAREZ                             | 302090001   |          |                                            |        0
+        2240 |          30 | 2240           | TEMPOAL                                            | 301610001   | 4262005  | TEMPOAL MUNICIPIO DE                       |        2
+        2246 |          30 | 2246           | TEPETZINTLA                                        | 301670001   | 3169003  | TEPETZINTLA                                |        2
+        2247 |          30 | 2247           | TEQUILA                                            | 301680001   | 1596003  | TEQUILA                                    |        2
+        2252 |          30 | 2252           | TIERRA BLANCA                                      | 301740001   | 1284006  | TIERRA BLANCA                              |        2
+        2258 |          30 | 2258           | TLACOTEPEC DE MEJIA                                | 301790001   |          |                                            |        0
+        2259 |          30 | 2259           | TLALIXCOYAN                                        | 301810001   | 4282004  | TLALIXCOYAN MUNICIPIO DE                   |        2
+        2261 |          30 | 2261           | TLALTETELA                                         | 300240001   |          |                                            |        0
+        2263 |          30 | 2263           | TLAQUILPAN                                         | 301840001   |          |                                            |        0
+        2265 |          30 | 2265           | TOMATLAN                                           | 301860001   | 1603004  | TOMATLAN                                   |        2
+        2269 |          30 | 2269           | TUXPAM                                             | 301890001   |          |                                            |        0
+        2271 |          30 | 2271           | URSULO GALVAN                                      | 301910001   | 4292008  | URSULO GALVAN MUNICIPIO DE                 |        2
+        2272 |          30 | 2272           | UXPANAPA                                           | 302100001   |          |                                            |        0
+        2273 |          30 | 2273           | VEGA DE ALATORRE                                   | 301920001   | 4293009  | VEGA DE ALATORRE MUNICIPIO DE              |        2
+        2276 |          30 | 2276           | XALAPA                                             | 300870001   |          |                                            |        0
+        2277 |          30 | 2277           | XICO                                               | 300920001   | 1001002  | CIUDAD DE MEXICO                           |        6
+        2281 |          30 | 2281           | ZACUALPAN                                          | 301980001   | 1819007  | ZACUALPAN                                  |        4
+        2282 |          30 | 2282           | ZARAGOZA                                           | 301990001   | 579009   | ZARAGOZA                                   |       17
+        2285 |          30 | 2285           | ZONTECOMATLAN DE LOPEZ Y FUENTES                   | 302020001   |          |                                            |        0
+        2286 |          30 | 2286           | ZOZOCOLCO DE HIDALGO                               | 302030001   |          |                                            |        0
+        2304 |          31 | 2304           | CHICXULUB PUEBLO                                   | 310200001   |          |                                            |        0
+        2317 |          31 | 2317           | DZONCAUICH                                         | 310310001   |          |                                            |        0
+        2329 |          31 | 2329           | KAUA                                               | 310430001   |          |                                            |        0
+        2338 |          31 | 2338           | MOTUL                                              | 310520001   | 4452006  | MOTUL DE FELIPE C. PUERTO                  |        1
+        2345 |          31 | 2345           | PROGRESO                                           | 310590001   | 553006   | PROGRESO                                   |       11
+        2350 |          31 | 2350           | SAN FELIPE                                         | 310650001   | 204555   | SAN FELIPE                                 |       13
+        2377 |          31 | 2377           | TINUM                                              | 310910001   | 4491009  | TINUM MUNICIPIO DE                         |        2
+        2380 |          31 | 2380           | TIXMEHUAC                                          | 310940001   |          |                                            |        0
+        2381 |          31 | 2381           | TIXPEHUAL                                          | 310950001   |          |                                            |        0
+        2390 |          31 | 2390           | YAXCABA                                            | 311040001   |          |                                            |        0
+        2391 |          31 | 2391           | YAXKUKUL                                           | 311050001   |          |                                            |        0
+        2396 |          32 | 2396           | BENITO JUAREZ                                      | 320040001   | 204159   | BENITO JUAREZ                              |       10
+        2401 |          32 | 2401           | CUAUHTEMOC                                         | 320080001   | 611009   | CUAUHTEMOC MUNICIPIO DE                    |       10
+        2402 |          32 | 2402           | EL PLATEADO DE JOAQUIN AMARO                       | 320150001   |          |                                            |        0
+        2403 |          32 | 2403           | EL SALVADOR                                        | 320410001   |          |                                            |        0
+        2407 |          32 | 2407           | GENERAL FRANCISCO R MURGUIA                        | 320140001   |          |                                            |        0
+        2409 |          32 | 2409           | GUADALUPE                                          | 320170001   | 204252   | GUADALUPE VICTORIA                         |       14
+        2411 |          32 | 2411           | JALPA                                              | 320190001   | 2743005  | SAN RAYMUNDO JALPAN                        |        7
+        2412 |          32 | 2412           | JEREZ                                              | 320200001   | 4620003  | JEREZ DE GARCIA SALINAS                    |        1
+        2413 |          32 | 2413           | JIMENEZ DEL TEUL                                   | 320210001   |          |                                            |        0
+        2416 |          32 | 2416           | LORETO                                             | 320240001   | 303069   | LORETO                                     |        2
+        2419 |          32 | 2419           | MELCHOR OCAMPO                                     | 320270001   | 1754002  | MELCHOR OCAMPO                             |        5
+        2424 |          32 | 2424           | MORELOS                                            | 320320001   | 204208   | CIUDAD MORELOS                             |       23
+        2429 |          32 | 2429           | PANUCO                                             | 320370001   | 1141001  | PANUCO DE CORONADO MUNICIPIO DE            |        4
+        2431 |          32 | 2431           | RIO GRANDE                                         | 320390001   | 2410155  | RIO GRANDE                                 |        4
+        2433 |          32 | 2433           | SANTA MARIA DE LA PAZ                              | 320580001   |          |                                            |        0
+        2441 |          32 | 2441           | TRANCOSO                                           | 320570001   |          |                                            |        0
+        2442 |          32 | 2442           | TRINIDAD GARCIA DE LA CADENA                       | 320110001   |          |                                            |        0
+        2447 |          32 | 2447           | VILLA HIDALGO                                      | 320530001   | 1619002  | VILLA HIDALGO                              |        6
+           1 |           1 | 1              | AGUASCALIENTES                                     | 010010001   | 101003   | AGUASCALIENTES MUNICIPIO DE (OTROS)        |        2
+           5 |           1 | 5              | EL LLANO                                           | 010100001   | 4261439  | POTRERO DEL LLANO                          |        1
+           6 |           1 | 6              | JESUS MARIA                                        | 010050001   | 113006   | JESUS MARIA                                |        2
+          10 |           1 | 10             | SAN JOSE DE GRACIA                                 | 010080001   | 122009   | SAN JOSE DE GRACIA                         |        2
+          12 |           2 | 12             | ENSENADA                                           | 020010001   | 201105   | ENSENADA LOCALIDAD DE                      |        1
+          13 |           2 | 13             | MEXICALI                                           | 020020001   | 204009   | MEXICALI MUNICIPIO DE                      |        2
+          14 |           2 | 14             | PLAYAS DE ROSARITO                                 | 020050001   |          |                                            |        0
+          16 |           2 | 16             | TIJUANA                                            | 020040001   | 210009   | TIJUANA MUNICIPIO DE                       |        2
+          19 |           3 | 19             | LORETO                                             | 030090001   | 303069   | LORETO                                     |        2
+          20 |           3 | 20             | LOS CABOS                                          | 030080001   |          |                                            |        0
+          21 |           3 | 21             | MULEGE                                             | 030020001   | 305006   | MULEGE MUNICIPIO DE                        |        2
+          22 |           4 | 22             | CALAKMUL                                           | 040100001   |          |                                            |        0
+          24 |           4 | 24             | CAMPECHE                                           | 040020001   | 405009   | CAMPECHE MUNICIPIO DE                      |        3
+          26 |           4 | 26             | CARMEN                                             | 040030001   | 407003   | CARMEN                                     |        5
+          33 |           5 | 33             | ABASOLO                                            | 050010001   | 503009   | ABASOLO                                    |        6
+          35 |           5 | 35             | ALLENDE                                            | 050030001   | 507009   | ALLENDE                                    |       12
+          36 |           5 | 36             | ARTEAGA                                            | 050040001   | 116006   | PABELLON DE ARTEAGA                        |        4
+          41 |           5 | 41             | FRANCISCO I MADERO                                 | 050090001   | 519009   | FRANCISCO I MADERO                         |        3
+          42 |           5 | 42             | FRONTERA                                           | 050100001   | 521006   | FRONTERA                                   |        7
+          44 |           5 | 44             | GUERRERO                                           | 050120001   | 201408   | VICENTE GUERRERO                           |       22
+          45 |           5 | 45             | HIDALGO                                            | 050130001   | 527006   | HIDALGO                                    |       29
+          46 |           5 | 46             | JIMENEZ                                            | 050140001   | 529006   | JIMENEZ                                    |        8
+          47 |           5 | 47             | JUAREZ                                             | 050150001   | 204159   | BENITO JUAREZ                              |       33
+          50 |           5 | 50             | MONCLOVA                                           | 050180001   | 537009   | MONCLOVA MUNICIPIO DE                      |        2
+          51 |           5 | 51             | MORELOS                                            | 050190001   | 204208   | CIUDAD MORELOS                             |       23
+          52 |           5 | 52             | MUZQUIZ                                            | 050200001   | 535059   | LA ESPERANZA (MUZQUIZ)                     |        3
+          55 |           5 | 55             | OCAMPO                                             | 050230001   | 547009   | OCAMPO                                     |       16
+          56 |           5 | 56             | PARRAS                                             | 050240001   | 549009   | PARRAS DE LA FUENTE                        |        1
+          58 |           5 | 58             | PROGRESO                                           | 050260001   | 553006   | PROGRESO                                   |       11
+          60 |           5 | 60             | SABINAS                                            | 050280001   | 557006   | SABINAS MUNICIPIO DE                       |        5
+          62 |           5 | 62             | SALTILLO                                           | 050300001   | 561009   | SALTILLO                                   |        2
+          64 |           5 | 64             | SAN JUAN DE SABINAS                                | 050320001   | 565003   | SAN JUAN DE SABINAS MUNICIPIO DE           |        2
+          66 |           5 | 66             | SIERRA MOJADA                                      | 050340001   | 571009   | SIERRA MOJADA MUNICIPIO DE                 |        2
+          69 |           5 | 69             | VILLA UNION                                        | 050370001   | 577009   | VILLA UNION                                |        3
+          70 |           5 | 70             | ZARAGOZA                                           | 050380001   | 579009   | ZARAGOZA                                   |       17
+          72 |           6 | 72             | COLIMA                                             | 060020001   | 605006   | COLIMA MUNICIPIO DE                        |        2
+          75 |           6 | 75             | CUAUHTEMOC                                         | 060050001   | 611009   | CUAUHTEMOC MUNICIPIO DE                    |       10
+          77 |           6 | 77             | MANZANILLO                                         | 060070001   | 615009   | MANZANILLO MUNICIPIO DE                    |        2
+          78 |           6 | 78             | MINATITLAN                                         | 060080001   | 617009   | MINATITLAN                                 |        2
+          79 |           6 | 79             | TECOMAN                                            | 060090001   | 619003   | TECOMAN MUNICIPIO DE                       |        2
+          80 |           6 | 80             | VILLA DE ALVAREZ                                   | 060100001   | 621009   | VILLA DE ALVAREZ MUNICIPIO DE              |        2
+          81 |           7 | 81             | ACACOYAGUA                                         | 070010001   |          |                                            |        0
+          83 |           7 | 83             | ACAPETAHUA                                         | 070030001   |          |                                            |        0
+          84 |           7 | 84             | ALDAMA                                             | 071130001   | 902006   | ALDAMA                                     |        9
+          85 |           7 | 85             | ALTAMIRANO                                         | 070040001   | 704003   | ALTAMIRANO                                 |        4
+          93 |           7 | 93             | BENEMERITO DE LAS AMERICAS                         | 071140001   |          |                                            |        0
+         112 |           7 | 112            | EL BOSQUE                                          | 070140001   |          |                                            |        0
+         113 |           7 | 113            | EL PORVENIR                                        | 070700001   |          |                                            |        0
+         120 |           7 | 120            | HUIXTAN                                            | 070380001   |          |                                            |        0
+         124 |           7 | 124            | IXTAPA                                             | 070440001   | 744009   | IXTAPA                                     |        7
+         128 |           7 | 128            | JUAREZ                                             | 070480001   | 204159   | BENITO JUAREZ                              |       33
+         129 |           7 | 129            | LA CONCORDIA                                       | 070200001   |          |                                            |        0
+         130 |           7 | 130            | LA GRANDEZA                                        | 070360001   |          |                                            |        0
+         131 |           7 | 131            | LA INDEPENDENCIA                                   | 070410001   |          |                                            |        0
+         132 |           7 | 132            | LA LIBERTAD                                        | 070500001   |          |                                            |        0
+         133 |           7 | 133            | LA TRINITARIA                                      | 070990001   |          |                                            |        0
+         135 |           7 | 135            | LAS MARGARITAS                                     | 070520001   |          |                                            |        0
+         136 |           7 | 136            | LAS ROSAS                                          | 070750001   |          |                                            |        0
+         138 |           7 | 138            | MARAVILLA TENEJAPA                                 | 071150001   |          |                                            |        0
+         139 |           7 | 139            | MARQUES DE COMILLAS                                | 071160001   |          |                                            |        0
+         144 |           7 | 144            | MONTECRISTO DE GUERRERO                            | 071170001   |          |                                            |        0
+         155 |           7 | 155            | PANTEPEC                                           | 070670001   | 767003   | PANTEPEC                                   |        4
+         159 |           7 | 159            | RAYON                                              | 070730001   | 773006   | RAYON                                      |        5
+         162 |           7 | 162            | SALTO DE AGUA                                      | 070770001   |          |                                            |        0
+         163 |           7 | 163            | SAN ANDRES DURAZNAL                                | 071180001   |          |                                            |        0
+         165 |           7 | 165            | SAN FERNANDO                                       | 070790001   | 779006   | SAN FERNANDO (CHIAPAS)                     |        3
+         166 |           7 | 166            | SAN JUAN CANCUC                                    | 071120001   |          |                                            |        0
+         167 |           7 | 167            | SAN LUCAS                                          | 071100001   | 302103   | CABO SAN LUCAS                             |        7
+         168 |           7 | 168            | SANTIAGO EL PINAR                                  | 071190001   |          |                                            |        0
+         170 |           7 | 170            | SIMOJOVEL                                          | 070810001   | 781003   | SIMOJOVEL DE ALLENDE                       |        1
+         173 |           7 | 173            | SOLOSUCHIAPA                                       | 070840001   |          |                                            |        0
+         186 |           7 | 186            | TOTOLAPA                                           | 070980001   | 1355002  | SAN MIGUEL TOTOLAPAN                       |        3
+         187 |           7 | 187            | TUMBALA                                            | 071000001   |          |                                            |        0
+         193 |           7 | 193            | VENUSTIANO CARRANZA                                | 071060001   | 807009   | VENUSTIANO CARRANZA (CHIAPAS)              |        5
+         194 |           7 | 194            | VILLA COMALTITLAN                                  | 070710001   |          |                                            |        0
+         195 |           7 | 195            | VILLA CORZO                                        | 071070001   | 808503   | VILLA CORZO ( LOCALIDAD )                  |        1
+         196 |           7 | 196            | VILLAFLORES                                        | 071080001   |          |                                            |        0
+         200 |           8 | 200            | ALDAMA                                             | 080020001   | 902006   | ALDAMA                                     |        9
+         201 |           8 | 201            | ALLENDE                                            | 080030001   | 507009   | ALLENDE                                    |       12
+         203 |           8 | 203            | ASCENSION                                          | 080050001   |          |                                            |        0
+         207 |           8 | 207            | BOCOYNA                                            | 080090001   |          |                                            |        0
+         208 |           8 | 208            | BUENAVENTURA                                       | 080100001   | 563009   | SAN BUENAVENTURA                           |        3
+         210 |           8 | 210            | CARICHI                                            | 080120001   | 912009   | CARICHIC                                   |        1
+         212 |           8 | 212            | CHIHUAHUA                                          | 080190001   | 919003   | CHIHUAHUA MUNICIPIO DE                     |        3
+         215 |           8 | 215            | COYAME DEL SOTOL                                   | 080150001   |          |                                            |        0
+         216 |           8 | 216            | CUAUHTEMOC                                         | 080170001   | 611009   | CUAUHTEMOC MUNICIPIO DE                    |       10
+         217 |           8 | 217            | CUSIHUIRIACHI                                      | 080180001   | 918009   | CUSIHUIRIACHIC                             |        1
+         218 |           8 | 218            | DELICIAS                                           | 080210001   | 921009   | DELICIAS CIUDAD                            |        1
+         219 |           8 | 219            | DOCTOR BELISARIO DOMINGUEZ                         | 080220001   |          |                                            |        0
+         220 |           8 | 220            | EL TULE                                            | 080640001   | 2811006  | SANTA MARIA DEL TULE                       |        1
+         222 |           8 | 222            | GOMEZ FARIAS                                       | 080250001   | 925009   | GOMEZ FARIAS                               |        3
+         225 |           8 | 225            | GUADALUPE                                          | 080280001   | 204252   | GUADALUPE VICTORIA                         |       14
+         228 |           8 | 228            | GUERRERO                                           | 080310001   | 201408   | VICENTE GUERRERO                           |       22
+         231 |           8 | 231            | IGNACIO ZARAGOZA                                   | 080340001   | 934006   | IGNACIO ZARAGOZA                           |        2
+         233 |           8 | 233            | JIMENEZ                                            | 080360001   | 529006   | JIMENEZ                                    |        8
+         234 |           8 | 234            | JUAREZ                                             | 080370001   | 204159   | BENITO JUAREZ                              |       33
+         238 |           8 | 238            | MADERA                                             | 080400001   | 940003   | MADERA MUNICIPIO DE                        |        2
+         239 |           8 | 239            | MAGUARICHI                                         | 080410001   | 941009   | MAGUARICHIC                                |        1
+         241 |           8 | 241            | MATACHI                                            | 080430001   | 943003   | MATACHIC                                   |        1
+         243 |           8 | 243            | MEOQUI                                             | 080450001   | 945009   | MEOQUI MUNICIPIO DE                        |        2
+         244 |           8 | 244            | MORELOS                                            | 080460001   | 204208   | CIUDAD MORELOS                             |       23
+         246 |           8 | 246            | NAMIQUIPA                                          | 080480001   | 948009   | NAMIQUIPA MUNICIPIO DE                     |        2
+         247 |           8 | 247            | NONOAVA                                            | 080490001   |          |                                            |        0
+         248 |           8 | 248            | NUEVO CASAS GRANDES                                | 080500001   | 950003   | NUEVO CASAS GRANDES MUNICIPIO DE           |        2
+         249 |           8 | 249            | OCAMPO                                             | 080510001   | 547009   | OCAMPO                                     |       16
+         253 |           8 | 253            | ROSALES                                            | 080550001   | 955009   | ROSALES                                    |        4
+         254 |           8 | 254            | ROSARIO                                            | 080560001   | 956003   | ROSARIO                                    |        6
+         256 |           8 | 256            | SAN FRANCISCO DE BORJA                             | 080580001   |          |                                            |        0
+         259 |           8 | 259            | SANTA ISABEL (GENERAL TRIAS)                       | 080240001   |          |                                            |        0
+         262 |           8 | 262            | TEMOSACHI                                          | 080630001   | 963009   | TEMOSACHIC                                 |        1
+         264 |           8 | 264            | URUACHI                                            | 080660001   | 966009   | URUACHIC                                   |        1
+         266 |           9 | 266            | ALVARO OBREGON                                     | 090100001   | 1903007  | ALVARO OBREGON MUNICIPIO DE                |        2
+         267 |           9 | 267            | AZCAPOTZALCO                                       | 090020001   |          |                                            |        0
+         268 |           9 | 268            | BENITO JUAREZ                                      | 090140001   | 204159   | BENITO JUAREZ                              |       10
+         269 |           9 | 269            | COYOACAN                                           | 090030001   |          |                                            |        0
+         270 |           9 | 270            | CUAJIMALPA DE MORELOS                              | 090040001   |          |                                            |        0
+         271 |           9 | 271            | CUAUHTEMOC                                         | 090150001   | 611009   | CUAUHTEMOC MUNICIPIO DE                    |       10
+         272 |           9 | 272            | GUSTAVO A MADERO                                   | 090050001   |          |                                            |        0
+         273 |           9 | 273            | IZTACALCO                                          | 090060001   |          |                                            |        0
+         274 |           9 | 274            | IZTAPALAPA                                         | 090070001   |          |                                            |        0
+         275 |           9 | 275            | LA MAGDALENA CONTRERAS                             | 090080001   |          |                                            |        0
+         277 |           9 | 277            | MILPA ALTA                                         | 090090001   |          |                                            |        0
+         278 |           9 | 278            | TLAHUAC                                            | 090110001   | 613003   | IXTLAHUACAN                                |       25
+         279 |           9 | 279            | TLALPAN                                            | 090120001   | 1760002  | NEXTLALPAN                                 |        2
+         280 |           9 | 280            | VENUSTIANO CARRANZA                                | 090170001   | 807009   | VENUSTIANO CARRANZA (CHIAPAS)              |        5
+         281 |           9 | 281            | XOCHIMILCO                                         | 090130001   |          |                                            |        0
+         282 |          10 | 282            | CANATLAN                                           | 100010001   | 1103002  | CANATLAN MUNICIPIO DE                      |        2
+         287 |          10 | 287            | EL ORO                                             | 100180001   | 959003   | SAN FRANCISCO DEL ORO                      |        6
+         289 |          10 | 289            | GOMEZ PALACIO                                      | 100070001   | 1115008  | GOMEZ PALACIOS                             |        1
+         290 |          10 | 290            | GUADALUPE VICTORIA                                 | 100080001   | 204252   | GUADALUPE VICTORIA                         |        3
+         292 |          10 | 292            | HIDALGO                                            | 100100001   | 527006   | HIDALGO                                    |       29
+         295 |          10 | 295            | MAPIMI                                             | 100130001   | 1127005  | MAPIMI MUNICIPIO DE                        |        2
+         300 |          10 | 300            | OCAMPO                                             | 100170001   | 547009   | OCAMPO                                     |       16
+         302 |          10 | 302            | PANUCO DE CORONADO                                 | 100200001   | 1141001  | PANUCO DE CORONADO MUNICIPIO DE            |        2
+         305 |          10 | 305            | PUEBLO NUEVO                                       | 100230001   | 771009   | PUEBLO NUEVO COMATITLAN                    |        4
+         309 |          10 | 309            | SAN JUAN DEL RIO                                   | 100270001   | 1157008  | SAN JUAN DEL RIO                           |        3
+         313 |          10 | 313            | SANTA CLARA                                        | 100310001   | 1163008  | SANTA CLARA                                |        3
+         318 |          10 | 318            | TLAHUALILO                                         | 100360001   | 1173003  | TLAHUALILO DE ZARAGOZA                     |        1
+         320 |          10 | 320            | VICENTE GUERRERO                                   | 100380001   | 201408   | VICENTE GUERRERO                           |        5
+         321 |          11 | 321            | ABASOLO                                            | 110010001   | 503009   | ABASOLO                                    |        6
+         323 |          11 | 323            | ALLENDE                                            | 110040001   | 507009   | ALLENDE                                    |       12
+         327 |          11 | 327            | CELAYA                                             | 110090001   | 1214005  | CELAYA MUNICIPIO DE                        |        2
+         340 |          11 | 340            | MANUEL DOBLADO                                     | 110210001   | 1216007  | CIUDAD MANUEL DOBLADO                      |        1
+         342 |          11 | 342            | OCAMPO                                             | 110230001   | 547009   | OCAMPO                                     |       16
+         343 |          11 | 343            | PENJAMO                                            | 110240001   | 1246001  | PENJAMO MUNICIPIO DE                       |        2
+         344 |          11 | 344            | PUEBLO NUEVO                                       | 110250001   | 771009   | PUEBLO NUEVO COMATITLAN                    |        4
+         350 |          11 | 350            | SAN FELIPE                                         | 110310001   | 204555   | SAN FELIPE                                 |       13
+         354 |          11 | 354            | SANTA CATARINA                                     | 110340001   | 1272003  | SANTA CATARINA                             |       17
+         360 |          11 | 360            | TIERRA BLANCA                                      | 110400001   | 1284006  | TIERRA BLANCA                              |        2
+         363 |          11 | 363            | VICTORIA                                           | 110430001   | 204252   | GUADALUPE VICTORIA                         |       10
+         364 |          11 | 364            | VILLAGRAN                                          | 110440001   | 1292008  | VILLAGRAN                                  |        2
+         366 |          11 | 366            | YURIRIA                                            | 110460001   | 1296009  | YURIRIA MUNICIPIO DE                       |        2
+         367 |          12 | 367            | ACAPULCO DE JUAREZ                                 | 120010001   |          |                                            |        0
+         368 |          12 | 368            | ACATEPEC                                           | 120760001   | 2125008  | JONACATEPEC                                |        8
+         369 |          12 | 369            | AHUACUOTZINGO                                      | 120020001   |          |                                            |        0
+         370 |          12 | 370            | AJUCHITLAN DEL PROGRESO                            | 120030001   |          |                                            |        0
+         371 |          12 | 371            | ALCOZAUCA DE GUERRERO                              | 120040001   |          |                                            |        0
+         379 |          12 | 379            | AYUTLA DE LOS LIBRES                               | 120120001   |          |                                            |        0
+         380 |          12 | 380            | AZOYU                                              | 120130001   | 1313002  | AZOYU MUNICIPIO DE                         |        3
+         381 |          12 | 381            | BENITO JUAREZ                                      | 120140001   | 204159   | BENITO JUAREZ                              |       10
+         383 |          12 | 383            | CHILAPA DE ALVAREZ                                 | 120280001   |          |                                            |        0
+         384 |          12 | 384            | CHILPANCINGO DE LOS BRAVO                          | 120290001   |          |                                            |        0
+         385 |          12 | 385            | COAHUAYUTLA DE JOSE MARIA IZAZAGA                  | 120160001   |          |                                            |        0
+         386 |          12 | 386            | COCULA                                             | 120170001   | 1317003  | COCULA                                     |        2
+         392 |          12 | 392            | CUAJINICUILAPA                                     | 120230001   |          |                                            |        0
+         394 |          12 | 394            | CUAUTEPEC                                          | 120250001   | 1325008  | CUAUTEPEC                                  |        2
+         395 |          12 | 395            | CUETZALA DEL PROGRESO                              | 120260001   |          |                                            |        0
+         396 |          12 | 396            | CUTZAMALA DE PINZON                                | 120270001   |          |                                            |        0
+         397 |          12 | 397            | EDUARDO NERI                                       | 120750001   |          |                                            |        0
+         402 |          12 | 402            | HUITZUCO DE LOS FIGUEROA                           | 120340001   |          |                                            |        0
+         403 |          12 | 403            | IGUALA DE LA INDEPENDENCIA                         | 120350001   |          |                                            |        0
+         405 |          12 | 405            | IXCATEOPAN DE CUAUHTEMOC                           | 120370001   |          |                                            |        0
+         408 |          12 | 408            | LA UNION DE ISIDORO MONTES DE OCA                  | 120680001   |          |                                            |        0
+         423 |          12 | 423            | SAN MARCOS                                         | 120530001   | 1354001  | SAN MARCOS                                 |        3
+         425 |          12 | 425            | TAXCO DE ALARCON                                   | 120550001   |          |                                            |        0
+         427 |          12 | 427            | TECPAN DE GALEANA                                  | 120570001   |          |                                            |        0
+         429 |          12 | 429            | TEPECOACUILCO DE TRUJANO                           | 120590001   |          |                                            |        0
+         431 |          12 | 431            | TIXTLA DE GUERRERO                                 | 120610001   |          |                                            |        0
+         435 |          12 | 435            | TLALIXTAQUILLA DE MALDONADO                        | 120650001   |          |                                            |        0
+         436 |          12 | 436            | TLAPA DE COMONFORT                                 | 120660001   |          |                                            |        0
+         442 |          12 | 442            | ZIRANDARO                                          | 120730001   | 1374006  | ZIRANDARO MUNICIPIO DE                     |        2
+         444 |          13 | 444            | ACATLAN                                            | 130010001   | 1353003  | SAN LUIS ACATLAN                           |       15
+         446 |          13 | 446            | ACTOPAN                                            | 130030001   | 1403005  | ACTOPAN                                    |        2
+         447 |          13 | 447            | AGUA BLANCA DE ITURBIDE                            | 130040001   |          |                                            |        0
+         455 |          13 | 455            | ATOTONILCO DE TULA                                 | 130120001   |          |                                            |        0
+         461 |          13 | 461            | CUAUTEPEC                                          | 130160001   | 1325008  | CUAUTEPEC                                  |        2
+         462 |          13 | 462            | EL ARENAL                                          | 130090001   |          |                                            |        0
+         463 |          13 | 463            | ELOXOCHITLAN                                       | 130200001   | 1420007  | ELOXOCHITLAN                               |        4
+         464 |          13 | 464            | EMILIANO ZAPATA                                    | 130210001   | 1421002  | EMILIANO ZAPATA                            |        5
+         466 |          13 | 466            | FRANCISCO I MADERO                                 | 130230001   | 519009   | FRANCISCO I MADERO                         |        3
+         467 |          13 | 467            | HUASCA DE OCAMPO                                   | 130240001   |          |                                            |        0
+         470 |          13 | 470            | HUEHUETLA                                          | 130270001   | 1371003  | XOCHIHUEHUETLAN                            |        7
+         474 |          13 | 474            | JACALA DE LEDEZMA                                  | 130310001   |          |                                            |        0
+         477 |          13 | 477            | LA MISION                                          | 130400001   |          |                                            |        0
+         479 |          13 | 479            | METEPEC                                            | 130350001   | 1347006  | OMETEPEC                                   |        3
+         483 |          13 | 483            | MINERAL DE LA REFORMA                              | 130390001   |          |                                            |        0
+         484 |          13 | 484            | MIXQUIAHUALA DE JUAREZ                             | 130410001   |          |                                            |        0
+         485 |          13 | 485            | MOLANGO DE ESCAMILLA                               | 130420001   |          |                                            |        0
+         487 |          13 | 487            | NOPALA DE VILLAGRAN                                | 130440001   |          |                                            |        0
+         489 |          13 | 489            | PACHUCA DE SOTO                                    | 130480001   |          |                                            |        0
+         492 |          13 | 492            | PROGRESO DE OBREGON                                | 130500001   |          |                                            |        0
+         493 |          13 | 493            | SAN AGUSTIN METZQUITITLAN                          | 130360001   |          |                                            |        0
+         496 |          13 | 496            | SAN FELIPE ORIZATLAN                               | 130460001   |          |                                            |        0
+         498 |          13 | 498            | SANTIAGO TULANTEPEC DE LUGO GUERRERO               | 130550001   |          |                                            |        0
+         499 |          13 | 499            | SANTIAGO DE ANAYA                                  | 130560001   |          |                                            |        0
+         504 |          13 | 504            | TEPEAPULCO                                         | 130610001   | 1461003  | TEPEAPULCO MUNICIPIO DE                    |        2
+         506 |          13 | 506            | TEPEJI DEL RIO DE OCAMPO                           | 130630001   |          |                                            |        0
+         518 |          13 | 518            | TULA DE ALLENDE                                    | 130760001   | 1476009  | TULA DE ALLENDE MUNICIPIO DE               |        2
+         519 |          13 | 519            | TULANCINGO DE BRAVO                                | 130770001   |          |                                            |        0
+         520 |          13 | 520            | VILLA DE TEZONTEPEC                                | 130660001   |          |                                            |        0
+         524 |          13 | 524            | ZACUALTIPAN DE ANGELES                             | 130810001   |          |                                            |        0
+         526 |          13 | 526            | ZEMPOALA                                           | 130830001   | 1483007  | ZEMPOALA                                   |        2
+         532 |          14 | 532            | AMATITAN                                           | 140050001   |          |                                            |        0
+         539 |          14 | 539            | ATOYAC                                             | 140140001   | 1311006  | ATOYAC DE ALVAREZ                          |        5
+         540 |          14 | 540            | AUTLAN DE NAVARRO                                  | 140150001   |          |                                            |        0
+         542 |          14 | 542            | AYUTLA                                             | 140170001   | 1312007  | AYUTLA                                     |        5
+         546 |          14 | 546            | CAÑADAS DE OBREGON                                 | 140210001   |          |                                            |        0
+         547 |          14 | 547            | CHAPALA                                            | 140300001   | 1530009  | CHAPALA MUNICIPIO DE                       |        2
+         548 |          14 | 548            | CHIMALTITAN                                        | 140310001   |          |                                            |        0
+         550 |          14 | 550            | CIHUATLAN                                          | 140220001   | 1522004  | CIHUATLAN MUNICIPIO DE                     |        2
+         551 |          14 | 551            | COCULA                                             | 140240001   | 1317003  | COCULA                                     |        2
+         554 |          14 | 554            | CUAUTITLAN (DE GARCIA BARRAGAN)                    | 140270001   |          |                                            |        0
+         559 |          14 | 559            | EL ARENAL                                          | 140090001   |          |                                            |        0
+         560 |          14 | 560            | EL GRULLO                                          | 140370001   |          |                                            |        0
+         561 |          14 | 561            | EL LIMON                                           | 140540001   |          |                                            |        0
+         562 |          14 | 562            | EL SALTO                                           | 140700001   |          |                                            |        0
+         565 |          14 | 565            | GOMEZ FARIAS                                       | 140790001   | 925009   | GOMEZ FARIAS                               |        3
+         572 |          14 | 572            | IXTLAHUACAN DE LOS MEMBRILLOS                      | 140450001   | 1545006  | IXTLAHUACAN DE LOS MEMBRILLOS MUNICIPIO DE |        2
+         575 |          14 | 575            | JESUS MARIA                                        | 140480001   | 113006   | JESUS MARIA                                |        2
+         580 |          14 | 580            | LA BARCA                                           | 140180001   |          |                                            |        0
+         581 |          14 | 581            | LA HUERTA                                          | 140430001   |          |                                            |        0
+         582 |          14 | 582            | LA MANZANILLA DE LA PAZ                            | 140570001   |          |                                            |        0
+         584 |          14 | 584            | MAGDALENA                                          | 140550001   | 1556008  | MAGDALENA                                  |       14
+         593 |          14 | 593            | PONCITLAN                                          | 140660001   |          |                                            |        0
+         594 |          14 | 594            | PUERTO VALLARTA                                    | 140670001   | 1569003  | PUERTO VALLARTA MUNICIPIO DE (OTRAS LOC.)  |        2
+         596 |          14 | 596            | SAN CRISTOBAL DE LA BARRANCA                       | 140710001   |          |                                            |        0
+         598 |          14 | 598            | SAN GABRIEL (CD VENUSTIANO CARRANZA)               | 141130001   |          |                                            |        0
+         600 |          14 | 600            | SAN JUANITO DE ESCOBEDO                            | 140070001   |          |                                            |        0
+         602 |          14 | 602            | SAN MARCOS                                         | 140750001   | 1354001  | SAN MARCOS                                 |        3
+         604 |          14 | 604            | SAN MARTIN DE HIDALGO                              | 140770001   |          |                                            |        0
+         606 |          14 | 606            | SAN SEBASTIAN DEL OESTE                            | 140800001   |          |                                            |        0
+         607 |          14 | 607            | SANTA MARIA DEL ORO                                | 140810001   | 1137306  | SANTA MARIA DEL ORO                        |        2
+         609 |          14 | 609            | SAYULA                                             | 140820001   | 1584009  | SAYULA                                     |        2
+         615 |          14 | 615            | TECHALUTA DE MONTENEGRO                            | 140890001   |          |                                            |        0
+         620 |          14 | 620            | TEPATITLAN DE MORELOS                              | 140930001   | 1595005  | TEPATITLAN DE MORELOS MUNICIPIO DE         |        2
+         621 |          14 | 621            | TEQUILA                                            | 140940001   | 1596003  | TEQUILA                                    |        2
+         624 |          14 | 624            | TLAJOMULCO DE ZUÑIGA                               | 140970001   |          |                                            |        0
+         625 |          14 | 625            | TLAQUEPAQUE                                        | 140980001   | 1601008  | TLAQUEPAQUE MUNICIPIO DE                   |        2
+         626 |          14 | 626            | TOLIMAN                                            | 140990001   | 1602009  | TOLIMAN                                    |        2
+         627 |          14 | 627            | TOMATLAN                                           | 141000001   | 1603004  | TOMATLAN                                   |        2
+         631 |          14 | 631            | TOTATICHE                                          | 141040001   |          |                                            |        0
+         634 |          14 | 634            | TUXCUECA                                           | 141070001   | 1610002  | TUXCUECA MUNICIPIO DE                      |        2
+         635 |          14 | 635            | TUXPAN                                             | 141080001   | 1611009  | TUXPAN                                     |        6
+         641 |          14 | 641            | VILLA GUERRERO                                     | 141150001   | 1618007  | VILLA GUERRERO                             |        2
+         642 |          14 | 642            | VILLA HIDALGO                                      | 141160001   | 1619002  | VILLA HIDALGO                              |        6
+         643 |          14 | 643            | VILLA PURIFICACION                                 | 140680001   |          |                                            |        0
+         646 |          14 | 646            | ZAPOPAN                                            | 141200001   | 1623003  | ZAPOPAN MUNICIPIO DE                       |        2
+         650 |          14 | 650            | ZAPOTLAN EL GRANDE (CIUDAD GUZMAN)                 | 140230001   |          |                                            |        0
+         656 |          15 | 656            | ALMOLOYA DE ALQUISIRAS                             | 150050001   |          |                                            |        0
+         662 |          15 | 662            | ATENCO                                             | 150110001   | 1711004  | ATENCO SAN SALVADOR                        |        3
+         668 |          15 | 668            | AYAPANGO                                           | 150170001   | 1717001  | AYAPANGO GABRIEL RAMOS MILLAN              |        1
+         674 |          15 | 674            | CHIAUTLA                                           | 150280001   | 1729001  | CHIAUTLA                                   |        2
+         675 |          15 | 675            | CHICOLOAPAN DE JUAREZ                              | 150290001   |          |                                            |        0
+         678 |          15 | 678            | COACALCO DE BERRIOZABAL                            | 150200001   |          |                                            |        0
+         681 |          15 | 681            | COYOTEPEC                                          | 150230001   | 1723004  | COYOTEPEC                                  |        4
+         684 |          15 | 684            | DONATO GUERRA                                      | 150320001   | 1733002  | DONATO GUERRA ASUNCION                     |        1
+         685 |          15 | 685            | ECATEPEC DE MORELOS                                | 150330001   |          |                                            |        0
+         687 |          15 | 687            | EL ORO                                             | 150640001   | 959003   | SAN FRANCISCO DEL ORO                      |        6
+         691 |          15 | 691            | ISIDRO FABELA                                      | 150380001   |          |                                            |        0
+         692 |          15 | 692            | IXTAPALUCA                                         | 150390001   | 1740003  | IXTAPALUCA MUNICIPIO DE                    |        2
+         697 |          15 | 697            | JILOTEPEC                                          | 150450001   | 1746009  | JILOTEPEC                                  |        2
+         698 |          15 | 698            | JILOTZINGO                                         | 150460001   | 1747004  | JILOTZINGO SANTA ANA                       |        1
+         700 |          15 | 700            | JOCOTITLAN                                         | 150480001   | 1551501  | JOCOTITLAN                                 |        2
+         704 |          15 | 704            | LERMA                                              | 150510001   | 405609   | LERMA                                      |        2
+         705 |          15 | 705            | LUVIANOS                                           | 151230001   |          |                                            |        0
+         707 |          15 | 707            | MELCHOR OCAMPO                                     | 150530001   | 1754002  | MELCHOR OCAMPO                             |        5
+         708 |          15 | 708            | METEPEC                                            | 150540001   | 1347006  | OMETEPEC                                   |        3
+         709 |          15 | 709            | MEXICALTZINGO                                      | 150550001   |          |                                            |        0
+         710 |          15 | 710            | MORELOS                                            | 150560001   | 204208   | CIUDAD MORELOS                             |       23
+         711 |          15 | 711            | NAUCALPAN DE JUAREZ                                | 150570001   |          |                                            |        0
+         713 |          15 | 713            | NEZAHUALCOYOTL                                     | 150580001   |          |                                            |        0
+         722 |          15 | 722            | PAPALOTLA                                          | 150690001   | 1770006  | PAPALOTLA                                  |        2
+         724 |          15 | 724            | RAYON                                              | 150720001   | 773006   | RAYON                                      |        5
+         727 |          15 | 727            | SAN JOSE DEL RINCON                                | 151240001   |          |                                            |        0
+         731 |          15 | 731            | SANTO TOMAS                                        | 150780001   | 1779006  | SANTO TOMAS DE LOS PLATANOS                |        6
+         732 |          15 | 732            | SOYANIQUILPAN DE JUAREZ                            | 150790001   |          |                                            |        0
+         737 |          15 | 737            | TEMASCALAPA                                        | 150840001   |          |                                            |        0
+         739 |          15 | 739            | TEMASCALTEPEC                                      | 150860001   |          |                                            |        0
+         741 |          15 | 741            | TENANCINGO                                         | 150880001   | 1789007  | TENANCINGO                                 |        2
+         749 |          15 | 749            | TEQUIXQUIAC                                        | 150960001   |          |                                            |        0
+         750 |          15 | 750            | TEXCALTITLAN                                       | 150970001   |          |                                            |        0
+         754 |          15 | 754            | TIANGUISTENCO                                      | 151010001   |          |                                            |        0
+         756 |          15 | 756            | TLALMANALCO                                        | 151030001   |          |                                            |        0
+         757 |          15 | 757            | TLALNEPANTLA DE BAZ                                | 151040001   |          |                                            |        0
+         758 |          15 | 758            | TLATLAYA                                           | 151050001   |          |                                            |        0
+         760 |          15 | 760            | TONANITLA                                          | 151250001   |          |                                            |        0
+         764 |          15 | 764            | VALLE DE BRAVO                                     | 151100001   | 1812003  | VALLE DE BRAVO MUNICIPIO DE                |        2
+         765 |          15 | 765            | VALLE DE CHALCO SOLIDARIDAD                        | 151220001   |          |                                            |        0
+         767 |          15 | 767            | VILLA GUERRERO                                     | 151120001   | 1618007  | VILLA GUERRERO                             |        2
+         768 |          15 | 768            | VILLA VICTORIA                                     | 151130001   | 1816004  | VILLA VICTORIA                             |        2
+         770 |          15 | 770            | XALATLACO                                          | 150430001   |          |                                            |        0
+         773 |          15 | 773            | ZACUALPAN                                          | 151170001   | 1819007  | ZACUALPAN                                  |        4
+         774 |          15 | 774            | ZINACANTEPEC                                       | 151180001   | 1820002  | ZINACANTEPEC SAN MIGUEL                    |        1
+         779 |          16 | 779            | ALVARO OBREGON                                     | 160030001   | 1903007  | ALVARO OBREGON MUNICIPIO DE                |        2
+         784 |          16 | 784            | AQUILA                                             | 160080001   | 1908009  | AQUILA                                     |        2
+         785 |          16 | 785            | ARIO                                               | 160090001   | 922009   | DOCTOR BELIZARIO DOMINGUEZ                 |        9
+         786 |          16 | 786            | ARTEAGA                                            | 160100001   | 116006   | PABELLON DE ARTEAGA                        |        4
+         787 |          16 | 787            | BRISEÑAS                                           | 160110001   | 1911003  | BRISEÑAS DE MATAMOROS                      |        1
+         799 |          16 | 799            | COAHUAYANA                                         | 160140001   | 1914006  | COAHUAYANA MUNICIPIO DE                    |        2
+         800 |          16 | 800            | COALCOMAN DE VAZQUEZ PALLARES                      | 160150001   |          |                                            |        0
+         804 |          16 | 804            | COPANDARO                                          | 160180001   | 1918001  | COPANDARO DE GALEANA                       |        1
+         811 |          16 | 811            | HIDALGO                                            | 160340001   | 527006   | HIDALGO                                    |       29
+         818 |          16 | 818            | IXTLAN                                             | 160420001   | 1564007  | MIXTLAN                                    |        7
+         820 |          16 | 820            | JIMENEZ                                            | 160440001   | 529006   | JIMENEZ                                    |        8
+         822 |          16 | 822            | JOSE SIXTO VERDUZCO                                | 161130001   |          |                                            |        0
+         823 |          16 | 823            | JUAREZ                                             | 160460001   | 204159   | BENITO JUAREZ                              |       33
+         825 |          16 | 825            | LA HUACANA                                         | 160350001   |          |                                            |        0
+         826 |          16 | 826            | LA PIEDAD                                          | 160690001   |          |                                            |        0
+         827 |          16 | 827            | LAGUNILLAS                                         | 160480001   | 1948004  | LAGUNILLAS                                 |        3
+         828 |          16 | 828            | LAZARO CARDENAS                                    | 160520001   | 945132   | LAZARO CARDENAS                            |        7
+         834 |          16 | 834            | MORELOS                                            | 160540001   | 204208   | CIUDAD MORELOS                             |       23
+         841 |          16 | 841            | OCAMPO                                             | 160610001   | 547009   | OCAMPO                                     |       16
+         854 |          16 | 854            | SALVADOR ESCALANTE                                 | 160790001   |          |                                            |        0
+         855 |          16 | 855            | SAN LUCAS                                          | 160770001   | 302103   | CABO SAN LUCAS                             |        7
+         862 |          16 | 862            | TANGANCICUARO                                      | 160850001   | 1985002  | TANGANCICUARO MUNICIPIO DE                 |        2
+         869 |          16 | 869            | TIQUICHEO DE NICOLAS ROMERO                        | 160920001   |          |                                            |        0
+         873 |          16 | 873            | TUMBISCATIO                                        | 160960001   | 1996001  | TUMBISCATIO DE RUIZ                        |        1
+         875 |          16 | 875            | TUXPAN                                             | 160980001   | 1611009  | TUXPAN                                     |        6
+         880 |          16 | 880            | VENUSTIANO CARRANZA                                | 161030001   | 807009   | VENUSTIANO CARRANZA (CHIAPAS)              |        5
+         891 |          17 | 891            | ATLATLAHUCAN                                       | 170020001   |          |                                            |        0
+         896 |          17 | 896            | CUERNAVACA                                         | 170070001   | 2113005  | CUERNAVACA MUNICIPIO DE                    |        2
+         897 |          17 | 897            | EMILIANO ZAPATA                                    | 170080001   | 1421002  | EMILIANO ZAPATA                            |        5
+         908 |          17 | 908            | TEMOAC                                             | 170330001   |          |                                            |        0
+         913 |          17 | 913            | TLALNEPANTLA                                       | 170230001   | 1806006  | TLALNEPANTLA MUNICIPIO DE                  |        4
+         915 |          17 | 915            | TLAQUILTENANGO                                     | 170250001   |          |                                            |        0
+         921 |          17 | 921            | ZACATEPEC DE HIDALGO                               | 170310001   |          |                                            |        0
+         922 |          17 | 922            | ZACUALPAN DE AMILPAS                               | 170320001   |          |                                            |        0
+         924 |          18 | 924            | AHUACATLAN                                         | 180020001   | 2204004  | AHUACATLAN                                 |        2
+         925 |          18 | 925            | AMATLAN DE CAÑAS                                   | 180030001   | 2207001  | AMATLAN DE CAÑAS MUNICIPIO DE              |        2
+         926 |          18 | 926            | BAHIA DE BANDERAS                                  | 180200001   |          |                                            |        0
+         927 |          18 | 927            | COMPOSTELA                                         | 180040001   | 2210001  | COMPOSTELA MUNICIPIO DE                    |        2
+         928 |          18 | 928            | DEL NAYAR                                          | 180090001   |          |                                            |        0
+         930 |          18 | 930            | IXTLAN DEL RIO                                     | 180060001   |          |                                            |        0
+         932 |          18 | 932            | LA YESCA                                           | 180190001   |          |                                            |        0
+         933 |          18 | 933            | ROSAMORADA                                         | 180100001   | 2228004  | ROSAMORADA MUNICIPIO DE                    |        2
+         937 |          18 | 937            | SANTA MARIA DEL ORO                                | 180140001   | 1137306  | SANTA MARIA DEL ORO                        |        2
+         938 |          18 | 938            | SANTIAGO IXCUINTLA                                 | 180150001   | 2243103  | SANTIAGO IXCUINTLA LOCALIDAD DE            |        1
+         939 |          18 | 939            | TECUALA                                            | 180160001   | 2248008  | TECUALA MUNICIPIO DE                       |        2
+         941 |          18 | 941            | TUXPAN                                             | 180180001   | 1611009  | TUXPAN                                     |        6
+         942 |          18 | 942            | XALISCO                                            | 180080001   |          |                                            |        0
+         943 |          19 | 943            | ABASOLO                                            | 190010001   | 503009   | ABASOLO                                    |        6
+         945 |          19 | 945            | ALLENDE                                            | 190040001   | 507009   | ALLENDE                                    |       12
+         946 |          19 | 946            | ANAHUAC                                            | 190050001   | 917033   | CIUDAD ANAHUAC                             |        3
+         949 |          19 | 949            | BUSTAMANTE                                         | 190080001   | 2308008  | BUSTAMANTE                                 |        2
+         951 |          19 | 951            | CARMEN                                             | 190100001   | 407003   | CARMEN                                     |        5
+         966 |          19 | 966            | GUADALUPE                                          | 190260001   | 204252   | GUADALUPE VICTORIA                         |       14
+         967 |          19 | 967            | HIDALGO                                            | 190470001   | 527006   | HIDALGO                                    |       29
+         970 |          19 | 970            | ITURBIDE                                           | 190300001   | 1268002  | SAN JOSE ITURBIDE                          |        4
+         971 |          19 | 971            | JUAREZ                                             | 190310001   | 204159   | BENITO JUAREZ                              |       33
+         974 |          19 | 974            | LOS ALDAMAS                                        | 190030001   |          |                                            |        0
+         975 |          19 | 975            | LOS HERRERAS                                       | 190270001   |          |                                            |        0
+         976 |          19 | 976            | LOS RAMONES                                        | 190420001   |          |                                            |        0
+         978 |          19 | 978            | MELCHOR OCAMPO                                     | 190350001   | 1754002  | MELCHOR OCAMPO                             |        5
+         989 |          19 | 989            | SAN PEDRO GARZA GARCIA                             | 190190001   |          |                                            |        0
+         990 |          19 | 990            | SANTA CATARINA                                     | 190480001   | 1272003  | SANTA CATARINA                             |       17
+         991 |          19 | 991            | SANTIAGO                                           | 190490001   | 302409   | SANTIAGO                                   |       70
+         996 |          20 | 996            | ANIMAS TRUJANO                                     | 201740001   | 2573007  | SAN JUAN BAUTISTA ANIMAS TRUJANO           |        1
+        1003 |          20 | 1003           | AYOQUEZCO DE ALDAMA                                | 203980001   | 2798007  | SANTA MA AYOQUEZCO DE ALDAMA               |        1
+        1007 |          20 | 1007           | CAPULALPAM DE MENDEZ                               | 202470001   |          |                                            |        0
+        1020 |          20 | 1020           | CUILAPAM DE GUERRERO                               | 200230001   |          |                                            |        0
+        1021 |          20 | 1021           | CUYAMECALCO VILLA DE ZARAGOZA                      | 200240001   |          |                                            |        0
+        1022 |          20 | 1022           | EL BARRIO DE LA SOLEDAD                            | 200100001   |          |                                            |        0
+        1023 |          20 | 1023           | EL ESPINAL                                         | 200300001   |          |                                            |        0
+        1030 |          20 | 1030           | HEROICA CIUDAD DE EJUTLA DE CRESPO                 | 200280001   |          |                                            |        0
+        1031 |          20 | 1031           | HEROICA CIUDAD DE HUAJUAPAN DE LEON                | 200390001   |          |                                            |        0
+        1032 |          20 | 1032           | HEROICA CIUDAD DE TLAXIACO                         | 203970001   |          |                                            |        0
+        1035 |          20 | 1035           | IXPANTEPEC NIEVES                                  | 200650001   |          |                                            |        0
+        1037 |          20 | 1037           | JUCHITAN DE ZARAGOZA                               | 200430001   | 2442006  | JUCHITAN DE ZARAGOZA MUNICIPIO DE          |        2
+        1038 |          20 | 1038           | LA COMPAÑIA                                        | 200170001   |          |                                            |        0
+        1039 |          20 | 1039           | LA PE                                              | 200690001   | 621355   | LA PEÑA COLORADA                           |        3
+        1041 |          20 | 1041           | LA TRINIDAD VISTA HERMOSA                          | 205560001   |          |                                            |        0
+        1051 |          20 | 1051           | MAGDALENA YODOCONO DE PORFIRIO DIAZ                | 205620001   |          |                                            |        0
+        1053 |          20 | 1053           | MARISCALA DE JUAREZ                                | 200550001   |          |                                            |        0
+        1055 |          20 | 1055           | MATIAS ROMERO AVENDAÑO                             | 200570001   |          |                                            |        0
+        1056 |          20 | 1056           | MAZATLAN VILLA DE FLORES                           | 200580001   |          |                                            |        0
+        1057 |          20 | 1057           | MESONES HIDALGO                                    | 200370001   |          |                                            |        0
+        1059 |          20 | 1059           | MIXISTLAN DE LA REFORMA                            | 200600001   |          |                                            |        0
+        1064 |          20 | 1064           | NUEVO ZOQUIAPAM                                    | 205040001   |          |                                            |        0
+        1069 |          20 | 1069           | PUTLA VILLA DE GUERRERO                            | 200730001   |          |                                            |        0
+        1085 |          20 | 1085           | SAN ANDRES HUAYAPAM                                | 200910001   |          |                                            |        0
+        1092 |          20 | 1092           | SAN ANDRES TEOTILALPAM                             | 200980001   |          |                                            |        0
+        1093 |          20 | 1093           | SAN ANDRES TEPETLAPA                               | 200990001   |          |                                            |        0
+        1097 |          20 | 1097           | SAN ANTONINO CASTILLO VELASCO                      | 201030001   |          |                                            |        0
+        1098 |          20 | 1098           | SAN ANTONINO EL ALTO                               | 201040001   |          |                                            |        0
+        1099 |          20 | 1099           | SAN ANTONINO MONTE VERDE                           | 201050001   |          |                                            |        0
+        1102 |          20 | 1102           | SAN ANTONIO NANAHUATIPAM                           | 201090001   |          |                                            |        0
+        1106 |          20 | 1106           | SAN BALTAZAR CHICHICAPAM                           | 201120001   |          |                                            |        0
+        1107 |          20 | 1107           | SAN BALTAZAR LOXICHA                               | 201130001   |          |                                            |        0
+        1108 |          20 | 1108           | SAN BALTAZAR YATZACHI EL BAJO                      | 201140001   |          |                                            |        0
+        1110 |          20 | 1110           | SAN BARTOLO SOYALTEPEC                             | 201210001   |          |                                            |        0
+        1122 |          20 | 1122           | SAN CRISTOBAL LACHIRIOAG                           | 201280001   |          |                                            |        0
+        1123 |          20 | 1123           | SAN CRISTOBAL SUCHIXTLAHUACA                       | 201290001   |          |                                            |        0
+        1127 |          20 | 1127           | SAN ESTEBAN ATATLAHUCA                             | 201330001   |          |                                            |        0
+        1129 |          20 | 1129           | SAN FELIPE TEJALAPAM                               | 201350001   |          |                                            |        0
+        1137 |          20 | 1137           | SAN FRANCISCO IXHUATAN                             | 201430001   |          |                                            |        0
+        1148 |          20 | 1148           | SAN ILDEFONSO AMATLAN                              | 201540001   |          |                                            |        0
+        1158 |          20 | 1158           | SAN JERONIMO TLACOCHAHUAYA                         | 205500001   |          |                                            |        0
+        1163 |          20 | 1163           | SAN JOSE DEL PROGRESO                              | 200720001   |          |                                            |        0
+        1170 |          20 | 1170           | SAN JUAN BAUTISTA ATATLAHUCA                       | 201750001   |          |                                            |        0
+        1175 |          20 | 1175           | SAN JUAN BAUTISTA LO DE SOTO                       | 201800001   |          |                                            |        0
+        1178 |          20 | 1178           | SAN JUAN BAUTISTA TLACOATZINTEPEC                  | 201820001   |          |                                            |        0
+        1179 |          20 | 1179           | SAN JUAN BAUTISTA TUXTEPEC                         | 201840001   | 2583009  | SAN JUAN BAUTISTA TUXTEPEC MUNICIPIO DE    |        2
+        1180 |          20 | 1180           | SAN JUAN BAUTISTA VALLE NACIONAL                   | 205590001   |          |                                            |        0
+        1185 |          20 | 1185           | SAN JUAN COATZOSPAM                                | 201870001   |          |                                            |        0
+        1219 |          20 | 1219           | SAN JUAN DE LOS CUES                               | 202060001   |          |                                            |        0
+        1190 |          20 | 1190           | SAN JUAN DEL RIO                                   | 201940001   | 1157008  | SAN JUAN DEL RIO                           |        3
+        1194 |          20 | 1194           | SAN JUAN GUICHICOVI                                | 201980001   | 2597007  | SAN JUAN GUICHICOVI MUNICIPIO DE           |        2
+        1195 |          20 | 1195           | SAN JUAN IHUALTEPEC                                | 201990001   |          |                                            |        0
+        1196 |          20 | 1196           | SAN JUAN JUQUILA MIXES                             | 202000001   | 2599002  | SAN JUAN JUQUILA MIXES MUNICIPIO DE        |        2
+        1203 |          20 | 1203           | SAN JUAN MIXTEPEC JUXTLAHUACA                      | 202080001   |          |                                            |        0
+        1204 |          20 | 1204           | SAN JUAN MIXTEPEC MIAHUATLAN                       | 202090001   |          |                                            |        0
+        1220 |          20 | 1220           | SAN JUAN ÑUMI                                      | 202100001   |          |                                            |        0
+        1216 |          20 | 1216           | SAN JUAN YAEE                                      | 202220001   |          |                                            |        0
+        1221 |          20 | 1221           | SAN LORENZO                                        | 202250001   | 2626008  | SAN LORENZO                                |        7
+        1230 |          20 | 1230           | SAN LUCAS ZOQUIAPAM                                | 202340001   |          |                                            |        0
+        1241 |          20 | 1241           | SAN MARTIN DE LOS CANSECOS                         | 202380001   |          |                                            |        0
+        1234 |          20 | 1234           | SAN MARTIN HUAMELULPAM                             | 202390001   |          |                                            |        0
+        1245 |          20 | 1245           | SAN MATEO NEJAPAM                                  | 202510001   |          |                                            |        0
+        1251 |          20 | 1251           | SAN MATEO YOLOXOCHITLAN                            | 202490001   |          |                                            |        0
+        1255 |          20 | 1255           | SAN MIGUEL ALOAPAM                                 | 202600001   |          |                                            |        0
+        1276 |          20 | 1276           | SAN MIGUEL TEQUIXTEPEC                             | 202830001   |          |                                            |        0
+        1277 |          20 | 1277           | SAN MIGUEL TILQUIAPAM                              | 202840001   |          |                                            |        0
+        1282 |          20 | 1282           | SAN NICOLAS                                        | 202890001   | 2347002  | SAN NICOLAS DE LOS GARZA                   |        8
+        1283 |          20 | 1283           | SAN NICOLAS HIDALGO                                | 202900001   | 2348004  | SAN NICOLAS HIDALGO                        |        2
+        1298 |          20 | 1298           | SAN PEDRO COXCALTEPEC CANTAROS                     | 203040001   |          |                                            |        0
+        1311 |          20 | 1311           | SAN PEDRO MIXTEPEC-JUQUILA                         | 203180001   |          |                                            |        0
+        1312 |          20 | 1312           | SAN PEDRO MIXTEPEC-MIAHUATLAN                      | 203190001   |          |                                            |        0
+        1319 |          20 | 1319           | SAN PEDRO SOCHIAPAM                                | 203260001   |          |                                            |        0
+        1326 |          20 | 1326           | SAN PEDRO TOTOLAPA                                 | 203330001   | 2734008  | SAN PEDRO TOTOLAPAN                        |        1
+        1331 |          20 | 1331           | SAN PEDRO Y SAN PABLO TEPOSCOLULA                  | 203390001   |          |                                            |        0
+        1332 |          20 | 1332           | SAN PEDRO Y SAN PABLO TEQUIXTEPEC                  | 203400001   |          |                                            |        0
+        1346 |          20 | 1346           | SAN VICENTE NUÑU                                   | 205360001   |          |                                            |        0
+        1347 |          20 | 1347           | SANTA ANA                                          | 203530001   | 1246154  | SANTA ANA PACUECO                          |       13
+        1355 |          20 | 1355           | SANTA CATALINA QUIERI                              | 203610001   |          |                                            |        0
+        1364 |          20 | 1364           | SANTA CATARINA QUIOQUITANI                         | 200740001   |          |                                            |        0
+        1379 |          20 | 1379           | SANTA CRUZ XOXOCOTLAN                              | 203850001   |          |                                            |        0
+        1385 |          20 | 1385           | SANTA INES DE ZARAGOZA                             | 205690001   |          |                                            |        0
+        1383 |          20 | 1383           | SANTA INES DEL MONTE                               | 203880001   |          |                                            |        0
+        1390 |          20 | 1390           | SANTA MAGDALENA JICOTLAN                           | 200470001   |          |                                            |        0
+        1392 |          20 | 1392           | SANTA MARIA APAZCO                                 | 203950001   |          |                                            |        0
+        1393 |          20 | 1393           | SANTA MARIA ATZOMPA                                | 203990001   |          |                                            |        0
+        1395 |          20 | 1395           | SANTA MARIA CHACHOAPAM                             | 204040001   |          |                                            |        0
+        1400 |          20 | 1400           | SANTA MARIA CORTIJO                                | 204020001   | 2804007  | SANTA MARIA CORTIJOS                       |        1
+        1405 |          20 | 1405           | SANTA MARIA GUELACE                                | 204110001   |          |                                            |        0
+        1412 |          20 | 1412           | SANTA MARIA JALAPA DEL MARQUES                     | 204180001   |          |                                            |        0
+        1414 |          20 | 1414           | SANTA MARIA LA ASUNCION                            | 203960001   |          |                                            |        0
+        1425 |          20 | 1425           | SANTA MARIA TATALTEPEC                             | 204300001   |          |                                            |        0
+        1426 |          20 | 1426           | SANTA MARIA TECOMAVACA                             | 204310001   |          |                                            |        0
+        1427 |          20 | 1427           | SANTA MARIA TEMAXCALAPA                            | 204320001   | 2834004  | SANTA MARIA TEMAXCALAPAN                   |        1
+        1454 |          20 | 1454           | SANTIAGO CHOAPAM                                   | 204600001   |          |                                            |        0
+        1459 |          20 | 1459           | SANTIAGO IHUITLAN PLUMAS                           | 204640001   |          |                                            |        0
+        1475 |          20 | 1475           | SANTIAGO NILTEPEC                                  | 200660001   |          |                                            |        0
+        1476 |          20 | 1476           | SANTIAGO NUNDICHE                                  | 204800001   |          |                                            |        0
+        1550 |          20 | 1550           | VILLA SOLA DE VEGA                                 | 202770001   |          |                                            |        0
+        1551 |          20 | 1551           | VILLA TALEA DE CASTRO                              | 202800001   |          |                                            |        0
+        1552 |          20 | 1552           | VILLA TEJUPAM DE LA UNION                          | 204860001   |          |                                            |        0
+        1523 |          20 | 1523           | SANTO TOMAS TAMAZULAPAM                            | 205330001   |          |                                            |        0
+        1528 |          20 | 1528           | SILACAYOAPAM                                       | 205370001   |          |                                            |        0
+        1531 |          20 | 1531           | TAMAZULAPAM DEL ESPIRITU SANTO                     | 200310001   |          |                                            |        0
+        1537 |          20 | 1537           | TEOTITLAN DE FLORES MAGON                          | 205450001   |          |                                            |        0
+        1539 |          20 | 1539           | TEPELMEME VILLA DE MORELOS                         | 205480001   |          |                                            |        0
+        1545 |          20 | 1545           | TRINIDAD ZAACHILA                                  | 205550001   |          |                                            |        0
+        1554 |          20 | 1554           | VILLA DE TAMAZULAPAM DEL PROGRESO                  | 205400001   |          |                                            |        0
+        1555 |          20 | 1555           | VILLA DE TUTUTEPEC DE MELCHOR OCAMPO               | 203340001   |          |                                            |        0
+        1556 |          20 | 1556           | VILLA DE ZAACHILA                                  | 205650001   |          |                                            |        0
+        1549 |          20 | 1549           | VILLA HIDALGO                                      | 200380001   | 1619002  | VILLA HIDALGO                              |        6
+        1011 |          20 | 1011           | CIENEGA DE ZIMATLAN                                | 200130001   |          |                                            |        0
+(754 filas)
+

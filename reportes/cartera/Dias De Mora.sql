@@ -1,0 +1,10 @@
+select p.prestamoid,s.clavesocioint,su.nombre||' '||su.paterno||' '||su.materno as nombre,trim(p.referenciaprestamo),p.tipoprestamoid,(current_date-fechadepago),a.fechadepago,'NINGUNA' as oportunidad from amortizaciones a, prestamos p, socio s,sujeto su where p.socioid=s.socioid and su.sujetoid=s.sujetoid and fechadepago between (current_date-30) and (current_date-1) and abonopagado<>importeamortizacion and a.prestamoid=p.prestamoid order by fechadepago desc;
+
+
+select p.prestamoid,s.clavesocioint,su.nombre||' '||su.paterno||' '||su.materno as nombre,trim(p.referenciaprestamo),p.tipoprestamoid,(current_date-(select min(fechadepago) from amortizaciones where prestamoid=p.prestamoid)),a.fechadepago,'NINGUNA' as oportunidad from amortizaciones a, prestamos p, socio s,sujeto su where p.socioid=s.socioid and su.sujetoid=s.sujetoid and fechadepago between (current_date-30) and (current_date-1) and abonopagado<>importeamortizacion and a.prestamoid=p.prestamoid order by fechadepago desc;
+
+select p.prestamoid,s.clavesocioint,trim(p.referenciaprestamo) from prestamos p, socio s where p.socioid=s.socioid and claveestadocredito='002' group by p.prestamoid,s.clavesocioint,p.referenciaprestamo having (current_date-(select min(fechadepago) from amortizaciones where abonopagado<>importeamortizacion and prestamoid=p.prestamoid))>0;
+
+--Query utilizado
+
+select p.prestamoid,s.clavesocioint,su.nombre||' '||su.paterno||' '||su.materno as nombre,trim(p.referenciaprestamo),p.tipoprestamoid,(current_date-(select min(fechadepago) from amortizaciones where abonopagado<>importeamortizacion and prestamoid=p.prestamoid)),(select min(fechadepago) from amortizaciones where abonopagado<>importeamortizacion and prestamoid=p.prestamoid),'NINGUNA' as oportunidad from prestamos p, socio s,sujeto su where p.socioid=s.socioid and su.sujetoid=s.sujetoid and claveestadocredito='001' group by p.prestamoid,s.clavesocioint,su.nombre,su.paterno,su.materno,p.referenciaprestamo,p.tipoprestamoid having (current_date-(select min(fechadepago) from amortizaciones where abonopagado<>importeamortizacion and prestamoid=p.prestamoid)) between 1 and 30;
