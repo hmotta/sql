@@ -81,7 +81,7 @@ begin
        su.nombre,
 	   su.fecha_nacimiento,
        su.rfc,
-	   (case when (select nacionalidad from generalesconceatucliente where socioid=s.socioid)=1 then 'MX' else '' end) as nacionalidad,
+	   (case when (select nacionalidad from generalesconceatucliente where socioid=s.socioid)=1 then 'MX' else 'MX' end) as nacionalidad,
        so.estadocivilid,
        so.sexo,
        d.calle,
