@@ -110,7 +110,8 @@ begin
        pr.noamorvencidas,
        (select clave from carteraclaveburo where prestamoid=pr.prestamoid),
 	   (select cuentaanterior from cuentaanterior where prestamoid=pr.prestamoid),
-	   NULL as fecha_primer_incum
+	   NULL as fecha_primer_incum,
+	   (SELECT sum(debe) FROM movimientoscaja(trim(s.clavesocioint),'00') where refmovimiento=p.referenciaprestamo group by fechapoliza order by fechapoliza limit 1) as monto_ultimo_pago
        from precorte pr, prestamos p, socio s, solicitudingreso so, sujeto su, domicilio d, colonia col, ciudadesmex c, estadosmex e
        where pr.fechacierre = pfecha and  s.tiposocioid = '02' and so.personajuridicaid = 0 and 			 
              p.prestamoid = pr.prestamoid and 
