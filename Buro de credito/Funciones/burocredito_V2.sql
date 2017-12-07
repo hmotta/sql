@@ -55,6 +55,7 @@ declare
   pfecha alias for $1;
   r rformato%rowtype;
   l record;
+  m record;
   pposicion integer;
   pnombre character varying(40);
   saldocastigado numeric;
@@ -109,7 +110,7 @@ begin
        pr.noamorvencidas,
        (select clave from carteraclaveburo where prestamoid=pr.prestamoid),
 	   (select cuentaanterior from cuentaanterior where prestamoid=pr.prestamoid),
-	   '' as fecha_primer_incum
+	   NULL as fecha_primer_incum
        from precorte pr, prestamos p, socio s, solicitudingreso so, sujeto su, domicilio d, colonia col, ciudadesmex c, estadosmex e
        where pr.fechacierre = pfecha and  s.tiposocioid = '02' and so.personajuridicaid = 0 and 			 
              p.prestamoid = pr.prestamoid and 
@@ -126,8 +127,8 @@ begin
     --i:=i+1;
 	if r.fecha_otorga >= '2011-05-25' then
 		if NOT exists(select * from clasificacioncartera natural join amortizaciones where prestamoid=pprestamoid) then
-			select * from calculadiasmora(r.prestamoid);
-		end
+			select * into m from  calculadiasmora(r.prestamoid);
+		end if;
 		select fechadepago into r.fecha_primer_incum from clasificacioncartera natural join amortizaciones where diasmora>0 and prestamoid=r.prestamoid order by fechadepago limit 1;
 	end if;
 
