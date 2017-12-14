@@ -20,6 +20,7 @@ CREATE TYPE rformato AS (
 	numero character varying(40),
 	colonia character varying(60),
 	municipio character varying(40),
+	ciudad character varying(40),
 	estado character varying(4),
 	cp character (5),
    	suc character varying(3),
@@ -43,7 +44,8 @@ CREATE TYPE rformato AS (
 	clave character (2),
 	cuentaanterior character varying(15),
 	fecha_primer_incum date,
-	monto_ultimo_pago numeric
+	monto_ultimo_pago numeric,
+	fecha_ult_pago_vencido date
 );
 
 
@@ -60,6 +62,7 @@ declare
   pnombre character varying(40);
   saldocastigado numeric;
   pprestamoid integer;
+  dultimoadeudo date;
   i int;
 begin
 
@@ -88,6 +91,7 @@ begin
 	   d.numero_ext,
 	   col.nombrecolonia,
        c.nombreciudadmex,
+	   c.nombreciudadmex,
        e.abre_estado,
        col.cp,
        (select substring(sucid,1,3) from empresa where empresaid=1),
@@ -128,11 +132,15 @@ begin
     --i:=i+1;
 	if r.fecha_otorga >= '2011-05-25' then
 		if NOT exists(select * from clasificacioncartera natural join amortizaciones where prestamoid=pprestamoid) then
-			select * into m from  calculadiasmora(r.prestamoid);
+			--select * into m from  calculadiasmora(r.prestamoid);
+			select fechapago into r.fecha_primer_incum from calculadiasmora(r.prestamoid) where diasmora>0 and fechapago<=pfecha order by fechapago limit 1;
+		else
+			select fechadepago into r.fecha_primer_incum from clasificacioncartera natural join amortizaciones where diasmora>0 and prestamoid=r.prestamoid and fechadepago<=pfecha order by fechadepago limit 1;
 		end if;
-		select fechadepago into r.fecha_primer_incum from clasificacioncartera natural join amortizaciones where diasmora>0 and prestamoid=r.prestamoid order by fechadepago limit 1;
 	end if;
 
+	select fechacierre into r.fecha_ult_pago_vencido from precorte where prestamoid=r.prestamoid and diasvencidos>diastraspasoavencida order by fechacierre limit 1  ;
+	
 	return next r;
 	--Se agrega informacion de Avales
 	for l in

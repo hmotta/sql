@@ -45,9 +45,12 @@ begin
         r.dia:=i;
 		r.fecha:=dfecha;
 		r.saldo_inicial:=xsaldo_inicial;
-		select coalesce(sum(debe),0) into xcargo from movslinead(pprestamoid,dfecha,dfecha) where tipomov in (1,2);
+		select coalesce(sum(debe),0) into xcargo from movslinead(pprestamoid,dfecha,dfecha,0) where tipomov in (1,2);
 		r.cargo:=xcargo;
-		select coalesce(sum(debe),0) into xabono from movslinead(pprestamoid,dfecha,dfecha) where tipomov in (3);
+		select coalesce(sum(debe),0) into xabono from movslinead(pprestamoid,dfecha,dfecha,0) where tipomov in (7);
+		xcargo:=coalesce(xcargo,0);
+		xabono:=coalesce(xabono,0);
+		
 		r.abono:=xabono;
 		xsaldo_final:=xsaldo_inicial + xcargo - xabono;
 		r.saldo_final:=xsaldo_final;

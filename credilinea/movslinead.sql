@@ -1,11 +1,11 @@
-CREATE or replace FUNCTION movslinead(integer,date,date) RETURNS SETOF rmovimientoslinea
+CREATE or replace FUNCTION movslinead(integer,date,date,integer) RETURNS SETOF rmovimientoslinea
     AS $_$
 declare
   r rmovimientoslinea%rowtype;
   pprestamoid alias for $1;
   pfecha1 alias for $2;
   pfecha2 alias for $3;
- 
+  pdesglose alias for $4;
   l record;
 
  fcargo numeric;
@@ -90,6 +90,14 @@ begin
                  cuentaid = l.cuentaiva and debe=0;
            
         end loop;
+		
+		fcapital_disp:=coalesce(fcapital_disp,0);
+		fseguro:=coalesce(fseguro,0);
+		fiva_seguro:=coalesce(fiva_seguro,0);
+		fcapital_pag:=coalesce(fcapital_pag,0);
+		fnormal:=coalesce(fnormal,0);
+		fmoratorio:=coalesce(fmoratorio,0);
+		fiva:=coalesce(fiva,0);
 
 		if fcapital_disp<>0 then
           r.concepto:='Disposicion';
@@ -107,46 +115,46 @@ begin
           return next r;
         end if;
 		
-		fcapital_pag:=coalesce(fcapital_pag,0);
-		fnormal:=coalesce(fnormal,0);
-		fmoratorio:=coalesce(fmoratorio,0);
-		fiva:=coalesce(fiva,0);
-
-		fpago_total := fcapital_pag + fnormal + fmoratorio + fiva;
-		raise notice 'fpago_total=%',fpago_total;
-		if fpago_total<>0 then
-          r.concepto:='Pago';
-          r.debe := 0;
-          r.haber := fpago_total;
-		  r.tipomov := 3;
-          return next r;
-        end if;
-		
-        --if fcapital_pag<>0 then
-          --r.desctipomovimiento:='Abono Capital';
-          --r.debe := fcapital;
-          --r.haber := 0;
-          --return next r;
-        --end if;
-        --if fnormal<>0 then
-          --r.desctipomovimiento:='Int. Normal';
-          --r.debe := fnormal;
-          --r.haber := 0;
-          --return next r;
-        --end if;
-        --if fmoratorio<>0 then
-          --r.desctipomovimiento:='Int. Morat.';
-          --r.debe := fmoratorio;
-          --r.haber := 0;
-          --return next r;
-        --end if;
-        --if fiva<>0 then
-          --r.desctipomovimiento:='IVA';
-          --r.debe := fiva;
-          --r.haber := 0;
-          --return next r;
-        --end if;
-        
+		if pdesglose=0 then
+			fpago_total := fcapital_pag + fnormal + fmoratorio + fiva;
+			raise notice 'fpago_total=%',fpago_total;
+			if fpago_total<>0 then
+			  r.concepto:='Pago';
+			  r.debe := 0;
+			  r.haber := fpago_total;
+			  r.tipomov := 7;
+			  return next r;
+			end if;
+		else
+			if fcapital_pag<>0 then
+			  r.concepto:='Abono Capital';
+			  r.debe := 0;
+			  r.haber := fcapital_pag;
+			  r.tipomov := 3;
+			  return next r;
+			end if;
+			if fnormal<>0 then
+			  r.concepto:='Int. Normal';
+			  r.debe := 0;
+			  r.haber := fnormal;
+			  r.tipomov := 4;
+			  return next r;
+			end if;
+			if fmoratorio<>0 then
+			  r.concepto:='Int. Morat.';
+			  r.debe := 0;
+			  r.haber := fmoratorio;
+			  r.tipomov := 5;
+			  return next r;
+			end if;
+			if fiva<>0 then
+			  r.concepto:='IVA';
+			  r.debe := 0;
+			  r.haber := fiva;
+			  r.tipomov := 6;
+			  return next r;
+			end if;
+		end if;
     end loop;
 
 

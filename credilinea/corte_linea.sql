@@ -1,7 +1,7 @@
---drop table corte_linea;
+drop table corte_linea;
 CREATE TABLE corte_linea
 (
-  corteid serial not null,
+  corteid serial NOT NULL,
   lineaid integer NOT NULL,
   fecha_corte date,
   dias integer,
@@ -13,6 +13,7 @@ CREATE TABLE corte_linea
   capital numeric,
   int_ordinario numeric,
   int_moratorio numeric,
+  iva numeric,
   comisiones numeric,
   pago_minimo numeric,
   CONSTRAINT domicilio_pk PRIMARY KEY (lineaid),
