@@ -20,7 +20,6 @@ CREATE TYPE rformato AS (
 	numero character varying(40),
 	colonia character varying(60),
 	municipio character varying(40),
-	ciudad character varying(40),
 	estado character varying(4),
 	cp character (5),
    	suc character varying(3),
@@ -61,7 +60,6 @@ declare
   pposicion integer;
   pnombre character varying(40);
   saldocastigado numeric;
-  pprestamoid integer;
   dultimoadeudo date;
   i int;
 begin
@@ -91,7 +89,6 @@ begin
 	   d.numero_ext,
 	   col.nombrecolonia,
        c.nombreciudadmex,
-	   c.nombreciudadmex,
        e.abre_estado,
        col.cp,
        (select substring(sucid,1,3) from empresa where empresaid=1),
@@ -115,7 +112,8 @@ begin
        (select clave from carteraclaveburo where prestamoid=pr.prestamoid),
 	   (select cuentaanterior from cuentaanterior where prestamoid=pr.prestamoid),
 	   NULL as fecha_primer_incum,
-	   (SELECT sum(debe) FROM movimientoscaja(trim(s.clavesocioint),'00') where refmovimiento=p.referenciaprestamo group by fechapoliza order by fechapoliza limit 1) as monto_ultimo_pago
+	   (select sum(debe) from movicaja mc,movipolizas mp where mp.movipolizaid = mc.movipolizaid and mc.tipomovimientoid='00' and mc.prestamoid=p.prestamoid group by mc.fechahora order by mc.fechahora desc limit 1) as monto_ultimo_pago,
+	   NULL as fecha_ult_pago_vencido
        from precorte pr, prestamos p, socio s, solicitudingreso so, sujeto su, domicilio d, colonia col, ciudadesmex c, estadosmex e
        where pr.fechacierre = pfecha and  s.tiposocioid = '02' and so.personajuridicaid = 0 and 			 
              p.prestamoid = pr.prestamoid and 
@@ -130,9 +128,9 @@ begin
   loop
     --r.clave:=i;
     --i:=i+1;
+	raise notice 'procesando prestamoid: %',r.prestamoid;
 	if r.fecha_otorga >= '2011-05-25' then
-		if NOT exists(select * from clasificacioncartera natural join amortizaciones where prestamoid=pprestamoid) then
-			--select * into m from  calculadiasmora(r.prestamoid);
+		if NOT exists(select * from clasificacioncartera natural join amortizaciones where prestamoid=r.prestamoid) then
 			select fechapago into r.fecha_primer_incum from calculadiasmora(r.prestamoid) where diasmora>0 and fechapago<=pfecha order by fechapago limit 1;
 		else
 			select fechadepago into r.fecha_primer_incum from clasificacioncartera natural join amortizaciones where diasmora>0 and prestamoid=r.prestamoid and fechadepago<=pfecha order by fechadepago limit 1;
