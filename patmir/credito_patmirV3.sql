@@ -35,7 +35,8 @@ CREATE TYPE rformatocreditopatmir AS (
 	monto_garantia_adicional numeric,
 	asesor_del_credito character(12),
 	referenciaprestamo character varying(18),
-	fechaingreso character(10)
+	fechaingreso character(10),
+	cat numeric
 );
 
 
@@ -134,8 +135,9 @@ begin
 	--33 referecnia del credito 
 		p.referenciaprestamo,
 	--34 fecha de alta
-		so.fechaingreso
-
+		so.fechaingreso,
+	--35 cat
+		p.cat
 	from precorte pr, 
 		prestamos p, 
 		socio s, 
@@ -252,8 +254,8 @@ for f in
 	monto_garantia_adicional numeric,
 	asesor_del_credito character(12),
 	referenciaprestamo character varying(18),
-	fechaingreso character(10)
-	
+	fechaingreso character(10),
+	cat numeric
 )
         loop
 
