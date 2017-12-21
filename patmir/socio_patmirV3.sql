@@ -189,19 +189,19 @@ spatmir(case when c.nombreciudadmex='SANTA MARIA CHILAPA DE DIAZ' then 'VILLA DE
 spatmir(case when e.nombreestadomex='VERACRUZ LLAVE' then 'VERACRUZ' else  ( case when e.nombreestadomex='MICHOACÃN DE OCAMPO' then 'MICHOACAN' else RTrim(e.nombreestadomex) end) end ),
 
 --22 capital_social_requerido character varying(12)---------ok
-0,
+'0',
 
 --23 requerido character varying(12) -------x definir 
 --(case when to_char((select sum(mp.debe)-sum(mp.haber) as saldo from movicaja mc, movipolizas mp, tipomovimiento tm, polizas p where mc.socioid=s.socioid and mp.movipolizaid=mc.movipolizaid and  mc.tipomovimientoid='PA' and tm.tipomovimientoid=mc.tipomovimientoid and tm.aplicasaldo='S' and mc.polizaid=p.polizaid and mp.polizaid=p.polizaid and p.fechapoliza<=pfechafinal), '999999.99') > 0 then to_char((select sum(mp.debe)-sum(mp.haber) as saldo from movicaja mc, movipolizas mp, tipomovimiento tm, polizas p where mc.socioid=s.socioid and mp.movipolizaid=mc.movipolizaid and  mc.tipomovimientoid='PA' and tm.tipomovimientoid=mc.tipomovimientoid and tm.aplicasaldo='S' and mc.polizaid=p.polizaid and mp.polizaid=p.polizaid and p.fechapoliza<=pfechafinal), '999999.99') else '0' end),
 
 --24 saldo_de_aportacion_requerido character varying(12)  --- ok
-0,
+'0',
 
 --25 saldo_de_aportacion_excedente character varying(12)  ---- ok 
 '0.00',
 
 --26 saldo_de_aportacion_voluntario character varying(12) ---- definir que productos 
-0, 
+'0', 
 
 --27 sucursal character varying(4)
 (select Rtrim(nombresucursal) from empresa where empresaid=1),
