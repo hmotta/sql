@@ -102,9 +102,7 @@ spatmir(case when e.nombreestadomex='VERACRUZ LLAVE' then 'VERACRUZ' else  ( cas
 --25 saldo_de_aportacion_excedente character varying(12)  ---- ok 
 '0.00',
 
-
 --26 saldo_de_aportacion_voluntario character varying(12) ---- definir que productos 
-
 (case when (select sum(saldo) FROM spssaldosmov(s.socioid) where saldo>0 and desctipomovimiento in ('PARTE SOCIAL ADICIONAL PSO','PARTE SOCIAL ADICIONAL PSV')) > 0  then (select sum(saldo) FROM spssaldosmov(s.socioid) where saldo>0 and desctipomovimiento in ('PARTE SOCIAL ADICIONAL PSO','PARTE SOCIAL ADICIONAL PSV')) else '0' end), 
 
 
