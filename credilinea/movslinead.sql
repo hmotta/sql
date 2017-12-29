@@ -20,9 +20,11 @@ declare
  fmoratorio numeric;
  fiva numeric;
  fpago_total numeric;
+ fsaldo_inicial numeric;
  
 begin
 	fsaldo := 0;
+	
     for r in
       select p.polizaid,0 as num_mov,p.fechapoliza as fecha,'' as concepto,0 as debe,0 as haber,0 as saldo
         from polizas p, movipolizas mp,tipoprestamo tp, prestamos pr
@@ -104,6 +106,8 @@ begin
           r.debe := fcapital_disp-(fseguro+fiva_seguro);
           r.haber := 0;
 		  r.tipomov := 1;
+		  fsaldo_inicial := fsaldo_inicial - r.debe + r.haber;
+		  r.saldo := fsaldo_inicial;
           return next r;
         end if;
 		
@@ -112,6 +116,8 @@ begin
           r.debe := fseguro+fiva_seguro;
           r.haber := 0;
 		  r.tipomov := 2;
+		  fsaldo_inicial := fsaldo_inicial - r.debe + r.haber;
+		  r.saldo := fsaldo_inicial;
           return next r;
         end if;
 		
@@ -123,6 +129,8 @@ begin
 			  r.debe := 0;
 			  r.haber := fpago_total;
 			  r.tipomov := 7;
+			  fsaldo_inicial := fsaldo_inicial - r.debe + fcapital_pag;
+			  r.saldo := fsaldo_inicial;
 			  return next r;
 			end if;
 		else
@@ -131,6 +139,8 @@ begin
 			  r.debe := 0;
 			  r.haber := fcapital_pag;
 			  r.tipomov := 3;
+			  fsaldo_inicial := fsaldo_inicial - r.debe + r.haber;
+			  r.saldo := fsaldo_inicial;
 			  return next r;
 			end if;
 			if fnormal<>0 then
@@ -138,6 +148,8 @@ begin
 			  r.debe := 0;
 			  r.haber := fnormal;
 			  r.tipomov := 4;
+			  fsaldo_inicial := fsaldo_inicial;
+		      r.saldo := fsaldo_inicial;
 			  return next r;
 			end if;
 			if fmoratorio<>0 then
@@ -145,6 +157,8 @@ begin
 			  r.debe := 0;
 			  r.haber := fmoratorio;
 			  r.tipomov := 5;
+			  fsaldo_inicial := fsaldo_inicial;
+		      r.saldo := fsaldo_inicial;
 			  return next r;
 			end if;
 			if fiva<>0 then
@@ -152,6 +166,8 @@ begin
 			  r.debe := 0;
 			  r.haber := fiva;
 			  r.tipomov := 6;
+			  fsaldo_inicial := fsaldo_inicial;
+		      r.saldo := fsaldo_inicial;
 			  return next r;
 			end if;
 		end if;

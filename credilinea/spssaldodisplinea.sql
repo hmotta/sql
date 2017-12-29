@@ -1,4 +1,4 @@
-CREATE or replace FUNCTION spssaldolinea(integer) RETURNS numeric
+CREATE or replace FUNCTION spssaldodisplinea(integer) RETURNS numeric
     AS $_$
 declare
   lprestamoid alias for $1;
@@ -86,14 +86,14 @@ select sum(mp.debe),sum(mp.haber) into fcargos,fabonos from movipolizas mp,prest
 
   fsaldocalculado:=fmonto_inicial-fcargos+fabonos;
   
-  raise notice ' Saldo Actual %  Saldo Calculado %',fsaldoact,fsaldocalculado;
-  if fsaldoact<>fsaldocalculado and not exists (select prestamoid from prestamos where referenciaprestamo = sreferenciaprestamo||'CAS-') then
-    raise notice 'Voy a updetear el saldo';
-    update prestamos
-       set saldoprestamo = fsaldocalculado
-     where prestamoid=lprestamoid;
+  --raise notice ' Saldo Actual %  Saldo Calculado %',fsaldoact,fsaldocalculado;
+  --if fsaldoact<>fsaldocalculado and not exists (select prestamoid from prestamos where referenciaprestamo = sreferenciaprestamo||'CAS-') then
+    --raise notice 'Voy a updetear el saldo';
+    --update prestamos
+      -- set saldoprestamo = fsaldocalculado
+     --where prestamoid=lprestamoid;
 	 
-  end if;
+  --end if;
 	
 	return fsaldocalculado;
 

@@ -43,92 +43,165 @@ declare
 begin
 select sucid into psucid from empresa where empresaid=1;
 	for r in
-select
---1folio
-	'0017',
---2clave de socio
-	Rtrim(captaciontotal.clavesocioint),
---3nombre del socio  
-	Rtrim(nombresocio), 
---4numero de contrato 
-	(case when inversionid>0 then substring(captaciontotal.clavesocioint,1,3)||ltrim(to_char(inversionid,'999999'))||'IN' else substring(captaciontotal.clavesocioint,1,3)||substring(captaciontotal.clavesocioint,5,5)||substring(captaciontotal.clavesocioint,11,3)||substring(tipomovimientoid,1,2) end),
---5sucursal 
-	(select Rtrim(nombresucursal) from empresa where empresaid=1),  
---6fecha de apertura o contratacion
-	(case when tipomovimientoid in ('AA','AC','AF','AH','AO','AP','PR','TA','AI','PR','AM') then (select min(p.fechapoliza) from movicaja mc, polizas p where mc.socioid=captaciontotal.socioid and mc.tipomovimientoid = captaciontotal.tipomovimientoid and mc.polizaid=p.polizaid and p.tipo <> 'W' and p.fechapoliza < pfechacierre+1) else fechainversion end),
---7tipo de depsoito 
-	Rtrim(desctipoinversion),
---8fecha del depsoito (ultimo)
-	(case when tipomovimientoid in ('AA','AC','AF','AH','AO','AP','PR','TA','AI','PR','AM') then (select max(p.fechapoliza) from movicaja mc, polizas p where mc.socioid=captaciontotal.socioid and mc.tipomovimientoid = captaciontotal.tipomovimientoid and mc.polizaid=p.polizaid and p.tipo <> 'W' and p.fechapoliza < pfechacierre+1 ) else fechainversion end),
---9fecha de vencimiento
-	(case when inversionid>0 then to_char(fechavencimiento,'DD/MM/YYYY') else Rtrim('NA') end),
---10plazo deposto en dias 
-	plazo,
---11forma de pago rendimiento (dias)
---formapagorendimiento,
-	(case when tipomovimientoid in ('IN') then (case when (select i.noderenovaciones from inversion i where i.socioid=captaciontotal.socioid and i.inversionid=captaciontotal.inversionid)=3 then '30' else  formapagorendimiento end) else formapagorendimiento end),
---12tasa de interes nominal pactada (anual)
-	tasainteresnormalinversion,
---13monto de ahorro  
-	deposito,
---14intereses devengados no pagados al cierre del mes dep a plzo fijo (acumulados)
-	trunc(intdevacumulado,2),
---15saldo total  (se valida de acuerdo a la herramienta de patmir)
---	saldototal,
-        --trunc(deposito +(case when tipomovimientoid in ('IN')  then intdevacumulado else intdevmensual end),2),
-	--deposito +(case when tipomovimientoid in ('IN')  then intdevacumulado else intdevmensual end),  --02-febrero 2013 Esta linea de Codigo seria la idela para reportear el total de haberes + int (en la herramienta de patmir no lo validad asi, entonces tomaremos la columa de saldo total + interesesacumulados ) 
- deposito + trunc(intdevacumulado,2),
-
---- campos adiconales  
-	inversionid,
-
---16saldo promedio
-	saldopromedio,
---17interes devengado mensual
-	intdevmensual,
---18inteses devengado acumulado
-	intdevacumulado,
---19dias promedio
-	diaspromedio,
---20dias vencidos
-	diasvencimiento,
---21tipo de movimiento id 
-	tipomovimientoid, 
---22grupo 
-	so.grupo,
---23socio id 
-	so.socioid, 
---24cuenta contable de deposito y retiro 
-	cuentaid,
---25clave de localidad
-	localidad,
---26 isr de inversiones
-	isr,
---27 fecha ingreso
-	(select fechaingreso from solicitudingreso so where so.socioid=captaciontotal.socioid)
-
-
-	from captaciontotal, solicitudingreso so, socio s
-	where fechadegeneracion=pfechacierre 
-	--and s.tiposocioid not in ('05')  ----modificado el 07 de Septiembre del 2012
-	and s.tiposocioid in ('01','02','05')  ----modificado el 07 de Septiembre del 2012
-	and s.socioid=captaciontotal.socioid
-	--and fechaingreso>=pfechaingreso
-	and sucursal=psucid 
-	and so.socioid=captaciontotal.socioid
-	--and captaciontotal.clavesocioint in (select clave_socio_cliente from spssociopatmir(pfechaingreso,pfechacierre))
-	-- no pa, pso p3, psv, ide
-	and desctipoinversion not in ('PARTE SOCIAL','PARTE SOCIAL P3','PARTE SOCIAL ADICIONAL OBLIGAT','PARTE SOCIAL ADICIONAL VOLUNTA','IMPUESTO POR DEP. EN EFECTIVO','PAGO PARCIAL DE CAPITAL SOCIAL')
-	--and saldototal>=0   --modificado el 07 de Septiembre del 2012 >=0
+		select
+		--1folio
+			'0017',
+		--2clave de socio
+			Rtrim(ct.clavesocioint),
+		--3nombre del socio  
+			Rtrim(nombresocio), 
+		--4numero de contrato 
+			(case when inversionid>0 then substring(ct.clavesocioint,1,3)||ltrim(to_char(inversionid,'999999'))||'IN' else substring(ct.clavesocioint,1,3)||substring(ct.clavesocioint,5,5)||substring(ct.clavesocioint,11,3)||substring(tipomovimientoid,1,2) end),
+		--5sucursal 
+			(select Rtrim(nombresucursal) from empresa where empresaid=1),  
+		--6fecha de apertura o contratacion
+			(case when tipomovimientoid in ('AA','AC','AF','AH','AO','AP','PR','TA','AI','PR','AM') then (select min(p.fechapoliza) from movicaja mc, polizas p where mc.socioid=ct.socioid and mc.tipomovimientoid = ct.tipomovimientoid and mc.polizaid=p.polizaid and p.tipo <> 'W' and p.fechapoliza < pfechacierre+1) else fechainversion end),
+		--7tipo de depsoito 
+			Rtrim(desctipoinversion),
+		--8fecha del depsoito (ultimo)
+			(case when tipomovimientoid in ('AA','AC','AF','AH','AO','AP','PR','TA','AI','PR','AM') then (select max(p.fechapoliza) from movicaja mc, polizas p where mc.socioid=ct.socioid and mc.tipomovimientoid = ct.tipomovimientoid and mc.polizaid=p.polizaid and p.tipo <> 'W' and p.fechapoliza < pfechacierre+1 ) else fechainversion end),
+		--9fecha de vencimiento
+			(case when inversionid>0 then to_char(fechavencimiento,'DD/MM/YYYY') else Rtrim('NA') end),
+		--10plazo deposto en dias 
+			plazo,
+		--11forma de pago rendimiento (dias)
+		--formapagorendimiento,
+			(case when tipomovimientoid in ('IN') then (case when (select i.noderenovaciones from inversion i where i.socioid=ct.socioid and i.inversionid=ct.inversionid)=3 then '30' else  formapagorendimiento end) else formapagorendimiento end),
+		--12tasa de interes nominal pactada (anual)
+			tasainteresnormalinversion,
+		--13monto de ahorro  
+			deposito,
+		--14intereses devengados no pagados al cierre del mes dep a plzo fijo (acumulados)
+			trunc(intdevacumulado,2),
+		--15saldo total  (se valida de acuerdo a la herramienta de patmir)
+		--	saldototal,
+				--trunc(deposito +(case when tipomovimientoid in ('IN')  then intdevacumulado else intdevmensual end),2),
+			--deposito +(case when tipomovimientoid in ('IN')  then intdevacumulado else intdevmensual end),  --02-febrero 2013 Esta linea de Codigo seria la idela para reportear el total de haberes + int (en la herramienta de patmir no lo validad asi, entonces tomaremos la columa de saldo total + interesesacumulados ) 
+		 deposito + trunc(intdevacumulado,2),
+		--- campos adiconales  
+			inversionid,
+		--16saldo promedio
+			saldopromedio,
+		--17interes devengado mensual
+			intdevmensual,
+		--18inteses devengado acumulado
+			intdevacumulado,
+		--19dias promedio
+			diaspromedio,
+		--20dias vencidos
+			diasvencimiento,
+		--21tipo de movimiento id 
+			tipomovimientoid, 
+		--22grupo 
+			so.grupo,
+		--23socio id 
+			so.socioid, 
+		--24cuenta contable de deposito y retiro 
+			cuentaid,
+		--25clave de localidad
+			localidad,
+		--26 isr de inversiones
+			isr,
+		--27 fecha ingreso
+			(select fechaingreso from solicitudingreso so where so.socioid=ct.socioid)
+			from captaciontotal ct, solicitudingreso so, socio s
+			where fechadegeneracion=pfechacierre 
+			--and s.tiposocioid not in ('05')  ----modificado el 07 de Septiembre del 2012
+			and s.tiposocioid in ('01','02','05')  ----modificado el 07 de Septiembre del 2012
+			and s.socioid=ct.socioid
+			--and fechaingreso>=pfechaingreso
+			and sucursal=psucid 
+			and so.socioid=ct.socioid
+			--and ct.clavesocioint in (select clave_socio_cliente from spssociopatmir(pfechaingreso,pfechacierre))
+			-- no pa, pso p3, psv, ide
+			and desctipoinversion not in ('PARTE SOCIAL','PARTE SOCIAL P3','PARTE SOCIAL ADICIONAL OBLIGAT','PARTE SOCIAL ADICIONAL VOLUNTA','IMPUESTO POR DEP. EN EFECTIVO','PAGO PARCIAL DE CAPITAL SOCIAL')
+			--and saldototal>=0   --modificado el 07 de Septiembre del 2012 >=0
+			--and (case when tipomovimientoid in ('AA','AC','AF','AH','AO','AP','P3','PA','PB','PR','TA','AI','PR','AM') then (select min(p.fechapoliza) from movicaja mc, polizas p where mc.socioid=ct.socioid and mc.tipomovimientoid = ct.tipomovimientoid and mc.polizaid=p.polizaid and p.tipo <> 'W' and p.fechapoliza < pfechacierre+1 ) else fechainversion end)<=pfechacierre
+			order by ct.clavesocioint, tipomovimientoid
+	loop 
+	  return next r;
+	end loop;
 	
-	--and (case when tipomovimientoid in ('AA','AC','AF','AH','AO','AP','P3','PA','PB','PR','TA','AI','PR','AM') then (select min(p.fechapoliza) from movicaja mc, polizas p where mc.socioid=captaciontotal.socioid and mc.tipomovimientoid = captaciontotal.tipomovimientoid and mc.polizaid=p.polizaid and p.tipo <> 'W' and p.fechapoliza < pfechacierre+1 ) else fechainversion end)<=pfechacierre
-	order by captaciontotal.clavesocioint, tipomovimientoid
-
-loop 
-  
-  return next r;
-
-end loop;
+	for r in
+		select
+		--1folio
+			'0017',
+		--2clave de socio
+			Rtrim(ct.clavesocioint),
+		--3nombre del socio  
+			Rtrim(nombresocio), 
+		--4numero de contrato 
+			(case when inversionid>0 then substring(ct.clavesocioint,1,3)||ltrim(to_char(inversionid,'999999'))||'IN' else substring(ct.clavesocioint,1,3)||substring(ct.clavesocioint,5,5)||substring(ct.clavesocioint,11,3)||substring(tipomovimientoid,1,2) end),
+		--5sucursal 
+			(select Rtrim(nombresucursal) from empresa where empresaid=1),  
+		--6fecha de apertura o contratacion
+			(case when tipomovimientoid in ('AA','AC','AF','AH','AO','AP','PR','TA','AI','PR','AM') then (select min(p.fechapoliza) from movicaja mc, polizas p where mc.socioid=ct.socioid and mc.tipomovimientoid = ct.tipomovimientoid and mc.polizaid=p.polizaid and p.tipo <> 'W' and p.fechapoliza < pfechacierre+1) else fechainversion end),
+		--7tipo de depsoito 
+			Rtrim(desctipoinversion),
+		--8fecha del depsoito (ultimo)
+			(case when tipomovimientoid in ('AA','AC','AF','AH','AO','AP','PR','TA','AI','PR','AM') then (select max(p.fechapoliza) from movicaja mc, polizas p where mc.socioid=ct.socioid and mc.tipomovimientoid = ct.tipomovimientoid and mc.polizaid=p.polizaid and p.tipo <> 'W' and p.fechapoliza < pfechacierre+1 ) else fechainversion end),
+		--9fecha de vencimiento
+			(case when inversionid>0 then to_char(fechavencimiento,'DD/MM/YYYY') else Rtrim('NA') end),
+		--10plazo deposto en dias 
+			plazo,
+		--11forma de pago rendimiento (dias)
+		--formapagorendimiento,
+			(case when tipomovimientoid in ('IN') then (case when (select i.noderenovaciones from inversion i where i.inversionid=ct.inversionid)=3 then '30' else  formapagorendimiento end) else formapagorendimiento end),
+		--12tasa de interes nominal pactada (anual)
+			tasainteresnormalinversion,
+		--13monto de ahorro  
+			0,
+		--14intereses devengados no pagados al cierre del mes dep a plzo fijo (acumulados)
+			0,
+		--15saldo total  (se valida de acuerdo a la herramienta de patmir)
+		--	saldototal,
+				--trunc(deposito +(case when tipomovimientoid in ('IN')  then intdevacumulado else intdevmensual end),2),
+			--deposito +(case when tipomovimientoid in ('IN')  then intdevacumulado else intdevmensual end),  --02-febrero 2013 Esta linea de Codigo seria la idela para reportear el total de haberes + int (en la herramienta de patmir no lo validad asi, entonces tomaremos la columa de saldo total + interesesacumulados ) 
+		 0,
+		--- campos adiconales  
+			inversionid,
+		--16saldo promedio
+			0,
+		--17interes devengado mensual
+			0,
+		--18inteses devengado acumulado
+			0,
+		--19dias promedio
+			diaspromedio,
+		--20dias vencidos
+			diasvencimiento,
+		--21tipo de movimiento id 
+			tipomovimientoid, 
+		--22grupo 
+			so.grupo,
+		--23socio id 
+			so.socioid, 
+		--24cuenta contable de deposito y retiro 
+			cuentaid,
+		--25clave de localidad
+			localidad,
+		--26 isr de inversiones
+			isr,
+		--27 fecha ingreso
+			(select fechaingreso from solicitudingreso so where so.socioid=ct.socioid)
+			from captaciontotal ct, solicitudingreso so, socio s
+			where fechadegeneracion=pfechacierre 
+			--and s.tiposocioid not in ('05')  ----modificado el 07 de Septiembre del 2012
+			and s.tiposocioid in ('01','02','05')  ----modificado el 07 de Septiembre del 2012
+			and s.socioid=ct.socioid
+			--and fechaingreso>=pfechaingreso
+			and sucursal=psucid 
+			and so.socioid=ct.socioid
+			--and ct.clavesocioint in (select clave_socio_cliente from spssociopatmir(pfechaingreso,pfechacierre))
+			-- no pa, pso p3, psv, ide
+			and desctipoinversion not in ('PARTE SOCIAL','PARTE SOCIAL P3','PARTE SOCIAL ADICIONAL OBLIGAT','PARTE SOCIAL ADICIONAL VOLUNTA','IMPUESTO POR DEP. EN EFECTIVO','PAGO PARCIAL DE CAPITAL SOCIAL')
+			and (ct.socioid||ct.tipomovimientoid not in (select socioid||tipomovimientoid from captaciontotal where fechadegeneracion in (pfechacierre)) OR cast(ct.socioid as character)||ct.inversionid not in (select cast(socioid as character)||inversionid from captaciontotal where fechadegeneracion in (pfechacierre)))
+			--and saldototal>=0   --modificado el 07 de Septiembre del 2012 >=0
+			--and (case when tipomovimientoid in ('AA','AC','AF','AH','AO','AP','P3','PA','PB','PR','TA','AI','PR','AM') then (select min(p.fechapoliza) from movicaja mc, polizas p where mc.socioid=ct.socioid and mc.tipomovimientoid = ct.tipomovimientoid and mc.polizaid=p.polizaid and p.tipo <> 'W' and p.fechapoliza < pfechacierre+1 ) else fechainversion end)<=pfechacierre
+			order by ct.clavesocioint, tipomovimientoid
+	loop 
+	  return next r;
+	end loop;
 return;
 end
 $_$

@@ -14,35 +14,33 @@ CREATE or replace FUNCTION movslineaactual(integer) RETURNS SETOF rmovimientosli
 declare
   r rmovimientoslinea%rowtype;
   pprestamoid alias for $1;
-  
-
   l record;
-
  fcargo numeric;
  fabono numeric;
  fsaldo numeric;
- 
  fcapital_disp numeric;
  fcapital_pag numeric;
  fseguro numeric;
  fiva_seguro numeric;
- 
  dfecha_corte date;
- dfecha_otorga date;
- 
  fnormal numeric;
  fmoratorio numeric;
  fiva numeric;
  fpago_total numeric;
- 
+ fsaldo_inicial numeric;
+ ncorteid integer;
  nnum integer;
 begin
 	fsaldo := 0;
 	nnum := 1;
-	select fecha_otorga into dfecha_otorga from prestamos where prestamoid=pprestamoid;
-	select fecha_corte into dfecha_corte from corte_linea where lineaid=pprestamoid;
 	
-	dfecha_corte := coalesce(dfecha_corte,dfecha_otorga);
+	select fecha_otorga,montoprestamo into dfecha_corte,fsaldo_inicial from prestamos where prestamoid=pprestamoid;
+	
+	select corteid into ncorteid from corte_linea where lineaid=pprestamoid order by fecha_corte desc limit 1;
+	if FOUND then
+		--Ya hay un corte anterior, se cambian las variables iniciales
+		select fecha_corte,saldo_final into dfecha_corte,fsaldo_inicial from corte_linea where corteid=ncorteid;
+	end if;
 	
     for r in
       select p.polizaid,0 as num_mov,p.fechapoliza as fecha,'' as concepto,0 as debe,0 as haber,0 as saldo
@@ -50,7 +48,7 @@ begin
        where pr.prestamoid = pprestamoid and
              p.polizaid = mp.polizaid and
 			 mp.prestamoid = pr.prestamoid and
-             tp.tipoprestamoid = pr.tipoprestamoid and p.fechapoliza>= dfecha_corte group by p.polizaid,p.fechapoliza
+             tp.tipoprestamoid = pr.tipoprestamoid and p.fechapoliza between dfecha_corte and current_date group by p.polizaid,p.fechapoliza
     order by p.fechapoliza
 
     loop
@@ -124,6 +122,8 @@ begin
           r.debe := fcapital_disp-(fseguro+fiva_seguro);
           r.haber := 0;
 		  r.tipomov := 1;
+		  fsaldo_inicial := fsaldo_inicial - r.debe + r.haber;
+		  r.saldo := fsaldo_inicial;
           return next r;
 		  nnum:=nnum+1;
         end if;
@@ -134,6 +134,8 @@ begin
           r.debe := fseguro+fiva_seguro;
           r.haber := 0;
 		  r.tipomov := 2;
+		  fsaldo_inicial := fsaldo_inicial - r.debe + r.haber;
+		  r.saldo := fsaldo_inicial;
           return next r;
 		  nnum:=nnum+1;
         end if;
@@ -147,6 +149,8 @@ begin
           r.debe := 0;
           r.haber := fpago_total;
 		  r.tipomov := 3;
+		  fsaldo_inicial := fsaldo_inicial - r.debe + r.haber;
+		  r.saldo := fsaldo_inicial;
           return next r;
 		  nnum:=nnum+1;
         end if;

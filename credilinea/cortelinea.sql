@@ -52,9 +52,9 @@ declare
 	xsaldo_promedio:=coalesce(xsaldo_promedio,0);
 	xsaldo_promedio:=xsaldo_promedio/ndias;
 	
-	select count(*) into nnumdisp from movslinead(pprestamoid,pfecha_anterior,pfecha) where tipomov in (1);
+	select count(*) into nnumdisp from movslinead(pprestamoid,pfecha_anterior,pfecha,0) where tipomov in (1);
 	
-	select spssaldolinea into xsaldo_insoluto from spssaldolinea(pprestamoid);
+	select spssaldoadeudolinea into xsaldo_insoluto from spssaldoadeudolinea(pprestamoid);
 	
 	--xcapital := round(xsaldo_insoluto * 0.05,2);
 	--xsaldo_promedio := round(xsaldo_promedio * 0.05,2);
