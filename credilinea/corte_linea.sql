@@ -16,7 +16,7 @@ CREATE TABLE corte_linea
   iva numeric,
   comisiones numeric,
   pago_minimo numeric,
-  CONSTRAINT domicilio_pk PRIMARY KEY (lineaid),
+  CONSTRAINT lineaid_pk PRIMARY KEY (corteid),
   CONSTRAINT lineaid FOREIGN KEY (lineaid)
       REFERENCES prestamos (prestamoid) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
