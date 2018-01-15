@@ -1,4 +1,4 @@
-drop table operaciones_detectadas_pld;
+--drop table operaciones_detectadas_pld;
 CREATE TABLE operaciones_detectadas_pld (
     operacionid serial NOT NULL,
 	autorizada int,
@@ -8,5 +8,6 @@ CREATE TABLE operaciones_detectadas_pld (
 	monto numeric,
 	motivo character varying (200),
 	riesgo character varying (10),
+	tipo_operacion int,
 	PRIMARY KEY  (operacionid)
 );
