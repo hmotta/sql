@@ -185,7 +185,7 @@ begin
 	--Cuentas con bloqueo de solo retiro de efectivo, Por PLD, solo puede desbloquear Oficial de Cumplimiento
 	select motivo into smotivobloqueo  from cuentasbloqueadas where bloqueovigente='S' and bloqueatodo='N' and socioid=psocioid;
 	if found then	
-		if fretiro>0 and pefectivo=1 then
+		if fretiro>0 and pefectivo<>3 then --No deja retirar mas que por transferencia interna
 			raise notice 'validare cuentas bloqueadas...';
 			raise exception 'Cuenta bloqueada % Favor de notificar al Oficial de Cumplimiento',smotivobloqueo;
 		end if;
