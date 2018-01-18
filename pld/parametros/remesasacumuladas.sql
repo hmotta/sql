@@ -15,7 +15,7 @@ begin
 			 where l.fechapoliza between pfechai and pfechaf and mc.socioid=psocioid and 
 				   m.polizaid = mc.polizaid and
 				   m.polizaid=l.polizaid  and
-				   mc.tipomovimientoid='RN';
+				   mc.tipomovimientoid='EN';
 		
 	
 	else --Pagos
@@ -24,7 +24,7 @@ begin
 			 where l.fechapoliza between pfechai and pfechaf and mc.socioid=psocioid and
 				   m.polizaid = mc.polizaid and
 				   m.polizaid=l.polizaid  and
-				   mc.tipomovimientoid in ('EI','EN','RG','WU');
+				   mc.tipomovimientoid in ('EI','RN','RG','WU');
 
 	end if;
 
