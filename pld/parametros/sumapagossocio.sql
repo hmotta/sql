@@ -15,7 +15,7 @@ begin
        mc.prestamoid = p.prestamoid and
        m.polizaid = mc.polizaid and
        m.polizaid=l.polizaid  and
-       (m.cuentaid = tp.cuentaactivo or m.cuentaid = tp.cuentaactivoren
+       (m.cuentaid = tp.cuentaactivo or m.cuentaid = tp.cuentaactivoren or
 	   m.cuentaid = tp.cuentaiva or 
 	   m.cuentaid = tp.cuentaintnormal or m.cuentaid = tp.cuentaintnormalren
 	   or m.cuentaid = tp.cuentaintmora or m.cuentaid = tp.cuentaintmoraren);
