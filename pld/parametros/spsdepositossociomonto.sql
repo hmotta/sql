@@ -12,7 +12,7 @@ begin
 	xSuma:=0;
 	select spsdolarvalor into xdolar_valor from spsdolarvalor(pfechai);
 	for r in 
-		select debe as monto_operacion from movicaja mc, movipolizas mp, polizas p where mc.tipomovimientoid not in ('WU','RG','CH','RE','AG','LE','BU','SM','SI','SQ','SB','ST','TC','MV','IU','OP','MC','CM','SK','CF','TU','ET','ID','00') and mp.movipolizaid=mc.movipolizaid and p.polizaid=mc.polizaid and p.fechapoliza between pfechai and pfechaf and p.seriepoliza not in ('ZA','Z') and mc.efectivo>=1 and mc.socioid=dsocioid and debe>=xdolar_valor
+		select debe as monto_operacion from movicaja mc, movipolizas mp, polizas p where mc.tipomovimientoid not in ('WU','RG','CH','RE','AG','LE','BU','SM','SI','SQ','SB','ST','TC','MV','IU','OP','MC','CM','SK','CF','TU','ET','ID','00') and mp.movipolizaid=mc.movipolizaid and p.polizaid=mc.polizaid and p.fechapoliza between pfechai and pfechaf and p.seriepoliza not in ('ZA','WW','Z') and mc.efectivo>=1 and mc.socioid=dsocioid and debe>=xdolar_valor
 	loop 
 		if r.monto_operacion >= (xmonto_dolares*xdolar_valor) then
 			xSuma := xSuma + coalesce(r.monto_operacion,0);
