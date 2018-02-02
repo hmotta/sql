@@ -10,5 +10,6 @@ CREATE TABLE parametros_pld (
 	tipo_operacion character varying(2),
 	alertar_correo_oc integer,
 	solicitar_declaracion integer,
+	adicional character varying(100),
 	PRIMARY KEY  (parametroid)
 );

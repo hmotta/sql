@@ -93,6 +93,8 @@ AS $_$
 	sdia character(2);
 	statusfuturo numeric;
 	statusfuturo1 numeric;
+	
+	rmovicajaid integer;
 begin
 	raise notice 'Movicaja...';
 	nmontopartesocial:=1000.00;	
@@ -502,7 +504,7 @@ end if;
 	update autorizabonificacion set movicajaid=imovicajaid,aplicado=1 where autorizacionid=iautorizacionid;
 	
 ------------------------------------------
-
+	rmovicajaid:=currval('movicaja_movicajaid_seq');
 	-- Impuesto Deposito en efectivo
 	raise notice ' Voy a efectuar el ide credito %',pefectivo;
 	if ptipomovimientoid in ((select tipomovimientoid from tipomovimiento where tipomovimientoid<>'CI' and ptipomovimientoid<>'AH' and  tipomovimientoid<>'RE' and aplicasaldo='S') union (select (case 	when exists (select socioid from datosfiscales where socioid =psocioid) then '**' else '00' end) )) and  pefectivo=1 then
@@ -540,7 +542,7 @@ end if;
 		end if;
 	end if;
 	
-return currval('movicaja_movicajaid_seq');
+return rmovicajaid;
 end
 $_$
 	 LANGUAGE plpgsql SECURITY DEFINER;
