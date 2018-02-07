@@ -353,11 +353,11 @@ end if;
 			
 			raise notice 'garantiaactual==%',ngarantiaactual;
 			--Se suma solamente las garantias de los prestamos que ya han sido desembolsados
-			select coalesce(sum(monto_garantia),0) into ngarantiarequerida from prestamos where claveestadocredito='001' and  socioid=psocioid and prestamoid in (select prestamoid from movicaja where prestamoid is not null union select prestamoid from movibanco where prestamoid is not null);
-			raise notice '(ngarantiaactual-fretiro)==% , %',(ngarantiaactual-fretiro),ngarantiarequerida;
-			if (ngarantiaactual-fretiro)<ngarantiarequerida then 
-				raise exception 'El monto en garantía no puede ser menor a: %',round(ngarantiarequerida,2);
-			end if;
+			--select coalesce(sum(monto_garantia),0) into ngarantiarequerida from prestamos where claveestadocredito='001' and  socioid=psocioid and prestamoid in (select prestamoid from movicaja where prestamoid is not null union select prestamoid from movibanco where prestamoid is not null);
+			--raise notice '(ngarantiaactual-fretiro)==% , %',(ngarantiaactual-fretiro),ngarantiarequerida;
+			--if (ngarantiaactual-fretiro)<ngarantiarequerida then 
+			--	raise exception 'El monto en garantía no puede ser menor a: %',round(ngarantiarequerida,2);
+			--end if;
 		end if;
 
 	--	  if fretiro>fsaldo-freciprocidad and saplicasaldo='S' and ptipomovimientoid<>'IN' and ptipomovimientoid<>'RM' and ptipomovimientoid<>'RE' then
@@ -546,3 +546,4 @@ return rmovicajaid;
 end
 $_$
 	 LANGUAGE plpgsql SECURITY DEFINER;
+
