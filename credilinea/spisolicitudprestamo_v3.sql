@@ -55,8 +55,8 @@ raise exception 'Este tipo de credito no puede a la Vivienda';
    
    select grupo into pgrupo from solicitudingreso where socioid=psocioid;
    
-   --select ultimaconsultaburo into pconsultaburoid from ultimaconsultaburo(psujetoid);
-   pconsultaburoid:=3099;
+   select ultimaconsultaburo into pconsultaburoid from ultimaconsultaburo(psujetoid);
+   --pconsultaburoid:=3099;
   insert into
     solicitudprestamo(
       socioid,            

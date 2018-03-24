@@ -86,7 +86,7 @@ select p.prestamoid,
        iejercicio as ejercicio,
        iperiodo as periodo,
        pfechacorte as fechacierre,
-       (case when p.claveestadocredito<>'002' then (p.montoprestamo-(SUM(case when (m.cuentaid=tp.cuentaactivo or m.cuentaid=tp.cuentaactivoren) and po.fechapoliza<dcorte then m.haber else 0 end))) else 0 end) as saldoprestamo,
+       (case when p.claveestadocredito<>'002' then ( case when pr.revolvente=0 then (p.montoprestamo-(SUM(case when (m.cuentaid=tp.cuentaactivo or m.cuentaid=tp.cuentaactivoren) and po.fechapoliza<dcorte then m.haber else 0 end))) else select spssaldoadeudolinea from spssaldoadeudolinea(p.prestamoid) end) else 0 end) as saldoprestamo,
        0 as interesdevengadomenoravencido,
        0 as interesdevengadomayoravencido,
 
@@ -100,10 +100,10 @@ select p.prestamoid,
        0 as saldovencidomayoravencido,
        0 as saldovencidomenoravencido,
        
-       fechaultimapagada(p.prestamoid,pfechacorte)as fechaultamorpagada,
+       ( case when pr.revolvente=0 then fechaultimapagada(p.prestamoid,pfechacorte) else NULL end) as fechaultamorpagada,
 	   
        p.tipoprestamoid,p.montoprestamo,tp.clavefinalidad,p.tasanormal,p.tasa_moratoria,
-	   MAX(case when (m.cuentaid=tp.cuentaactivo or m.cuentaid=tp.cuentaactivoren) and po.fechapoliza<dcorte then po.fechapoliza else p.fecha_otorga end),
+	   MAX(case when (m.cuentaid=tp.cuentaactivo or m.cuentaid=tp.cuentaactivoren) and po.fechapoliza<dcorte then po.fechapoliza else p.fecha_otorga end) AS ultimoabono,
        (case when (p.numero_de_amor=1) then 29 else (
 			case when (select count(*) from amortizaciones where prestamoid=p.prestamoid and importeamortizacion<>0)=1 then -1 else 
 				(case when p.dias_de_cobro=7 then 20 else 
@@ -120,7 +120,7 @@ select p.prestamoid,
        MAX(case when (m.cuentaid=tp.cuentaintnormal or m.cuentaid=tp.cuentaintnormalren) and po.fechapoliza<dcorte
                 then po.fechapoliza else (case when (m.cuentaid=tp.cuentaactivo or m.cuentaid=tp.cuentaactivoren) and
                                                        po.fechapoliza<dcorte
-                then po.fechapoliza else p.fecha_otorga end) end),
+                then po.fechapoliza else p.fecha_otorga end) end) AS ultimoabonointeres,
        0 as interesdevmormenor,
        0 as interesdevmormayor,p.dias_de_cobro,p.meses_de_cobro,(case when p.dias_de_cobro > 0 then p.dias_de_cobro else p.meses_de_cobro*30 end) as frecuencia,
 	   tp.clavefinalidad,p.fecha_otorga,0 as estatusvive,p.monto_garantia,
@@ -139,42 +139,26 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
          p.fecha_1er_pago,tp.diastraspasoavencida,p.fecha_vencimiento,p.dias_de_cobro,p.meses_de_cobro,tp.clavefinalidad,p.fecha_otorga,p.monto_garantia,p.claveestadocredito,p.numero_de_amor,p.renovado
    order by prestamoid;
 
-   --Con los parametros calculados anteriormente se calculan los interesesdevengados y los dias vencidos
+   --Con los parametros calculados anteriormente se calculan los interesesdevengados y los dias vencidos (creditos ordinarios)
    ---------------------------------------------------------------------------------------------------------------------------------------------------------
    for r in
      select p.precorteid,p.saldoprestamo,p.fechaultamorpagada,p.prestamoid,
             p.ultimoabono,p.diastraspasoavencida,p.ultimoabonointeres,p.frecuencia
        from precorte p
-      where p.fechacierre=pfechacorte
-
-   loop
-
-     -- Clasificacion de interes devengado
-
+      where p.fechacierre=pfechacorte and p.tipoprestamoid in (select tipoprestamoid from tipoprestamo where revolvente=0)
+   looP
      finteresdevengadomenor := 0;
      fdevengadomayor := 0;
 	 finteresdevmormenor:=0;
      finteresdevmormayor:=0;
-	  
-     --raise notice 'ultima amortizacion  %  %  %',r.prestamoid,r.fechaultamorpagada,;
-
      if r.saldoprestamo>0 then
-		   
-		    --if exists (select fechadepago from amortizaciones where prestamoid=r.prestamoid and fechadepago>r.ultimoabonointeres order by fechadepago limit 1) then
-				--select fechadepago into dultfechaexigibleint from amortizaciones where prestamoid=r.prestamoid and fechadepago>r.ultimoabonointeres order by fechadepago limit 1;
-			--else
-				--select fechadepago into dultfechaexigibleint from amortizaciones where prestamoid=r.prestamoid and fechadepago<=r.ultimoabonointeres order by fechadepago limit 1;
-			--end if;
 			select fechaprimeradeudo into dfechaprimeradeudo from fechaprimeradeudo(r.prestamoid,pfechacorte);
-			
 			idiascapital:=(case when (pfechacorte-dfechaprimeradeudo) > 0 then (pfechacorte-dfechaprimeradeudo) else 0 end);
 			--Poner 1 dia de mora cuando le toca pagar al cierre
 			if pfechacorte=dfechaprimeradeudo then
 				idiascapital:=1;
 			end if;
-			
 			idiasinteres:=(case when (select fechadepago from amortizaciones where prestamoid=r.prestamoid and interesnormal>0 order by fechadepago  limit 1)<=pfechacorte then (case when (r.fechaultamorpagada-r.ultimoabonointeres)-r.frecuencia > 0 then (r.fechaultamorpagada-r.ultimoabonointeres)-r.frecuencia else 0 end) else 0 end);
-			--idiasinteres:=(case when (pfechacorte-dultfechaexigibleint-r.frecuencia)>0 then (pfechacorte-dultfechaexigibleint-r.frecuencia) else 0 end);
 			-- Asignar a los dias vencidos lo que sea mayor interes o capital 
 			if idiascapital>idiasinteres then
 				idiasvencidos:=idiascapital;
@@ -183,9 +167,7 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
 			end if;
 			
 			if pfechacorte-r.ultimoabonointeres>0 then
-				 --
 				 -- Interes Normal y Moratorio
-				 --
 				finteresdevengadomenor := interesdevengado(r.prestamoid,pfechacorte,idiasvencidos,idiascapital,r.ultimoabonointeres,r.saldoprestamo,r.diastraspasoavencida,'S');
 				finteresdevmormenor := interesdevmoratorio(r.prestamoid,pfechacorte,r.saldoprestamo,r.diastraspasoavencida,'S');
 				
@@ -203,9 +185,57 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
 			else
 				update precorte set saldovencidomenoravencido=saldoprestamo, saldovencidomayoravencido=0 where precorteid=r.precorteid;
 			end if;
-	
      end if;
-	
+   end loop;
+   
+   
+   --Con los parametros calculados anteriormente se calculan los interesesdevengados y los dias vencidos (Lineas de crédito)
+   ---------------------------------------------------------------------------------------------------------------------------------------------------------
+   for r in
+     select p.precorteid,p.saldoprestamo,p.fechaultamorpagada,p.prestamoid,
+            p.ultimoabono,p.diastraspasoavencida,p.ultimoabonointeres,p.frecuencia
+       from precorte p
+      where p.fechacierre=pfechacorte and p.tipoprestamoid in (select tipoprestamoid from tipoprestamo where revolvente=1)
+   looP
+     finteresdevengadomenor := 0;
+     fdevengadomayor := 0;
+	 finteresdevmormenor:=0;
+     finteresdevmormayor:=0;
+     if r.saldoprestamo>0 then
+			select fechaprimeradeudo into dfechaprimeradeudo from fechaprimeradeudo(r.prestamoid,pfechacorte);
+			idiascapital:=(case when (pfechacorte-dfechaprimeradeudo) > 0 then (pfechacorte-dfechaprimeradeudo) else 0 end);
+			--Poner 1 dia de mora cuando le toca pagar al cierre
+			if pfechacorte=dfechaprimeradeudo then
+				idiascapital:=1;
+			end if;
+			idiasinteres:=(case when (select fechadepago from amortizaciones where prestamoid=r.prestamoid and interesnormal>0 order by fechadepago  limit 1)<=pfechacorte then (case when (r.fechaultamorpagada-r.ultimoabonointeres)-r.frecuencia > 0 then (r.fechaultamorpagada-r.ultimoabonointeres)-r.frecuencia else 0 end) else 0 end);
+			-- Asignar a los dias vencidos lo que sea mayor interes o capital 
+			if idiascapital>idiasinteres then
+				idiasvencidos:=idiascapital;
+			else
+				idiasvencidos:=idiasinteres;
+			end if;
+			
+			if pfechacorte-r.ultimoabonointeres>0 then
+				 -- Interes Normal y Moratorio
+				finteresdevengadomenor := interesdevengado(r.prestamoid,pfechacorte,idiasvencidos,idiascapital,r.ultimoabonointeres,r.saldoprestamo,r.diastraspasoavencida,'S');
+				finteresdevmormenor := interesdevmoratorio(r.prestamoid,pfechacorte,r.saldoprestamo,r.diastraspasoavencida,'S');
+				
+				--if pfechacorte-r.ultimoabonointeres>r.diastraspasoavencida then
+				fdevengadomayor := interesdevengado(r.prestamoid,pfechacorte,idiasvencidos,idiascapital,r.ultimoabonointeres,r.saldoprestamo,r.diastraspasoavencida,'N');
+				finteresdevmormayor := interesdevmoratorio(r.prestamoid,pfechacorte,r.saldoprestamo,r.diastraspasoavencida,'N');
+				--end if;
+		   end if;
+			
+			update precorte set interesdevengadomenoravencido=finteresdevengadomenor,interesdevengadomayoravencido=fdevengadomayor,interesdevmormenor=finteresdevmormenor,
+				interesdevmormayor=finteresdevmormayor,diascapital=idiascapital,diasinteres=idiasinteres,diasvencidos=idiasvencidos where precorteid=r.precorteid;
+			
+			if idiasvencidos>r.diastraspasoavencida then
+				update precorte set saldovencidomenoravencido=0, saldovencidomayoravencido=saldoprestamo where precorteid=r.precorteid;
+			else
+				update precorte set saldovencidomenoravencido=saldoprestamo, saldovencidomayoravencido=0 where precorteid=r.precorteid;
+			end if;
+     end if;
    end loop;
    
    delete from precorte  where fechacierre=pfechacorte and saldoprestamo=0 and interesdevengadomenoravencido=0 and interesdevengadomayoravencido=0 and pagocapitalenperiodo=0 and pagointeresenperiodo=0 and pagomoratorioenperiodo=0 and saldovencidomenoravencido=0 and saldovencidomayoravencido=0;
@@ -213,10 +243,6 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
    update precorte set saldopromediodelmes=saldopromedioprecorte(precorte.prestamoid,precorte.ejercicio,precorte.periodo);
    update precorte set interesdevengadomes=interesdevengadoprecorte(precorte.prestamoid,precorte.ejercicio,precorte.periodo); 
    update precorte set primerincumplimiento=fechaultamorpagada+frecuencia where fechacierre=pfechacorte;
-
-      
-   --Poner 1 dia de mora cuando le toca pagar al cierre
-   --update precorte set diascapital = (case when fechacierre=(select fechaprimeradeudo from fechaprimeradeudo(precorte.prestamoid,pfechacorte)) then 1 else diascapital end) where fechacierre=pfechacorte and diascapital=0 and saldoprestamo>0;
    
    update precorte set diascapital = 0 where fechacierre=pfechacorte and diascapital=0 and saldoprestamo=0;
    update precorte set diascapital = 0 where fechacierre=pfechacorte and saldoprestamo=0;
@@ -263,11 +289,11 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
 		update precorte set tipo_cartera_est='tipo 2' where precorteid=r.precorteid;
 	end if;
 	
-	if (r.renovado=1 and r.diasmoraorigen>0) then
+	if (r.renovado=1 and r.diasmoraorigen>0) then --si es renovado emproblemado
 		update precorte set tipocartera='11' where precorteid=r.precorteid and finalidaddefault='002';
 		update precorte set tipo_cartera_est='tipo 2' where precorteid=r.precorteid;
 	end if;
-	
+
      -- Verificar el pago sostenido por tres ocasiones a capital
       		--Dias vencidos
 		if r.pagosostenido<3 then
@@ -282,12 +308,23 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
      
    end loop;
 --<<--
-
+	
+	
+	
+	
+	
 	for r in 
 		select e.prestamoid,precorteid from emproblemados e, precorte p where p.prestamoid=e.prestamoid and p.fechacierre=pfechacorte
 	loop
 		update precorte set tipocartera='11' where precorteid=r.precorteid;
 		update precorte set tipo_cartera_est='tipo 2' where precorteid=r.precorteid;
+	end loop;
+	
+	for r in 
+		select prestamoid from prestamos where socioid in (select socioid from precorte p inner join prestamos pr on (p.prestamoid=pr.prestamoid) where p.tipo_cartera_est='tipo 2' and fechacierre=pfechacorte)
+	loop
+		update precorte set tipocartera='11' where prestamoid=r.prestamoid and fechacierre=pfechacorte;
+		update precorte set tipo_cartera_est='tipo 2' where prestamoid=r.prestamoid and fechacierre=pfechacorte;
 	end loop;
 
 	--Correccion de reestructurado vigente en arteaga (le pagaron el mismo dia de la reestructura)

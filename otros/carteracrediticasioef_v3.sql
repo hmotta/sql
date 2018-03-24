@@ -117,6 +117,7 @@ begin
                         (case when pr.numero_de_amor > 1 then 'Pagos periodicos de principal e intereses' else 'Pago Unico de principal e intereses ' end) as condicionpago,
                         (case when pr.renovado=1 and pr.diasmoraorigen=0 then 'Renovado 1' else
 						(case when pr.renovado=1 and pr.diasmoraorigen>0 then 'Renovado 2' else
+						(case when found (select * from precorte p1 where p1.renovado=1 and p1.diasmoraorigen>0 and socioid=p.socioid and p1.fechacierre=p.fechacierre) then 'Renovado 2' else
 						(case when p.diasvencidos <= p.diastraspasoavencida and p.tipoprestamoid not in ('T1','T2','T3','R1','R2','R3') then 'Normal' else
                         (case when p.diasvencidos > p.diastraspasoavencida and p.tipoprestamoid not in ('T1','T2','T3','R1','R2','R3') then 'Normal' else
                         (case when p.diasvencidos <= p.diastraspasoavencida and p.tipoprestamoid in ('T1','T2','T3') then 'Reestructurado' else
@@ -128,7 +129,7 @@ begin
                         (case when p.diasvencidos <= p.diastraspasoavencida and p.tipoprestamoid in ('T1','T2','T3') then 'Vigente' else
                         (case when p.diasvencidos > p.diastraspasoavencida and p.tipoprestamoid in ('T1','T2','T3') then 'Vencido' else
                         (case when p.diasvencidos <= p.diastraspasoavencida and p.tipoprestamoid in ('R1','R2','R3') then 'Vigente' else
-                        (case when p.diasvencidos > p.diastraspasoavencida and p.tipoprestamoid in ('R1','R2','R3') then 'Vencido' end) end) end) end) end) end) as estacion1,pr.norenovaciones,pr.clavegarantia,pr.monto_garantia,devengadoanterior(p.prestamoid,p.fechacierre) as interesanterior,
+                        (case when p.diasvencidos > p.diastraspasoavencida and p.tipoprestamoid in ('R1','R2','R3') then 'Vencido' end) end) end) end) end) end) end) as estacion1,pr.norenovaciones,pr.clavegarantia,pr.monto_garantia,devengadoanterior(p.prestamoid,p.fechacierre) as interesanterior,
 			(case when  p.diasvencidos <= p.diastraspasoavencida then interesdevengadomenoravencido else 0 end) as devengadovigente,
                         (case when  p.diasvencidos > p.diastraspasoavencida then interesdevengadomenoravencido else 0 end) as devengadovencido,
 			p.primerincumplimiento,pr.fecha_1er_pago,
