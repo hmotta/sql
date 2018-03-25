@@ -42,6 +42,14 @@ begin
 		select fecha_corte,saldo_final into dfecha_corte,fsaldo_inicial from corte_linea where corteid=ncorteid;
 	end if;
 	
+	  r.num_mov:=0;
+	  r.concepto:='Saldo Incial';
+	  r.debe := 0;
+	  r.haber := 0;
+	  r.tipomov := 0;
+	  r.saldo := fsaldo_inicial;
+	  return next r;
+	  
     for r in
       select p.polizaid,0 as num_mov,p.fechapoliza as fecha,'' as concepto,0 as debe,0 as haber,0 as saldo
         from polizas p, movipolizas mp,tipoprestamo tp, prestamos pr
@@ -122,7 +130,7 @@ begin
           r.debe := fcapital_disp-(fseguro+fiva_seguro);
           r.haber := 0;
 		  r.tipomov := 1;
-		  fsaldo_inicial := fsaldo_inicial - r.debe + r.haber;
+		  fsaldo_inicial := fsaldo_inicial + r.debe - r.haber;
 		  r.saldo := fsaldo_inicial;
           return next r;
 		  nnum:=nnum+1;
@@ -134,7 +142,7 @@ begin
           r.debe := fseguro+fiva_seguro;
           r.haber := 0;
 		  r.tipomov := 2;
-		  fsaldo_inicial := fsaldo_inicial - r.debe + r.haber;
+		  fsaldo_inicial := fsaldo_inicial + r.debe - r.haber;
 		  r.saldo := fsaldo_inicial;
           return next r;
 		  nnum:=nnum+1;
@@ -145,11 +153,11 @@ begin
 		
 		if fpago_total<>0 then
 		  r.num_mov:=nnum;
-          r.concepto:='Pago';
+          r.concepto:='Pago a capital';
           r.debe := 0;
-          r.haber := fpago_total;
+          r.haber := fcapital_pag;
 		  r.tipomov := 3;
-		  fsaldo_inicial := fsaldo_inicial - r.debe + r.haber;
+		  fsaldo_inicial := fsaldo_inicial + r.debe - r.haber;
 		  r.saldo := fsaldo_inicial;
           return next r;
 		  nnum:=nnum+1;
@@ -157,6 +165,13 @@ begin
         
     end loop;
 
+		r.num_mov:=0;
+	  r.concepto:='Saldo Final';
+	  r.debe := 0;
+	  r.haber := 0;
+	  r.tipomov := 0;
+	  r.saldo := fsaldo_inicial;
+	  return next r;
 
 return;
 end

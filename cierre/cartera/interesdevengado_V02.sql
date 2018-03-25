@@ -77,7 +77,7 @@ begin
 		  
 		  if pdiasvencidos>pdiastraspasovencida then --si es un credito vencido 
 			if idiasinteres > pdiasvencidos then  --se verifica si el credito tiene pagos adelantados, si tiene pagos adelantados es decir los dias de interes son mayores a los dias vencidos 
-				idias = (idiasinteres - pdiascapital) + pdiastraspasovencida;
+				idias := (idiasinteres - pdiascapital) + pdiastraspasovencida;
 			else
 				idias := pdiastraspasovencida;
 			end if;
@@ -86,7 +86,7 @@ begin
 		  end if;
 	--se calcula el interes mayor a vencido
     else 
-		  if idiasinteres > pdiasvencidos then
+		  if idiasinteres > pdiasvencidos then --si tiene pagos adelantados
 				idias = idiasinteres - ( (idiasinteres - pdiascapital) + pdiastraspasovencida );
 				--reduciendo la formula anterior
 				--idias = pdiascapital - pdiastraspasovencida ;
