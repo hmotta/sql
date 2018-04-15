@@ -34,14 +34,16 @@ begin
 	fsaldo := 0;
 	nnum := 1;
 	
-	select fecha_otorga,montoprestamo into dfecha_corte,fsaldo_inicial from prestamos where prestamoid=pprestamoid;
+	select fecha_otorga into dfecha_corte from prestamos where prestamoid=pprestamoid;
+	fsaldo_inicial:=0;
 	
-	select corteid into ncorteid from corte_linea where lineaid=pprestamoid order by fecha_corte desc limit 1;
+	select corteid into ncorteid from corte_linea where lineaid=pprestamoid and fecha_corte<=current_date order by fecha_corte desc limit 1;
 	if FOUND then
 		--Ya hay un corte anterior, se cambian las variables iniciales
 		select fecha_corte,saldo_final into dfecha_corte,fsaldo_inicial from corte_linea where corteid=ncorteid;
 	end if;
-	
+	--dfecha_corte:='2018-03-25';
+	--raise notice 'Fecha Corte=%',dfecha_corte;
 	  r.num_mov:=0;
 	  r.concepto:='Saldo Incial';
 	  r.debe := 0;
@@ -58,7 +60,8 @@ begin
 			 mp.prestamoid = pr.prestamoid and
              tp.tipoprestamoid = pr.tipoprestamoid and p.fechapoliza between dfecha_corte and current_date group by p.polizaid,p.fechapoliza
     order by p.fechapoliza
-
+	
+	
     loop
         fcargo := 0;
         fabono := 0;
@@ -69,7 +72,6 @@ begin
 		 fnormal := 0;
 		 fmoratorio := 0;
 		 fiva := 0;
-
         for l in
           select mp.polizaid,t.cuentaactivo,t.cuentaintnormal,t.cuentaintmora,t.cuentaiva
             from movipolizas mp, prestamos pr, tipoprestamo t

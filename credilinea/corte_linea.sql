@@ -23,6 +23,8 @@ CREATE TABLE corte_linea
   fecha_pago_capital date,
   capital_pagado numeric,
   capital_vencido numeric,
+  interes_pagado numeric,
+  interes_vencido numeric,
   int_ord_dev_balance numeric,
   int_ord_dev_cuent_orden numeric,
   int_mor_dev_balance numeric,

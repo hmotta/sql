@@ -44,7 +44,8 @@ create type tregulatorioC451 as (
 	estatustiposocio integer,
 	relacionado integer,
 	funcionario integer,
-	renovado integer
+	renovado integer,
+	revolvente integer
 );
 CREATE or replace FUNCTION regulatorioC451(date) RETURNS SETOF tregulatorioC451
     AS $_$
@@ -97,7 +98,8 @@ select
 	(select estatustiposocio from generalesconceatucliente where socioid=s.socioid),
 	(select gc.estatustiposocio from  relacionados re,socio sx,generalesconceatucliente gc where sx.socioid=re.socioidem and  gc.socioid=sx.socioid  and  re.socioidem<>re.socioidre and socioidre<>0 and re.socioidre=s.socioid  limit 1),
 	(select e.puestoid from empleado e where e.puestoid in (1,2,3,4,5,6,11,12) and e.socioid=s.socioid),
-	p.renovado
+	p.renovado,
+	(select revolvente from tipoprestamo where tipoprestamoid=p.tipoprestamoid)
 	from precorte pr,prestamos p, socio s, sujeto su,domicilio d, colonia c, ciudadesmex cd, estadosmex ed
 	where pr.fechacierre=pfecha
 	and p.prestamoid = pr.prestamoid

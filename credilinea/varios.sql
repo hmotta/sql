@@ -11,3 +11,4 @@ insert into cargoprestamo (tipoprestamoid,cuentaid,descripcioncargo,tipocargo,po
 
 alter table prestamos add column pagominimo numeric not null default 0;
 alter table prestamos add column fechacorte date;
+alter table prestamos add column tipo_cartera_est varchar (20);

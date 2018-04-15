@@ -1,7 +1,7 @@
 CREATE or replace FUNCTION spspagomaximolinea(integer) RETURNS SETOF tcalculopago
     AS $_$
 declare
-  pprestamoid alias for $1;
+  lsolicitudprestamoid alias for $1;
   r tcalculopago%rowtype;
   rec record;
   
@@ -76,8 +76,8 @@ begin
 -- Calculo de interes Normal
 --
   icalculonormalid:=7;
-
-  select tasanormal,montoprestamo into ftasanormal,fsaldoinsoluto from prestamos where prestamoid=pprestamoid;
+select tasanormal,montoprestamo from prestamos where prestamoid=15801;
+  select tasanormal,montosolicitado into ftasanormal,fsaldoinsoluto from solicitudprestamo where solicitudprestamoid=lsolicitudprestamoid;
   
   idiasint := 30;
   raise notice 'updateando calculo................';
@@ -146,7 +146,7 @@ begin
   idiasint := 30;
 
 
-  r.prestamoid   := pprestamoid;
+  r.prestamoid   := lsolicitudprestamoid;
   r.amortizacion := 0;
   r.vencidas     := 0;
   r.diasint      := idiasint;

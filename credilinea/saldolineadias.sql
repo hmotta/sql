@@ -36,10 +36,11 @@ declare
 begin
 	fsaldo := 0;
 	ndias:=pfecha2-pfecha1;
+	raise notice 'ndias=%',ndias;
 	dfecha:=pfecha1;
 	xsaldo_inicial:=0;
 	if exists (select * from corte_linea where lineaid=pprestamoid and fecha_corte=pfecha1) then
-		select coalesce(saldo_inicial,0) into xsaldo_inicial from corte_linea where lineaid=pprestamoid and fecha_corte=pfecha1;
+		select coalesce(saldo_final,0) into xsaldo_inicial from corte_linea where lineaid=pprestamoid and fecha_corte=pfecha1;
 	end if;
     for i in 1..ndias loop
         r.dia:=i;
@@ -47,7 +48,7 @@ begin
 		r.saldo_inicial:=xsaldo_inicial;
 		select coalesce(sum(debe),0) into xcargo from movslinead(pprestamoid,dfecha,dfecha,0) where tipomov in (1,2);
 		r.cargo:=xcargo;
-		select coalesce(sum(debe),0) into xabono from movslinead(pprestamoid,dfecha,dfecha,0) where tipomov in (7);
+		select coalesce(sum(haber),0) into xabono from movslinead(pprestamoid,dfecha,dfecha,0) where tipomov in (7);
 		xcargo:=coalesce(xcargo,0);
 		xabono:=coalesce(xabono,0);
 		

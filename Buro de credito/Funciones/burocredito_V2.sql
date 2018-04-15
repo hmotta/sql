@@ -44,7 +44,10 @@ CREATE TYPE rformato AS (
 	cuentaanterior character varying(15),
 	fecha_primer_incum date,
 	monto_ultimo_pago numeric,
-	fecha_ult_pago_vencido date
+	fecha_ult_pago_vencido date,
+	revolvente integer,
+	pago_minimo numeric,
+	fecha_ultima_disp date
 );
 
 
@@ -111,12 +114,16 @@ begin
        pr.noamorvencidas,
        (select clave from carteraclaveburo where prestamoid=pr.prestamoid),
 	   (select cuentaanterior from cuentaanterior where prestamoid=pr.prestamoid),
-	   NULL as fecha_primer_incum,
+	   pr.primerincumplimiento as fecha_primer_incum,
 	   (select sum(debe) from movicaja mc,movipolizas mp where mp.movipolizaid = mc.movipolizaid and mc.tipomovimientoid='00' and mc.prestamoid=p.prestamoid group by mc.fechahora order by mc.fechahora desc limit 1) as monto_ultimo_pago,
-	   NULL as fecha_ult_pago_vencido
-       from precorte pr, prestamos p, socio s, solicitudingreso so, sujeto su, domicilio d, colonia col, ciudadesmex c, estadosmex e
+	   NULL as fecha_ult_pago_vencido,
+	   tp.revolvente,
+	   (case when tp.revolvente=1 then (select pago_minimo from corte_linea where lineaid=p.prestamoid and fecha_corte<=pfecha) else 0 end ) as pago_minimo,
+	   (select max(p1.fechapoliza) from polizas p1 natural join movipolizas mp1 inner join prestamos pr1 on (mp1.prestamoid=pr1.prestamoid) inner join tipoprestamo tp1 on (pr1.tipoprestamoid=tp1.tipoprestamoid) where mp1.prestamoid=p.prestamoid and (mp1.cuentaid = tp1.cuentaactivo or mp1.cuentaid=tp1.cuentaactivoren) and p1.fechapoliza<=pfecha and mp1.debe>0)
+       from precorte pr, prestamos p, tipoprestamo tp, socio s, solicitudingreso so, sujeto su, domicilio d, colonia col, ciudadesmex c, estadosmex e
        where pr.fechacierre = pfecha and  s.tiposocioid = '02' and so.personajuridicaid = 0 and 			 
              p.prestamoid = pr.prestamoid and 
+			 tp.tipoprestamoid = p.tipoprestamoid and 
 			 p.tipoprestamoid <> 'CAS' and
              s.socioid = p.socioid and
              su.sujetoid=s.sujetoid and
@@ -130,10 +137,14 @@ begin
     --i:=i+1;
 	raise notice 'procesando prestamoid: %',r.prestamoid;
 	if r.fecha_otorga >= '2011-05-25' then
-		if NOT exists(select * from clasificacioncartera natural join amortizaciones where prestamoid=r.prestamoid) then
-			select fechapago into r.fecha_primer_incum from calculadiasmora(r.prestamoid) where diasmora>0 and fechapago<=pfecha order by fechapago limit 1;
+		if r.revolvente=1 then
+			
 		else
-			select fechadepago into r.fecha_primer_incum from clasificacioncartera natural join amortizaciones where diasmora>0 and prestamoid=r.prestamoid and fechadepago<=pfecha order by fechadepago limit 1;
+			if NOT exists(select * from clasificacioncartera natural join amortizaciones where prestamoid=r.prestamoid) then
+				select fechapago into r.fecha_primer_incum from calculadiasmora(r.prestamoid) where diasmora>0 and fechapago<=pfecha order by fechapago limit 1;
+			else
+				select fechadepago into r.fecha_primer_incum from clasificacioncartera natural join amortizaciones where diasmora>0 and prestamoid=r.prestamoid and fechadepago<=pfecha order by fechadepago limit 1;
+			end if;
 		end if;
 	end if;
 

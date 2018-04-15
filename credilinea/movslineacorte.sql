@@ -26,13 +26,22 @@ begin
 	fsaldo := 0;
 	nnum := 1;
 	--se saca el ultimo corte que se se hizo
-	select saldo_final,fecha_corte into fsaldo_inicial,dfecha2 from corte_linea order by fecha_corte desc limit 1;
+	select saldo_final,fecha_corte into fsaldo_inicial,dfecha2 from corte_linea where fecha_corte<=current_date order by fecha_corte desc limit 1;
 	if FOUND then
 		--se saca el penultimo corte para emitir los movimientos en ese inter
 		select saldo_final,fecha_corte into fsaldo_inicial,dfecha1 from corte_linea where fecha_corte<dfecha2 order by fecha_corte desc limit 1;
 		if NOT FOUND then --si no existe es desde la creacion del prestamo
-			select fecha_otorga,montoprestamo into dfecha1,fsaldo_inicial from prestamos where prestamoid=pprestamoid;
+			select fecha_otorga,0 into dfecha1,fsaldo_inicial from prestamos where prestamoid=pprestamoid;
 		end if;
+		
+		  r.num_mov:=0;
+		  r.concepto:='Saldo Incial';
+		  r.debe := null;
+		  r.haber := null;
+		  r.tipomov := null;
+		  r.saldo := fsaldo_inicial;
+		  return next r;
+	  
 		for r in
 		  select p.polizaid,0 as num_mov,p.fechapoliza as fecha,'' as concepto,0 as debe,0 as haber,0 as saldo
 			from polizas p, movipolizas mp,tipoprestamo tp, prestamos pr
@@ -115,7 +124,7 @@ begin
 			  r.debe := fcapital_disp-(fseguro+fiva_seguro);
 			  r.haber := 0;
 			  r.tipomov := 1;
-			  fsaldo_inicial := fsaldo_inicial - r.debe + r.haber;
+			  fsaldo_inicial := fsaldo_inicial + r.debe - r.haber;
 			  r.saldo := fsaldo_inicial;
 			  return next r;
 			  nnum:=nnum+1;
@@ -127,7 +136,7 @@ begin
 			  r.debe := fseguro+fiva_seguro;
 			  r.haber := 0;
 			  r.tipomov := 2;
-			  fsaldo_inicial := fsaldo_inicial - r.debe + r.haber;
+			  fsaldo_inicial := fsaldo_inicial + r.debe - r.haber;
 			  r.saldo := fsaldo_inicial;
 			  return next r;
 			  nnum:=nnum+1;
@@ -142,7 +151,7 @@ begin
 				  r.debe := 0;
 				  r.haber := fpago_total;
 				  r.tipomov := 7;
-				  fsaldo_inicial := fsaldo_inicial - r.debe + fcapital_pag;
+				  fsaldo_inicial := fsaldo_inicial + r.debe - fcapital_pag;
 				  r.saldo := fsaldo_inicial;
 				  return next r;
 				  nnum:=nnum+1;
@@ -154,7 +163,7 @@ begin
 				  r.debe := 0;
 				  r.haber := fcapital_pag;
 				  r.tipomov := 3;
-				  fsaldo_inicial := fsaldo_inicial - r.debe + r.haber;
+				  fsaldo_inicial := fsaldo_inicial + r.debe - r.haber;
 				  r.saldo := fsaldo_inicial;
 				  return next r;
 				  nnum:=nnum+1;
@@ -196,6 +205,14 @@ begin
 		end loop;
 	end if;
 
+	  r.num_mov:=0;
+	  r.concepto:='Saldo Final';
+	  r.debe := null;
+	  r.haber := null;
+	  r.fecha := null;
+	  r.tipomov := null;
+	  r.saldo := fsaldo_inicial;
+	  return next r;
 return;
 end
 $_$

@@ -1,7 +1,8 @@
-CREATE or replace FUNCTION spspagomaximolinea(integer) RETURNS SETOF tcalculopago
+CREATE or replace FUNCTION spspagomaximodisposicion(integer,numeric) RETURNS SETOF tcalculopago
     AS $_$
 declare
   pprestamoid alias for $1;
+  pmonto_dispuesto alias for $2;
   r tcalculopago%rowtype;
   rec record;
   
@@ -86,7 +87,7 @@ begin
   raise notice 'ftasanormal=%',ftasanormal;
   
   update calculo
-     set saldopromdiario = fsaldoinsoluto,
+     set saldopromdiario = pmonto_dispuesto,
          dias = idiasint,
          tasaintnormal = ftasanormal,
          tasaintmoratorio = 0
@@ -117,7 +118,7 @@ begin
 
   update calculo
      set 
-         saldoinsoluto = fsaldoinsoluto
+         saldoinsoluto = pmonto_dispuesto
    where calculoid=icalculonormalid;
 
 
