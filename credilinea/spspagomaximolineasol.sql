@@ -1,4 +1,4 @@
-CREATE or replace FUNCTION spspagomaximolinea(integer) RETURNS SETOF tcalculopago
+CREATE or replace FUNCTION spspagomaximolineasol(integer) RETURNS SETOF tcalculopago
     AS $_$
 declare
   lsolicitudprestamoid alias for $1;
@@ -76,7 +76,7 @@ begin
 -- Calculo de interes Normal
 --
   icalculonormalid:=7;
-select tasanormal,montoprestamo from prestamos where prestamoid=15801;
+  --select tasanormal,montoprestamo from prestamos where prestamoid=15801;
   select tasanormal,montosolicitado into ftasanormal,fsaldoinsoluto from solicitudprestamo where solicitudprestamoid=lsolicitudprestamoid;
   
   idiasint := 30;
