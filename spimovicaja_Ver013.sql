@@ -115,7 +115,7 @@ begin
 
 	select debe,haber	into fdeposito,fretiro from movipolizas	where movipolizaid=pmovipolizaid;
 
-	select count(*) into iprestamosdeldia from prestamos where claveestadocredito<>'008' and fecha_otorga=current_date and prestamoid not in ((select distinct(prestamoid) from movibanco where prestamoid is not null) union (select distinct(prestamoid) from movicaja where estatusmovicaja='A' and tipomovimientoid='RM' and prestamoid is not null));
+	select count(*) into iprestamosdeldia from prestamos where claveestadocredito<>'008' and fecha_otorga=current_date and tipoprestamoid in (select tipoprestamoid from tipoprestamo where tipoprestamoid=prestamos.tipoprestamoid and revolvente=0) and prestamoid not in ((select distinct(prestamoid) from movibanco where prestamoid is not null) union (select distinct(prestamoid) from movicaja where estatusmovicaja='A' and tipomovimientoid='RM' and prestamoid is not null));
 																			 
 	if ptipomovimientoid='RE' and fretiro>0 and iprestamosdeldia>0 then
 		raise exception 'Retira tus créditos otorgados en el día, para poder realizar el retiro de dotación';	

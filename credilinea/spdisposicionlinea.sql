@@ -4,35 +4,15 @@ declare
   pprestamoid alias for $1;
   pmontodispuesto alias for $2;
 
-  fmontodispuesto numeric;
-  fAplicar numeric;
-  amor record;
-
-  lsaldoprestamo numeric;
-
-  finteres numeric;
-  fintpag numeric;
+  xsaldo_disponible numeric;
+  xsaldo_adeudo numeric;
   
 begin
+	select spssaldoadeudolinea into xsaldo_adeudo from spssaldoadeudolinea(pprestamoid);
+	select spssaldodisplinea into xsaldo_disponible from spssaldodisplinea(pprestamoid);
 
-  fmontodispuesto := round(pmontodispuesto,2);
-  raise notice ' Estoy en La funcion spmontodispuestoprestamo!!! ';
---
--- Actualizar tabla de prestamos, disminuir el saldo del prestamo y
--- actualizar fecha de ultimo pago, importante ya que a partir de ahi calculamos
--- el interes normal
---
-
-  update prestamos
-     set saldoprestamo = saldoprestamo - fmontodispuesto,
-         fechaultimopago = now()
-   where prestamoid=pprestamoid;
-
-  select saldoprestamo into lsaldoprestamo
-   from prestamos where prestamoid=pprestamoid;
-
-  if lsaldoprestamo<0 then
-     raise exception 'La disposicion es mayor al saldo de la linea';
+  if xsaldo_disponible<pmontodispuesto then
+     raise exception 'La disposicion es mayor al saldo disponible de la linea';
   end if;
 
 return 1;

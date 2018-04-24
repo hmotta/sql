@@ -1,4 +1,5 @@
 alter table tipoprestamo add column revolvente integer not null default 0;
+alter table tipoprestamo add column disp_minima integer not null default 0;
 alter table solicitudprestamo add column diacorte int;
 alter table calculo add column saldopromdiario numeric;
 insert into calculo values (6,'Pago Minimo Cap',0,0,0,0,'saldoinsoluto*0.05',0,0,0);
@@ -12,3 +13,4 @@ insert into cargoprestamo (tipoprestamoid,cuentaid,descripcioncargo,tipocargo,po
 alter table prestamos add column pagominimo numeric not null default 0;
 alter table prestamos add column fechacorte date;
 alter table prestamos add column tipo_cartera_est varchar (20);
+
