@@ -39,6 +39,7 @@ declare
 	ssucid character varying(4);
 	dfechaultimapagada date;
 	ndiasinteres integer;
+	nrevolvente integer;
 begin
 	fechaprecorte:=pfechacierre-cast(date_part('day',pfechacierre) as int);
 	raise notice ' Fecha Inicial:  %  ',fechaprecorte;
@@ -80,23 +81,29 @@ begin
 				and p.saldoprestamo>0
 				and p.prestamoid not in (select prestamoid from prestamos where referenciaprestamo in (select substr(referenciaprestamo,1,7) from prestamos where tipoprestamoid='CAS'))
 				group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,p.fecha_otorga,p.dias_de_cobro,p.meses_de_cobro,
-				p.clavefinalidad,p.fecha_vencimiento,p.referenciaprestamo,p.tasanormal,p.tasa_moratoria,p.socioid,s.clavesocioint,su.sujetoid,su.nombre,su.paterno,su.materno,tp.desctipoprestamo,p.saldoprestamo
+				p.clavefinalidad,p.fecha_vencimiento,p.referenciaprestamo,p.tasanormal,p.tasa_moratoria,p.socioid,s.clavesocioint,su.sujetoid,su.nombre,su.paterno,su.materno,tp.desctipoprestamo,p.saldoprestamo,tp.revolvente
 				order by s.clavesocioint
 		loop
 			r.sucursal:=ssucid;
+			select revolvente into nrevolvente from tipoprestamo inner join prestamos on (tipoprestamo.tipoprestamoid=prestamos.tipoprestamoid);
+			
 			select fechaultimapagada into dfechaultimapagada from fechaultimapagada(r.prestamoid,pfechacierre);
 			---dias mora cierre actual-----
 			select saldoprestamo,diasvencidos into r.saldo_prestamo_actual,r.dias_mora from precorte where prestamoid=r.prestamoid and fechacierre=fechacierre1;
 			select saldoprestamo,diasvencidos into r.saldo_prestamo_precierre,r.dias_mora_precierre from precorte where prestamoid=r.prestamoid and fechacierre=fechaprecorte;
 			select fecha_1er_pago,dias_de_cobro,meses_de_cobro into dfecha_1er_pago,idias_de_cobro,imeses_de_cobro from prestamos where prestamoid=r.prestamoid;
-			frecuencia:=(case when dfecha_1er_pago > dfechaultimapagada then dfecha_1er_pago-r.fecha_otorgamiento else (case when idias_de_cobro > 0 then idias_de_cobro else imeses_de_cobro*30 end) end);
+			if nrevolvente=1 then
+				frecuencia:=30;
+			else
+				frecuencia:=(case when dfecha_1er_pago > dfechaultimapagada then dfecha_1er_pago-r.fecha_otorgamiento else (case when idias_de_cobro > 0 then idias_de_cobro else imeses_de_cobro*30 end) end);
+			end if;
 			--raise notice ' nombre:  %  ',r.nombre;
 			--raise notice 'dias mora cierre:  %  ',r.dias_mora_precierre;
 			--raise notice 'frecuencia:  %  ',frecuencia;
-			if (r.dias_mora_precierre>=21 and frecuencia=7) or (r.dias_mora_precierre>=42 and frecuencia=14) or  (r.			dias_mora_precierre>=45 and frecuencia=15) or (r.dias_mora_precierre>=90)then
+			if (nrevolvente=1 and r.dias_mora_precierre>=60) or (nrevolvente=0 and ((r.dias_mora_precierre>=21 and frecuencia=7) or (r.dias_mora_precierre>=42 and frecuencia=14) or  (r.dias_mora_precierre>=45 and frecuencia=15) or (r.dias_mora_precierre>=90)))then
 				r.categoria_mora_precierre:='D.VENCIDA';
 			end if;
-			if (r.dias_mora_precierre<90 and frecuencia<>7 and frecuencia<>15 and frecuencia<>14) or (r.dias_mora_precierre<21 and frecuencia=7) or (r.dias_mora_precierre<45 and frecuencia=15) or (r.dias_mora_precierre<42 and frecuencia=14)then
+			if (nrevolvente=1 and r.dias_mora_precierre<60) or (nrevolvente=0 and ((r.dias_mora_precierre<90 and frecuencia<>7 and frecuencia<>15 and frecuencia<>14) or (r.dias_mora_precierre<21 and frecuencia=7) or (r.dias_mora_precierre<45 and frecuencia=15) or (r.dias_mora_precierre<42 and frecuencia=14)))then
 				r.categoria_mora_precierre:='C.MOROSA';
 			end if;
 			if r.dias_mora_precierre=0 then
@@ -107,10 +114,10 @@ begin
 				r.categoria_mora_precierre:='A.NUEVA';
 			end if;
 			-------categoria cartera cierre
-			if (r.dias_mora>=21 and frecuencia=7) or (r.dias_mora>=45 and frecuencia=15)or (r.dias_mora>=42 and frecuencia=14) or (r.dias_mora>=90)then
+			if (nrevolvente=1 and r.dias_mora>=60) or (nrevolvente=0 and ((r.dias_mora>=21 and frecuencia=7) or (r.dias_mora>=45 and frecuencia=15)or (r.dias_mora>=42 and frecuencia=14) or (r.dias_mora>=90))) then
 				r.categoria_mora_actual:='D.VENCIDA';
 			end if;
-			if (r.dias_mora<90 and frecuencia<>7 and frecuencia<>15 and frecuencia<>14) or (r.dias_mora<21 and frecuencia=7) or (r.dias_mora<45 and frecuencia=15) or(r.dias_mora<42 and frecuencia=14) then
+			if (nrevolvente=1 and r.dias_mora<60) or (nrevolvente=0 and ((r.dias_mora<90 and frecuencia<>7 and frecuencia<>15 and frecuencia<>14) or (r.dias_mora<21 and frecuencia=7) or (r.dias_mora<45 and frecuencia=15) or(r.dias_mora<42 and frecuencia=14))) then
 				r.categoria_mora_actual:='C.MOROSA';
 			end if;
 			if r.dias_mora=0 then
@@ -121,7 +128,11 @@ begin
 			end if;
 			select paterno||' '||materno||' '||nombre into r.cobrador from sujeto where sujetoid = (select sujetoid from cobradores natural join carteracobrador where prestamoid=r.prestamoid group by sujetoid);
 			select cobradorid into r.cobradorid from carteracobrador where prestamoid=r.prestamoid;
-			 r.frecuencia:=(case when dfecha_1er_pago > dfechaultimapagada then dfecha_1er_pago-r.fecha_otorgamiento else (case when idias_de_cobro > 0 then idias_de_cobro else imeses_de_cobro*30 end) end);
+			if nrevolvente=0 then
+				r.frecuencia:=30;
+			else
+				r.frecuencia:=(case when dfecha_1er_pago > dfechaultimapagada then dfecha_1er_pago-r.fecha_otorgamiento else (case when idias_de_cobro > 0 then idias_de_cobro else imeses_de_cobro*30 end) end);
+			end if;
 			select sl.grupo into r.grupo from solicitudingreso sl, prestamos p, socio s where sl.socioid=s.socioid and p.socioid=s.socioid and p.prestamoid=r.prestamoid; 																																									
 			return next r;
 		
@@ -140,7 +151,7 @@ begin
 				p.fecha_otorga,
 				p.montoprestamo,
 				--(case when (pfechacierre-fechaultimapagada(p.prestamoid,pfechacierre))-(case when p.dias_de_cobro > 0 then p.dias_de_cobro else p.meses_de_cobro*30 end) > 0 then (pfechacierre-fechaultimapagada(p.prestamoid,pfechacierre))-(case when p.dias_de_cobro > 0 then p.dias_de_cobro else p.meses_de_cobro*30 end) else 0 end) as dias,
-				(select diasmoracapital from diasmoracapital(p.prestamoid,pfechacierre)) as dias,--case when (pfechacierre-(select fechaprimeradeudo from fechaprimeradeudo(p.prestamoid,pfechacierre))) > 0 then (pfechacierre-(select fechaprimeradeudo from fechaprimeradeudo(p.prestamoid,pfechacierre))) else 0 end) as dias,
+				(case when tp.revolvente=1 then (select dias_mora_linea from dias_mora_linea(p.prestamoid)) else (select diasmoracapital from diasmoracapital(p.prestamoid,pfechacierre)) end) as dias,--case when (pfechacierre-(select fechaprimeradeudo from fechaprimeradeudo(p.prestamoid,pfechacierre))) > 0 then (pfechacierre-(select fechaprimeradeudo from fechaprimeradeudo(p.prestamoid,pfechacierre))) else 0 end) as dias,
 				--Categoria_mora
 				'' as cat_mora,
 				--saldo_prestamo,
@@ -164,10 +175,11 @@ begin
 				and p.saldoprestamo>0
 				and p.prestamoid not in (select prestamoid from prestamos where referenciaprestamo in (select substr(referenciaprestamo,1,7) from prestamos where tipoprestamoid='CAS'))
 				group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,p.fecha_otorga,p.dias_de_cobro,p.meses_de_cobro,
-				p.clavefinalidad,p.fecha_vencimiento,p.referenciaprestamo,p.tasanormal,p.tasa_moratoria,p.socioid,s.clavesocioint,su.sujetoid,su.nombre,su.paterno,su.materno,tp.desctipoprestamo,p.saldoprestamo
+				p.clavefinalidad,p.fecha_vencimiento,p.referenciaprestamo,p.tasanormal,p.tasa_moratoria,p.socioid,s.clavesocioint,su.sujetoid,su.nombre,su.paterno,su.materno,tp.desctipoprestamo,p.saldoprestamo,tp.revolvente
 				order by s.clavesocioint
 		loop
 			r.sucursal:=ssucid;
+			select revolvente into nrevolvente from tipoprestamo inner join prestamos on (tipoprestamo.tipoprestamoid=prestamos.tipoprestamoid);
 			select fechaultimapagada into dfechaultimapagada from fechaultimapagada(r.prestamoid,pfechacierre);
 			
 			-- select (case when diasvencidos = 0 then 'B.VIGENTE' else
@@ -177,19 +189,24 @@ begin
 			-------categoria cartera cierre
 			select saldoprestamo,diasvencidos into r.saldo_prestamo_precierre,r.dias_mora_precierre from precorte where prestamoid=r.prestamoid and fechacierre=fechaprecorte;
 			select fecha_1er_pago,dias_de_cobro,meses_de_cobro into dfecha_1er_pago,idias_de_cobro,imeses_de_cobro from prestamos where prestamoid=r.prestamoid;
-			frecuencia:=(case when dfecha_1er_pago > dfechaultimapagada then dfecha_1er_pago-r.fecha_otorgamiento else (case when idias_de_cobro > 0 then idias_de_cobro else imeses_de_cobro*30 end) end);
+			if nrevolvente=1 then
+				frecuencia:=30;
+			else
+				frecuencia:=(case when dfecha_1er_pago > dfechaultimapagada then dfecha_1er_pago-r.fecha_otorgamiento else (case when idias_de_cobro > 0 then idias_de_cobro else imeses_de_cobro*30 end) end);
+			end if;
+			
 			select diasmorainteres into ndiasinteres from diasmorainteres(r.prestamoid,pfechacierre,dfechaultimapagada,frecuencia);
-			if ndiasinteres>r.dias_mora then
+			if nrevolvente=0 and ndiasinteres>r.dias_mora then
 				r.dias_mora:=ndiasinteres;
 			end if;
 			raise notice ' dias de interes: -------->  %  ',ndiasinteres;
 			raise notice ' nombre:  %  ',r.nombre;
 			raise notice 'dias mora cierre:  %  ',r.dias_mora_precierre;
 			raise notice 'frecuencia:  %  ',frecuencia;
-			if (r.dias_mora_precierre>=21 and frecuencia=7) or (r.dias_mora_precierre>=42 and frecuencia=14) or (r.dias_mora_precierre>=45 and frecuencia=15) or (r.dias_mora_precierre>=90)then
+			if (nrevolvente=1 and r.dias_mora_precierre>=60) or (nrevolvente=0 and ((r.dias_mora_precierre>=21 and frecuencia=7) or (r.dias_mora_precierre>=42 and frecuencia=14) or (r.dias_mora_precierre>=45 and frecuencia=15) or (r.dias_mora_precierre>=90)))then
 				r.categoria_mora_precierre:='D.VENCIDA';
 			end if;
-			if (r.dias_mora_precierre<90 and frecuencia<>7 and frecuencia<>15 and frecuencia<>14) or (r.dias_mora_precierre<21 and frecuencia=7) or (r.dias_mora_precierre<42 and frecuencia=14) or (r.dias_mora_precierre<45 and frecuencia=15)then
+			if (nrevolvente=1 and r.dias_mora_precierre<60) or (nrevolvente=0 and ((r.dias_mora_precierre<90 and frecuencia<>7 and frecuencia<>15 and frecuencia<>14) or (r.dias_mora_precierre<21 and frecuencia=7) or (r.dias_mora_precierre<42 and frecuencia=14) or (r.dias_mora_precierre<45 and frecuencia=15)))then
 				r.categoria_mora_precierre:='C.MOROSA';
 			end if;
 			if r.dias_mora_precierre=0 then
@@ -201,10 +218,10 @@ begin
 			end if;
 			-------categoria cartera cierre
 
-			if (r.dias_mora>=21 and frecuencia=7) or (r.dias_mora>=42 and frecuencia=14) or (r.dias_mora>=45 and frecuencia=15) or (r.dias_mora>=90)then
+			if (nrevolvente=1 and r.dias_mora>=60) or (nrevolvente=0 and ((r.dias_mora>=21 and frecuencia=7) or (r.dias_mora>=42 and frecuencia=14) or (r.dias_mora>=45 and frecuencia=15) or (r.dias_mora>=90))) then
 				r.categoria_mora_actual:='D.VENCIDA';
 			end if;
-			if (r.dias_mora<90 and frecuencia<>7 and frecuencia<>15 and frecuencia<>14) or (r.dias_mora<21 and frecuencia=7) or (r.dias_mora<42 and frecuencia=14) or (r.dias_mora<45 and frecuencia=15)then
+			if (nrevolvente=1 and r.dias_mora<60) or (nrevolvente=0 and ((r.dias_mora<90 and frecuencia<>7 and frecuencia<>15 and frecuencia<>14) or (r.dias_mora<21 and frecuencia=7) or (r.dias_mora<42 and frecuencia=14) or (r.dias_mora<45 and frecuencia=15)))then
 				r.categoria_mora_actual:='C.MOROSA';
 			end if;
 			if r.dias_mora=0 then
@@ -216,7 +233,11 @@ begin
 			end if;
 			select paterno||' '||materno||' '||nombre into r.cobrador from sujeto where sujetoid = (select sujetoid from cobradores natural join carteracobrador where prestamoid=r.prestamoid group by sujetoid);
 			select cobradorid into r.cobradorid from carteracobrador where prestamoid=r.prestamoid;
-			r.frecuencia= (case when dfecha_1er_pago > dfechaultimapagada then dfecha_1er_pago-r.fecha_otorgamiento else (case when idias_de_cobro > 0 then idias_de_cobro else imeses_de_cobro*30 end) end);
+			if nrevolvente=1 then
+				r.frecuencia=30;
+			else
+				r.frecuencia= (case when dfecha_1er_pago > dfechaultimapagada then dfecha_1er_pago-r.fecha_otorgamiento else (case when idias_de_cobro > 0 then idias_de_cobro else imeses_de_cobro*30 end) end);
+			end if;
 			select sl.grupo into r.grupo from solicitudingreso sl, prestamos p, socio s where sl.socioid=s.socioid and p.socioid=s.socioid and p.prestamoid=r.prestamoid;
 			return next r;
 		end loop;
