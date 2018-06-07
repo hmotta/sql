@@ -59,7 +59,8 @@ begin
   from prestamos 
   where referenciaprestamo=preferenciaprestamo;
    
-   
+  select cuentadeposito into fcuentacobranzas from tipomovimiento where tipomovimientoid='0A';
+	
 --obtener comisiones
 	select polizaid,substr(referenciamovi,4,5) as referencia,substr(referenciamovi,1,2) as serie 
 	into fpolizaid, freferen, fserie
@@ -202,8 +203,9 @@ begin
 
 
   end if;
-  
+  raise notice 'Recorriendo pagos...';
   r.comisiones := 0;
+  
   for l in
     select p.fechapoliza,p.seriepoliza,p.numero_poliza,
            m.referenciacaja,
@@ -235,20 +237,11 @@ begin
      where polizaid = l.polizaid and
            cuentaid = l.cuentaiva;
 
-	select polizaid
-    into fpolizaid
-    from movicaja
-    where referenciacaja=l.referenciacaja and seriecaja=l.seriepoliza and tipomovimientoid='0A';
-	
-	select cuentadeposito 
-    into fcuentacobranzas
-    from tipomovimiento 
-    where tipomovimientoid='0A';
-	
-	select coalesce(sum(debe)-sum(haber),0)*-1 
-	into fcobranzas
-	from movipolizas 
-	where cuentaid = fcuentacobranzas and polizaid=fpolizaid;
+	--Gastos de Cobranza
+	select polizaid into fpolizaid from movicaja where referenciacaja=l.referenciacaja and seriecaja=l.seriepoliza and tipomovimientoid='0A';
+	if FOUND then
+	 select coalesce(sum(debe)-sum(haber),0)*-1 into fcobranzas from movipolizas where cuentaid = fcuentacobranzas and polizaid=fpolizaid;
+	end if;
 	
     if fcapital+finteres+fmoratorio+fiva <> 0 then 
        r.fecha := l.fechapoliza;
