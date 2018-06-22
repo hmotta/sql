@@ -5,6 +5,8 @@ create type pagoslinea as (
 	total_pago numeric
 	
 );
+
+--Se utilizar para el analisis de crédito, simula un pago maximo que tendria la linea
 CREATE or replace FUNCTION simulapagosdisposicion(integer,numeric) RETURNS SETOF pagoslinea
     AS $_$
 declare

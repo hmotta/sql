@@ -1,7 +1,8 @@
-CREATE or replace FUNCTION spscalculopago_linea(integer) RETURNS SETOF tcalculopago
+CREATE or replace FUNCTION spscalculopago_linea(integer,date) RETURNS SETOF tcalculopago
     AS $_$
 declare
   pprestamoid alias for $1;
+  pfecha alias for $2;
   r tcalculopago%rowtype;
   
   rec record;
@@ -12,6 +13,7 @@ declare
   ndias_mora integer;
   dfecha_limite date;
   dfecha_corte date;
+  dfecha_ortorga date;
   
   xcapital_corte numeric;
   xinteres_corte numeric;
@@ -27,10 +29,14 @@ declare
   
   xcapital_pagado_actual numeric;
   xinteres_pagado_actual numeric;
-  
+  xcapital_vencido numeric;
   xsaldo_linea numeric;
   
   xsaldo_promedio numeric;
+  
+  ndias_interes integer;
+  dfecha_ultimo_pago_int date;
+
 begin
 	xcapital_corte:=0;
 	xinteres_corte:=0;
@@ -41,15 +47,16 @@ begin
 	xcapital_pagado_actual:=0;
     xinteres_pagado_actual:=0;
 	xcapital_pagar:=0;
+	xcapital_vencido:=0;
     xinteres_pagar:=0;
     xmoratorio_pagar:=0;
-	xsaldo_promedio:=0;
 	
-	select saldoprestamo into xsaldo_linea from prestamos where prestamoid=pprestamoid;
+	select fecha_otorga into dfecha_ortorga from prestamos where prestamoid=pprestamoid;
+	select spssaldoadeudolinea into xsaldo_linea from spssaldoadeudolinea(pprestamoid);
 	--
 	-- Verifica si hay un corte anterior 
 	--
-	select corteid into ncorte_anterior_id from corte_linea where lineaid=pprestamoid and fecha_corte<=current_date order by fecha_corte desc limit 1;
+	select corteid into ncorte_anterior_id from corte_linea where lineaid=pprestamoid and fecha_corte<=pfecha order by fecha_corte desc limit 1;
 	if NOT FOUND then
 		--No hay corte anterior ( todo es nuevo )
 		r.prestamoid   := pprestamoid;
@@ -62,15 +69,14 @@ begin
 		return next r;
 	else
 		--Ya hay un corte anterior
+		--El capital vencido lo meti en el corte para sumarlo al pago minimo y dejarlo estatico hasta el dia 10
 		select 
-			saldo_promedio,
 			fecha_limite,
 			fecha_corte,
-			(capital+coalesce(capital_vencido,0)),
-			(int_ordinario+coalesce(interes_vencido,0)),
+			(capital+coalesce(capital_vencido,0)-coalesce(capital_pagado,0)),
+			int_ordinario,
 			int_moratorio 
 			into 
-			xsaldo_promedio,
 			dfecha_limite,
 			dfecha_corte,
 			xcapital_corte,
@@ -78,60 +84,32 @@ begin
 			xmoratorio_corte 
 		from corte_linea where corteid=ncorte_anterior_id;
 		
-		
-		--
-		-- ====================== Verifico los pagos realizados en el periodo (si lo hay) ===========================
-		--
-		-- Capital pagado en el periodo
-		select coalesce(sum(haber),0) into xcapital_pagado_actual from movslinead(pprestamoid,dfecha_corte,current_date,1) where tipomov=3;
-		-- Interes pagado en el periodo
-		select coalesce(sum(haber),0) into xinteres_pagado_actual from movslinead(pprestamoid,dfecha_corte,current_date,1) where tipomov=4;
-		
-		--a lo calculado del corte se le resta los pagos que realizó en el periodo si es que los hay
-		raise notice 'xcapital_corte=% xcapital_pagado_actual=%',xcapital_corte,xcapital_pagado_actual;
-		xcapital_pagar:=xcapital_corte-xcapital_pagado_actual;
-		raise notice 'xinteres_corte=% xinteres_pagado_actual=%',xinteres_corte,xinteres_pagado_actual;
-		xinteres_pagar:=xinteres_corte-xinteres_pagado_actual;
-		
-		if xcapital_pagar>0 then
-			--
-			-- ====================== Calculo del moratorio del periodo (si lo hay) ===========================
-			--
-			ndias_mora:= current_date - dfecha_limite;
-			if ndias_mora>0 then --hay un monto pendiente de capital, solo verificar que no esté en mora, si lo esta se adiciona
-				select tasa_moratoria into xtasa_moratoria from prestamos where prestamoid=pprestamoid;
-				
-				update calculo set amortizacion=xcapital_corte,dias=ndias_mora,tasaintnormal=xtasa_moratoria where calculoid=2;
-				SELECT formula into sformula from calculo where calculoid=2;
-				for rec in execute
-				  'SELECT round(' || sformula || ',2) as monto FROM calculo where calculoid='||2
-				loop
-				  xmoratorio_adicional := rec.monto;
-				end loop;
-			end if;
-			
-			xmoratorio_pagar:=xmoratorio_corte+xmoratorio_adicional;
-			xiva:= round((xinteres_pagar+xmoratorio_pagar)*0.16,2);
-			
-			r.prestamoid   := pprestamoid;
-			r.amortizacion := xsaldo_promedio;
-			r.capital      := round(xcapital_pagar,2);
-			r.interes      := round(xinteres_pagar,2);
-			r.moratorio    := round(xmoratorio_pagar,2);
-			r.iva          := round(xiva,2);
-			r.total        := round(xcapital_pagar,2)+round(xinteres_pagar,2)+round(xmoratorio_pagar,2)+round(xiva,2);
-			return next r;
-		else
-			r.prestamoid   := pprestamoid;
-			r.amortizacion := 0;
-			r.capital      := round(xsaldo_linea,2);
-			r.interes      := 0;
-			r.moratorio    := 0;
-			r.iva          := 0;
-			r.total        := 0;
-			return next r;
+		if pfecha>dfecha_limite then --Si el cálculo es mayor a la fecha limite ya le empieza a cobrar intereses
+			--El cálculo de interes cambio a petición de la sociedad. ex por día
+			select sum(interes_diario) into xinteres_pagar from calcula_int_ord_linea(pprestamoid,pfecha);
+			xiva:=xiva+round(xinteres_pagar*0.16,2);
 		end if;
 		
+		if xcapital_corte>0 then
+			--Calculo del moratorio del periodo (si lo hay)
+			xcapital_pagar:=xcapital_corte;
+			select dias_mora_linea into ndias_mora from dias_mora_linea(pprestamoid,pfecha);
+			select calcula_int_mor_linea into xmoratorio_pagar from calcula_int_mor_linea(pprestamoid,pfecha);
+			xiva:= xiva+round(xmoratorio_pagar*0.16,2);
+		else
+			xcapital_pagar:=xsaldo_linea;
+		end if;
+		
+		
+		
+		r.prestamoid   := pprestamoid;
+		r.amortizacion := 0;
+		r.capital      := round(xcapital_pagar,2);
+		r.interes      := round(xinteres_pagar,2);
+		r.moratorio    := round(xmoratorio_pagar,2);
+		r.iva          := round(xiva,2);
+		r.total        := round(xcapital_pagar,2)+round(xinteres_pagar,2)+round(xmoratorio_pagar,2)+round(xiva,2);
+		return next r;
 		
 	end if;
 	--ncorte_anterior_id:=coalesce(ncorte_anterior_id,0);

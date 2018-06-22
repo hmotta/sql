@@ -65,4 +65,4 @@ begin
 return;
 end
 $_$
-    LANGUAGE plpgsql SECURITY DEFINER;
+    LANGUAGE plpgsql SECURITY DEFINER;	

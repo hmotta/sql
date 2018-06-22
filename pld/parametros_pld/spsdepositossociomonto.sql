@@ -11,6 +11,7 @@ declare
 begin
 	xSuma:=0;
 	select spsdolarvalor into xdolar_valor from spsdolarvalor(pfechai);
+	raise notice 'xdolar_valor=%',xdolar_valor;
 	for r in 
 		select debe as monto_operacion from movicaja mc, movipolizas mp, polizas p where mc.tipomovimientoid not in ('WU','RG','CH','RE','AG','LE','BU','SM','SI','SQ','SB','ST','TC','MV','IU','OP','MC','CM','SK','CF','TU','ET','ID','00') and mp.movipolizaid=mc.movipolizaid and p.polizaid=mc.polizaid and p.fechapoliza between pfechai and pfechaf and p.seriepoliza not in ('ZA','WW','Z') and mc.efectivo=1 and mc.socioid=dsocioid and debe>=5000.00
 	loop 

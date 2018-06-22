@@ -1,17 +1,34 @@
-CREATE or replace FUNCTION dias_mora_linea(integer) RETURNS integer
+CREATE or replace FUNCTION dias_mora_linea(integer,date) RETURNS numeric
     AS $_$
 declare
-  pprestamoid alias for $1;
-  ndias_mora integer;
-  dfecha_adeudo date;
-  begin
-	select fecha_limite into dfecha_adeudo from corte_linea where lineaid=pprestamoid and (capital-capital_pagado)>0 order by fecha_corte limit 1;
-	dfecha_adeudo:=coalesce(dfecha_adeudo,current_date);
-	ndias_mora:=current_date - dfecha_adeudo;
-	if ndias_mora<0 then
-		ndias_mora:=0;
+	pprestamoid alias for $1;
+	pfecha alias for $2;
+    
+	dfecha_otorga date;
+	dultimo_pago_capital date;
+	dfecha_primer_adeudo date;
+	ndias_capital integer;
+begin
+	
+	--Se obtiene la fecha de ultimo pago a capital
+	select max(po.fechapoliza) into dultimo_pago_capital from polizas po,movipolizas mp,prestamos p,tipoprestamo tp  where po.polizaid=mp.polizaid and mp.prestamoid=p.prestamoid and p.tipoprestamoid=tp.tipoprestamoid and mp.haber>0 and p.prestamoid=pprestamoid and (mp.cuentaid = tp.cuentaactivo or mp.cuentaid = tp.cuentaactivoren) and po.fechapoliza<=pfecha;
+	raise notice 'dultimo_pago_capital=%',dultimo_pago_capital;
+	
+	select fecha_limite into dfecha_primer_adeudo from corte_linea where lineaid=pprestamoid and fecha_limite<pfecha and (capital-capital_pagado)>0 order by fecha_limite limit 1;
+	
+	if dultimo_pago_capital>dfecha_primer_adeudo then
+		ndias_capital := pfecha - dultimo_pago_capital;
+	else
+		ndias_capital := pfecha - dfecha_primer_adeudo;
 	end if;
-  return ndias_mora;
+
+	if ndias_capital<0 then
+		ndias_capital := 0;
+	end if;
+	
+	
+	return ndias_capital;
+
 end
 $_$
     LANGUAGE plpgsql SECURITY DEFINER;
