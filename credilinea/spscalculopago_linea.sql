@@ -73,7 +73,8 @@ begin
 		select 
 			fecha_limite,
 			fecha_corte,
-			(capital+coalesce(capital_vencido,0)-coalesce(capital_pagado,0)),
+			(capital-capital_pagado),
+			capital_vencido,
 			int_ordinario,
 			int_moratorio 
 			into 
@@ -92,7 +93,7 @@ begin
 		
 		if xcapital_corte>0 then
 			--Calculo del moratorio del periodo (si lo hay)
-			xcapital_pagar:=xcapital_corte;
+			xcapital_pagar:=xcapital_corte+xcapital_vencido;
 			select dias_mora_linea into ndias_mora from dias_mora_linea(pprestamoid,pfecha);
 			select calcula_int_mor_linea into xmoratorio_pagar from calcula_int_mor_linea(pprestamoid,pfecha);
 			xiva:= xiva+round(xmoratorio_pagar*0.16,2);

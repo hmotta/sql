@@ -131,9 +131,10 @@ declare
 	ndias_capital:=coalesce(ndias_capital,0);
 	
 	--Saco los dias de interes que debe
-	select max(num) into ndias_interes from calcula_int_ord_linea(pprestamoid,pfecha);
-	ndias_interes:=coalesce(ndias_interes,0);
-	
+	if xordinario>0 then
+		select max(num) into ndias_interes from calcula_int_ord_linea(pprestamoid,pfecha);
+		ndias_interes:=coalesce(ndias_interes,0);
+	end if;
 	
 	insert into corte_linea (lineaid,fecha_corte,dias_desde_corte_ant,saldo_inicial,num_disposiciones,monto_diposiciones,pagos,saldo_final,capital,capital_vencido,int_ordinario,int_moratorio,iva,comisiones,pago_minimo,fecha_limite,dias_capital,dias_interes,fecha_pago_capital,capital_pagado,estatus) values (pprestamoid,pfecha,ndias_corte,xsaldo_inicial,nnumdisp,xdisposiciones,xpagos,xsaldo_final,xcapital,xcapital_vencido,xordinario,xmoratorio,xiva,0,xpago_minimo,dfecha_limite_pago,ndias_capital,ndias_interes,null,0,1);
 	
