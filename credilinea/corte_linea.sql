@@ -22,7 +22,7 @@ CREATE TABLE corte_linea
   dias_capital integer,
   dias_interes integer,
   --fecha_pago_interes date,
-  --fecha_pago_capital date,
+  fecha_pago_capital date,
   capital_pagado numeric,
   --interes_pagado numeric,
   --interes_vencido numeric,

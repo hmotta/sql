@@ -114,7 +114,7 @@ begin
 	end if;
 	--ncorte_anterior_id:=coalesce(ncorte_anterior_id,0);
 
-	
+	perform verifica_bloqueo_linea(pprestamoid);
 	return;
 end
 $_$

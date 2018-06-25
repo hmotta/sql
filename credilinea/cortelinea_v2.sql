@@ -102,7 +102,7 @@ declare
 	-- Capital Vencido
 	--
 	--Si tiene un capital pendiente de pago se le suma al pago minimo
-	select sum(capital-capital_pagado) into xcapital_vencido from corte_linea where lineaid=pprestamoid and (capital-capital_pagado)>0 group by fecha_corte order by fecha_corte limit 1;
+	select sum(capital-capital_pagado) into xcapital_vencido from corte_linea where lineaid=pprestamoid and (capital-capital_pagado)>0 and fecha_limite<=pfecha;
 	xcapital_vencido:=coalesce(xcapital_vencido,0);
 	
 	-- 
@@ -135,7 +135,9 @@ declare
 	ndias_interes:=coalesce(ndias_interes,0);
 	
 	
-	insert into corte_linea (lineaid,fecha_corte,dias_desde_corte_ant,saldo_inicial,num_disposiciones,monto_diposiciones,pagos,saldo_final,capital,capital_vencido,int_ordinario,int_moratorio,iva,comisiones,pago_minimo,fecha_limite,dias_capital,dias_interes,capital_pagado,estatus) values (pprestamoid,pfecha,ndias_corte,xsaldo_inicial,nnumdisp,xdisposiciones,xpagos,xsaldo_final,xcapital,xcapital_vencido,xordinario,xmoratorio,xiva,0,xpago_minimo,dfecha_limite_pago,ndias_capital,ndias_interes,0,1);
+	insert into corte_linea (lineaid,fecha_corte,dias_desde_corte_ant,saldo_inicial,num_disposiciones,monto_diposiciones,pagos,saldo_final,capital,capital_vencido,int_ordinario,int_moratorio,iva,comisiones,pago_minimo,fecha_limite,dias_capital,dias_interes,fecha_pago_capital,capital_pagado,estatus) values (pprestamoid,pfecha,ndias_corte,xsaldo_inicial,nnumdisp,xdisposiciones,xpagos,xsaldo_final,xcapital,xcapital_vencido,xordinario,xmoratorio,xiva,0,xpago_minimo,dfecha_limite_pago,ndias_capital,ndias_interes,null,0,1);
+	
+	perform verifica_bloqueo_linea(pprestamoid);
   return;
 end
 $_$

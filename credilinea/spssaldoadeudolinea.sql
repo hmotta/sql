@@ -74,27 +74,28 @@ declare
 
 begin
 
--- Recalcular el saldo en base a pagos y disposiciones
-select p.saldoprestamo, p.montoprestamo into fsaldoact,fmonto_inicial from prestamos p where p.prestamoid = lprestamoid;
+	--verifica bloqueo
+	perform verifica_bloqueo_linea(pprestamoid);
+	-- Recalcular el saldo en base a pagos y disposiciones
+	select p.saldoprestamo, p.montoprestamo into fsaldoact,fmonto_inicial from prestamos p where p.prestamoid = lprestamoid;
 
-select sum(mp.debe),sum(mp.haber) into fcargos,fabonos from movipolizas mp,prestamos p,tipoprestamo tp  where mp.prestamoid=p.prestamoid and p.tipoprestamoid=tp.tipoprestamoid and p.prestamoid=lprestamoid and (mp.cuentaid = tp.cuentaactivo or mp.cuentaid = tp.cuentaactivoren);
+	select sum(mp.debe),sum(mp.haber) into fcargos,fabonos from movipolizas mp,prestamos p,tipoprestamo tp  where mp.prestamoid=p.prestamoid and p.tipoprestamoid=tp.tipoprestamoid and p.prestamoid=lprestamoid and (mp.cuentaid = tp.cuentaactivo or mp.cuentaid = tp.cuentaactivoren);
 
-  fsaldoact:=coalesce(fsaldoact,0);
-  
-  fcargos:=coalesce(fcargos,0);
-  fabonos:=coalesce(fabonos,0);
+	fsaldoact:=coalesce(fsaldoact,0);
 
-  fsaldocalculado:=fcargos-fabonos;
-  
-  raise notice ' Saldo Actual %  Saldo Calculado %',fsaldoact,fsaldocalculado;
-  if fsaldoact<>fsaldocalculado and not exists (select prestamoid from prestamos where referenciaprestamo = sreferenciaprestamo||'CAS-') then
-    raise notice 'Voy a updetear el saldo';
-    update prestamos
-      set saldoprestamo = fsaldocalculado
-     where prestamoid=lprestamoid;
-	 
-  end if;
-	
+	fcargos:=coalesce(fcargos,0);
+	fabonos:=coalesce(fabonos,0);
+
+	fsaldocalculado:=fcargos-fabonos;
+
+	raise notice ' Saldo Actual %  Saldo Calculado %',fsaldoact,fsaldocalculado;
+	if fsaldoact<>fsaldocalculado and not exists (select prestamoid from prestamos where referenciaprestamo = sreferenciaprestamo||'CAS-') then
+		raise notice 'Voy a updetear el saldo';
+		update prestamos
+		set saldoprestamo = fsaldocalculado
+		where prestamoid=lprestamoid;
+	end if;
+
 	return fsaldocalculado;
 
 end
