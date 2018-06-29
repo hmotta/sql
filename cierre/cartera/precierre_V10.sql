@@ -99,7 +99,7 @@ select p.prestamoid,
 	   
        p.tipoprestamoid,p.montoprestamo,tp.clavefinalidad,p.tasanormal,p.tasa_moratoria,
 	   MAX(case when ((m.cuentaid=tp.cuentaactivo or m.cuentaid=tp.cuentaactivoren) and m.haber>0) and po.fechapoliza<dcorte then po.fechapoliza else p.fecha_otorga end) AS ultimoabono,
-       (case when tp.revolvente=1 then 59 else (case when (p.numero_de_amor=1) then 29 else (
+       (case when tp.revolvente=1 then 29 else (case when (p.numero_de_amor=1) then 29 else (
 			case when (select count(*) from amortizaciones where prestamoid=p.prestamoid and importeamortizacion<>0)=1 then -1 else 
 				(case when p.dias_de_cobro=7 then 20 else 
 					(case when p.dias_de_cobro=14 then 41 else 
@@ -113,9 +113,9 @@ select p.prestamoid,
 		end) end) as diastraspasoavencida,
        p.fecha_vencimiento,
        MAX(case when (m.cuentaid=tp.cuentaintnormal or m.cuentaid=tp.cuentaintnormalren) and po.fechapoliza<dcorte
-                then po.fechapoliza else (case when (m.cuentaid=tp.cuentaactivo or m.cuentaid=tp.cuentaactivoren) and
+                then po.fechapoliza else (case when tp.revolvente=0 then (case when (m.cuentaid=tp.cuentaactivo or m.cuentaid=tp.cuentaactivoren) and
                                                        po.fechapoliza<dcorte
-                then po.fechapoliza else p.fecha_otorga end) end) AS ultimoabonointeres,
+                then po.fechapoliza else p.fecha_otorga end) else null end) end) AS ultimoabonointeres,
        0 as interesdevmormenor,
        0 as interesdevmormayor,p.dias_de_cobro,p.meses_de_cobro,(case when p.dias_de_cobro > 0 then p.dias_de_cobro else p.meses_de_cobro*30 end) as frecuencia,
 	   tp.clavefinalidad,p.fecha_otorga,0 as estatusvive,p.monto_garantia,
@@ -213,13 +213,24 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
 	 finteresdevmormenor:=0;
      finteresdevmormayor:=0;
      --if r.saldoprestamo>0 then
-			select int_ord_dev_balance,int_ord_dev_cuent_orden,int_mor_dev_balance,int_mor_dev_cuent_orden,dias_capital,dias_interes into finteresdevengadomenor,fdevengadomayor,finteresdevmormenor,finteresdevmormayor,idiascapital,idiasinteres from corte_linea where fecha_corte=pfechacorte and lineaid=r.prestamoid;
+			
+			select dias_mora_linea into idiascapital from dias_mora_linea(r.prestamoid,pfechacorte);
+			select max(num) into idiasinteres from calcula_int_ord_linea(r.prestamoid,pfechacorte);
+			
 			-- Asignar a los dias vencidos lo que sea mayor interes o capital 
 			if idiascapital>idiasinteres then
 				idiasvencidos:=idiascapital;
 			else
 				idiasvencidos:=idiasinteres;
 			end if;
+			
+			finteresdevengadomenor := interesdevengado(r.prestamoid,pfechacorte,idiasvencidos,idiascapital,r.ultimoabonointeres,r.saldoprestamo,r.diastraspasoavencida,'S');
+			finteresdevmormenor := interesdevmoratorio(r.prestamoid,pfechacorte,r.saldoprestamo,r.diastraspasoavencida,'S');
+				
+			--if pfechacorte-r.ultimoabonointeres>r.diastraspasoavencida then
+			fdevengadomayor := interesdevengado(r.prestamoid,pfechacorte,idiasvencidos,idiascapital,r.ultimoabonointeres,r.saldoprestamo,r.diastraspasoavencida,'N');
+			finteresdevmormayor := interesdevmoratorio(r.prestamoid,pfechacorte,r.saldoprestamo,r.diastraspasoavencida,'N');
+			
 			update precorte set interesdevengadomenoravencido=finteresdevengadomenor,interesdevengadomayoravencido=fdevengadomayor,interesdevmormenor=finteresdevmormenor,
 				interesdevmormayor=finteresdevmormayor,diascapital=idiascapital,diasinteres=idiasinteres,diasvencidos=idiasvencidos where precorteid=r.precorteid;
 			
@@ -229,16 +240,17 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
 				update precorte set saldovencidomenoravencido=saldoprestamo, saldovencidomayoravencido=0 where precorteid=r.precorteid;
 			end if;
      --end if;
+	 
 	 update precorte set saldopromediodelmes=(select saldo_promedio from corte_linea where prestamoid=r.prestamoid and fecha_corte=pfechacorte) where fechacierre=pfechacorte and prestamoid=r.prestamoid;
+	 
 	 update precorte set interesdevengadomes=(select int_ord_dev_balance+int_ord_dev_cuent_orden from corte_linea where prestamoid=r.prestamoid and fecha_corte=pfechacorte) where fechacierre=pfechacorte and prestamoid=r.prestamoid; 
      
 	 update precorte set primerincumplimiento=(select fecha_limite from corte_linea where fecha_corte<=(select fecha_corte from corte_linea where capital_vencido>0 and lineaid=precorte.prestamoid order by fecha_corte limit 1) and lineaid=precorte.prestamoid order by fecha_corte limit 1) where fechacierre=pfechacorte and prestamoid=r.prestamoid;
 	 
-	    
 	 update precorte set  importeultimaamort=coalesce((select capital from corte_linea where lineaid=precorte.prestamoid and fecha_corte<=pfechacorte order by fecha_corte desc limit 1),0) where fechacierre=pfechacorte and prestamoid=r.prestamoid;
-
+	 
 	 update precorte set  importevencidoamort=coalesce((select (capital+coalesce(capital_vencido,0)) from corte_linea where lineaid=precorte.prestamoid and (capital-capital_pagado)>0 and fecha_limite<=pfechacorte and estatus=1 order by fecha_corte desc limit 1),0) where fechacierre=pfechacorte and prestamoid=r.prestamoid;
-
+	 
 	 update precorte set noamorvencidas=(select count(*) from corte_linea where lineaid=precorte.prestamoid and (capital-capital_pagado)>0 and fecha_limite<=pfechacorte and estatus=1) where fechacierre>=pfechacorte and prestamoid=r.prestamoid;
    end loop;
    

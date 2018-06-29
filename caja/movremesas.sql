@@ -13,7 +13,7 @@ begin
 	from
 	  tipomovimiento
 	where
-		tipomovimientoid in ('EI','RG','EN','WU')
+		tipomovimientoid in ('EI','RG','EN','WU','RN')
  loop
  
 

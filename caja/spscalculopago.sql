@@ -346,13 +346,13 @@ end if;
 
             --raise notice ' mora menor 2 %  -- % -- idiasven %',idias,fmoratorio,idiastraspasoavencida;
 
-            if round(fmoratorio,2)-trunc(round(fmoratorio,2))>=0.50 then
-              fmormenor := fmormenor + round(fmoratorio+1,2);
+            --if round(fmoratorio,2)-trunc(round(fmoratorio,2))>=0.50 then
+              --fmormenor := fmormenor + round(fmoratorio+1,2);
 			  --  fmormenor := fmormenor + round(trunc(fmoratorio)+1,2);
-            else
-               fmormenor := fmormenor + round(fmoratorio,2);
+            --else
+               --fmormenor := fmormenor + round(fmoratorio,2);
 			  --   fmormenor := fmormenor + round(trunc(fmoratorio),2);
-            end if;
+            --end if;
 
             fpagado:=0;
                      
