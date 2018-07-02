@@ -1,4 +1,4 @@
-sCREATE or replace FUNCTION interesdevengado(integer, date, integer, integer, date, numeric, integer, character) RETURNS numeric
+CREATE or replace FUNCTION interesdevengado(integer, date, integer, integer, date, numeric, integer, character) RETURNS numeric
     AS $_$
 declare
   pprestamoid alias for $1;
@@ -63,7 +63,7 @@ begin
 
 			idiasinteres := dfechaf - dultimo_abono_int; --Primero se calculan los dias de interes que adeuda, es decir la fechaactual - la fecha de ultimo pago de interes
 			--se calcula el interes menor a vencido
-			if pmenorvencido='S' then  
+			if pmenorvencido='S' then   --Interes en cuentas de balance
 				if idiasinteres<1 then --si no hay dias de interes se regresa 0 y se termina el proceso
 					finteres := 0;
 					return finteres;
@@ -73,13 +73,17 @@ begin
 					if idiasinteres > pdiasvencidos then  --se verifica si el credito tiene pagos adelantados, si tiene pagos adelantados es decir los dias de interes son mayores a los dias vencidos 
 						idias := (idiasinteres - pdiascapital) + pdiastraspasovencida;
 					else
-						idias := pdiastraspasovencida;
+						if idiasinteres<pdiastraspasovencida then --Esta vencido pero tuvo un pago reciente de interes
+							idias := idiasinteres;
+						else
+							idias := pdiastraspasovencida;
+						end if;
 					end if;
 				else
 					idias := idiasinteres;
 				end if;
 				--se calcula el interes mayor a vencido
-			else 
+			else  --Interes en cuentas de orden
 				if idiasinteres > pdiasvencidos then --si tiene pagos adelantados
 					idias = idiasinteres - ( (idiasinteres - pdiascapital) + pdiastraspasovencida );
 					--reduciendo la formula anterior

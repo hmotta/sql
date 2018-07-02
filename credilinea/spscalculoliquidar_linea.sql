@@ -16,13 +16,13 @@ begin
     xinteres_pagar:=0;
     xmoratorio_pagar:=0;
 	xsaldo_linea:=0;
-	
+	perform genera_interes_diario_linea(pprestamoid,current_date);
 	select spssaldoadeudolinea into xsaldo_linea from spssaldoadeudolinea(pprestamoid);
 	
-	select sum(interes_diario) into xinteres_pagar from calcula_int_ord_linea(pprestamoid,current_date);
+	xinteres_pagar:=calcula_int_ord_linea(pprestamoid,current_date);
 	xiva:=xiva+round(xinteres_pagar*0.16,2);
 	
-	select calcula_int_mor_linea into xmoratorio_pagar from calcula_int_mor_linea(pprestamoid,current_date);
+	xmoratorio_pagar:=calcula_int_mor_linea(pprestamoid,current_date);
 	xiva:= xiva+round(xmoratorio_pagar*0.16,2);
 		
 	r.prestamoid   := pprestamoid;

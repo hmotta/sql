@@ -7,7 +7,7 @@ CREATE TABLE credito_linea_interes_devengado
   fecha date,
   saldo numeric,
   interes_diario numeric,
-  interes_acumulado numeric,
+  --interes_acumulado numeric,
   fecha_pago numeric,
   interes_pagado numeric default 0,
   CONSTRAINT devengamientoid_pk PRIMARY KEY (devengamientoid),

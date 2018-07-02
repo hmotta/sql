@@ -12,7 +12,7 @@ declare
 	fmormenor numeric;
 	fmormayor numeric;
 	ftasamoratorio numeric;
-	r amortizaciones%rowtype;
+	r record;
 	diasdespuesdevencido int4;
 	diasvencidosletra int4;
 	diasvencidosmenor int4;
@@ -41,7 +41,7 @@ begin
 	-- Calcular solo para los prestamos activos
 
 	if sclaveestadocredito='001' then
-		if nrevolvente=1 then 
+		if nrevolvente=0 then 
 			--se busca la fecha mas antigua de letras incumplidas
 			select min(fechadepago) into dfechaprimeradeudo from amortizaciones
 			where prestamoid=pprestamoid and fechadepago<pfechacorte and importeamortizacion<>abonopagado;

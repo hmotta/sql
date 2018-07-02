@@ -51,6 +51,8 @@ begin
     xinteres_pagar:=0;
     xmoratorio_pagar:=0;
 	
+	perform genera_interes_diario_linea(pprestamoid,pfecha);
+	
 	select fecha_otorga into dfecha_ortorga from prestamos where prestamoid=pprestamoid;
 	select spssaldoadeudolinea into xsaldo_linea from spssaldoadeudolinea(pprestamoid);
 	--
@@ -59,12 +61,14 @@ begin
 	select corteid into ncorte_anterior_id from corte_linea where lineaid=pprestamoid and fecha_corte<=pfecha order by fecha_corte desc limit 1;
 	if NOT FOUND then
 		--No hay corte anterior ( todo es nuevo )
+		xinteres_pagar:=calcula_int_ord_linea(pprestamoid,pfecha);
+		xiva:=xiva+round(xinteres_pagar*0.16,2);
 		r.prestamoid   := pprestamoid;
 		r.amortizacion := 0;
 		r.capital      := round(xsaldo_linea,2);
-		r.interes      := 0;
+		r.interes      := xinteres_pagar;
 		r.moratorio    := 0;
-		r.iva          := 0;
+		r.iva          := xiva;
 		r.total        := 0;
 		return next r;
 	else
@@ -85,17 +89,21 @@ begin
 			xmoratorio_corte 
 		from corte_linea where corteid=ncorte_anterior_id;
 		
+		raise notice 'dfecha_limite=%',dfecha_limite;
+		raise notice 'pfecha=%',pfecha;
+		
 		if pfecha>dfecha_limite then --Si el cálculo es mayor a la fecha limite ya le empieza a cobrar intereses
+			raise notice 'Se calcula el interes transcurrido';
 			--El cálculo de interes cambio a petición de la sociedad. ex por día
-			select sum(interes_diario) into xinteres_pagar from calcula_int_ord_linea(pprestamoid,pfecha);
+			xinteres_pagar:=calcula_int_ord_linea(pprestamoid,pfecha);
 			xiva:=xiva+round(xinteres_pagar*0.16,2);
 		end if;
 		
 		if xcapital_corte>0 then
 			--Calculo del moratorio del periodo (si lo hay)
 			xcapital_pagar:=xcapital_corte+xcapital_vencido;
-			select dias_mora_linea into ndias_mora from dias_mora_linea(pprestamoid,pfecha);
-			select calcula_int_mor_linea into xmoratorio_pagar from calcula_int_mor_linea(pprestamoid,pfecha);
+			ndias_mora:=dias_mora_linea(pprestamoid,pfecha);
+			xmoratorio_pagar:=calcula_int_mor_linea(pprestamoid,pfecha);
 			xiva:= xiva+round(xmoratorio_pagar*0.16,2);
 		else
 			xcapital_pagar:=xsaldo_linea;

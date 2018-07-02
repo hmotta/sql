@@ -48,6 +48,7 @@ declare
 	
 	delete from corte_linea where lineaid=pprestamoid and fecha_corte=pfecha;
 	
+	
 	--
 	-- Verifica si hay un corte anterior o es el primer corte
 	--

@@ -157,7 +157,11 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
 			if pfechacorte=dfechaprimeradeudo then
 				idiascapital:=1;
 			end if;
-			idiasinteres:=(case when (select fechadepago from amortizaciones where prestamoid=r.prestamoid and interesnormal>0 order by fechadepago  limit 1)<=pfechacorte then (case when (r.fechaultamorpagada-r.ultimoabonointeres)-r.frecuencia > 0 then (r.fechaultamorpagada-r.ultimoabonointeres)-r.frecuencia else 0 end) else 0 end);
+			--if ((select count(*) from amortizaciones where prestamoid=r.prestamoid and importeamortizacion>0)=1) and ((select max(fechadepago) from amortizaciones where prestamoid=r.prestamoid and importeamortizacion>0)>=pfechacorte) then
+				--idiasinteres:=pfechacorte-r.ultimoabonointeres;
+			--else
+				idiasinteres:=(case when (select fechadepago from amortizaciones where prestamoid=r.prestamoid and interesnormal>0 order by fechadepago  limit 1)<=pfechacorte then (case when (r.fechaultamorpagada-r.ultimoabonointeres)-r.frecuencia > 0 then (r.fechaultamorpagada-r.ultimoabonointeres)-r.frecuencia else 0 end) else 0 end);
+			--end if;
 			-- Asignar a los dias vencidos lo que sea mayor interes o capital 
 			if idiascapital>idiasinteres then
 				idiasvencidos:=idiascapital;

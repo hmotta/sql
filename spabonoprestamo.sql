@@ -16,7 +16,7 @@ declare
 begin
 
   fAbono := round(pabono,2);
-  raise notice ' Estoy en La funcion spabonoprestamo!!! ';
+  --raise notice ' Estoy en La funcion spabonoprestamo!!! ';
 --
 -- Actualizar tabla de prestamos, disminuir el saldo del prestamo y
 -- actualizar fecha de ultimo pago, importante ya que a partir de ahi calculamos
