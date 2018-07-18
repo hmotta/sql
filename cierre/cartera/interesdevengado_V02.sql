@@ -118,9 +118,17 @@ begin
 			raise notice 'dfechaf=%',dfechaf;
 			raise notice 'dfechai=%',dfechai;
 			if pmenorvencido='S' then
-				select sum(interes_diario) into finteres from credito_linea_interes_devengado where fecha between dfechai and dfechaf ;
+				if pdiasvencidos>pdiastraspasovencida then --si es un credito vencido 
+					select sum(interes_diario) into finteres from credito_linea_interes_devengado where fecha between dfechai and dfechaf ;
+				else
+					finteres:=calcula_int_ord_linea(pprestamoid,pfechacorte);
+				end if;
 			else
-				select sum(interes_diario) into finteres from credito_linea_interes_devengado where fecha > dfechaf ;
+				if pdiasvencidos>pdiastraspasovencida then --si es un credito vencido 
+					select sum(interes_diario) into finteres from credito_linea_interes_devengado where fecha > dfechaf ;
+				else
+					finteres:=0;
+				end if;
 			end if;
 			finteres:=coalesce(finteres,0);
 		else
