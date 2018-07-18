@@ -28,6 +28,9 @@ declare
   rec record;
 
   saplica char(1);
+  ncortes_vencidos integer;
+  i integer;
+  r record;
 begin
 
 	select aplicareciprocidad
@@ -109,23 +112,39 @@ begin
 		end if;
 	else
 		perform genera_interes_diario_linea(pprestamoid,pfechacorte);
+		select count(*) into ncortes_vencidos from corte_linea where (capital-capital_pagado)>0 and lineaid=pprestamoid and fecha_limite<pfechacorte;
+		raise notice 'ncortes_vencidos=%',ncortes_vencidos;
+		i:=0;
+		if ncortes_vencidos>=2 then
+			for r in 
+				select fecha_limite from corte_linea where (capital-capital_pagado)>0 and 	lineaid=pprestamoid order by fecha_limite
+			loop
+				i:=i+1;
+				if i=2 then
+					dfechaf:=r.fecha_limite;
+					exit;
+				end if;
+			end loop;
+		end if;
+		
 		if dias_interes_linea(pprestamoid,pfechacorte) > 0 then
 			select max(fecha_pago) into dfechai from credito_linea_interes_devengado where lineaid=pprestamoid and (interes_diario-interes_pagado)=0;
 			if dfechai is null then
 				select min(fecha) into dfechai from credito_linea_interes_devengado where lineaid=pprestamoid and (interes_diario-interes_pagado)>0;
 			end if;
-			dfechaf:=dfechai+pdiastraspasovencida;
+			
+			
 			raise notice 'dfechaf=%',dfechaf;
 			raise notice 'dfechai=%',dfechai;
 			if pmenorvencido='S' then
-				if pdiasvencidos>pdiastraspasovencida then --si es un credito vencido 
-					select sum(interes_diario) into finteres from credito_linea_interes_devengado where fecha between dfechai and dfechaf ;
+				if ncortes_vencidos>=2 then --si es un credito vencido 
+					select sum(interes_diario-interes_pagado) into finteres from credito_linea_interes_devengado where fecha between dfechai and dfechaf ;
 				else
 					finteres:=calcula_int_ord_linea(pprestamoid,pfechacorte);
 				end if;
 			else
-				if pdiasvencidos>pdiastraspasovencida then --si es un credito vencido 
-					select sum(interes_diario) into finteres from credito_linea_interes_devengado where fecha > dfechaf ;
+				if ncortes_vencidos>=2 then --si es un credito vencido 
+					select sum(interes_diario-interes_pagado) into finteres from credito_linea_interes_devengado where fecha > dfechaf ;
 				else
 					finteres:=0;
 				end if;

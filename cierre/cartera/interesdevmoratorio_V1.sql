@@ -21,6 +21,12 @@ declare
 	sclaveestadocredito char(3);
 	nrevolvente integer;
 	dultimo_pago_capital date;
+	
+	dfechaf date;
+	dfechai date;
+	i integer;
+	ncortes_vencidos integer;
+	pdiastraspasovencida_linea integer;
 begin
 
 	--raise notice 'Procesando PrestamoID=%',pprestamoid;
@@ -104,14 +110,40 @@ begin
 			select min(fecha_limite) into dfechaprimeradeudo from corte_linea
 			where lineaid=pprestamoid and fecha_limite<pfechacorte and (capital-capital_pagado)>0;
 			raise notice 'dfechaprimeradeudo=%',dfechaprimeradeudo;
+			dfechai:=dfechaprimeradeudo+1;
+			
+			select count(*) into ncortes_vencidos from corte_linea where (capital-capital_pagado)>0 and lineaid=pprestamoid and fecha_limite<pfechacorte;
+			raise notice 'ncortes_vencidos=%',ncortes_vencidos;
+			i:=0;
+			if ncortes_vencidos>=2 then
+				for r in 
+					select fecha_limite from corte_linea where (capital-capital_pagado)>0 and 	lineaid=pprestamoid order by fecha_limite
+				loop
+					i:=i+1;
+					if i=2 then
+						dfechaf:=r.fecha_limite;
+						dfechaf:=dfechaf+1;
+						exit;
+					end if;
+				end loop;
+				raise notice 'dfechai=%',dfechai;
+				raise notice 'dfechaf=%',dfechaf;
+				pdiastraspasovencida_linea:=dfechaf-dfechai;
+			else
+				pdiastraspasovencida_linea:=29;
+			end if;
+			
+			
+			raise notice 'pdiastraspasovencida=%',pdiastraspasovencida_linea;
+			
 			--se sacan los dias mayor a vencidos de la letra mas antigua es decir 1 dia si tiene 90, 2 si tiene 91,etc... con base a 89 dias --diasdespuesdevencido ya no cambia su valor
 			if dfechaprimeradeudo<dultimo_pago_capital then
 				dfechaprimeradeudo:=dultimo_pago_capital;
 			end if;
 			diasvencidosletra:=pfechacorte-dfechaprimeradeudo;
 			raise notice 'dfechaprimeradeudo=%',dfechaprimeradeudo;
-			if diasvencidosletra>pdiastraspasovencida then
-				diasdespuesdevencido:=diasvencidosletra-pdiastraspasovencida;
+			if diasvencidosletra>pdiastraspasovencida_linea then
+				diasdespuesdevencido:=diasvencidosletra-pdiastraspasovencida_linea;
 			else
 				diasdespuesdevencido:=0;
 			end if;
