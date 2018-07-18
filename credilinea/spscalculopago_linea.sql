@@ -61,6 +61,7 @@ begin
 	select corteid into ncorte_anterior_id from corte_linea where lineaid=pprestamoid and fecha_corte<=pfecha order by fecha_corte desc limit 1;
 	if NOT FOUND then
 		--No hay corte anterior ( todo es nuevo )
+		raise notice 'No hay cortes...';
 		xinteres_pagar:=calcula_int_ord_linea(pprestamoid,pfecha);
 		xiva:=xiva+round(xinteres_pagar*0.16,2);
 		r.prestamoid   := pprestamoid;
@@ -79,14 +80,13 @@ begin
 			fecha_corte,
 			(capital-capital_pagado),
 			capital_vencido,
-			int_ordinario,
-			int_moratorio 
+			int_ordinario
 			into 
 			dfecha_limite,
 			dfecha_corte,
 			xcapital_corte,
-			xinteres_corte,
-			xmoratorio_corte 
+			xcapital_vencido,
+			xinteres_corte
 		from corte_linea where corteid=ncorte_anterior_id;
 		
 		raise notice 'dfecha_limite=%',dfecha_limite;
@@ -96,14 +96,17 @@ begin
 			raise notice 'Se calcula el interes transcurrido';
 			--El cálculo de interes cambio a petición de la sociedad. ex por día
 			xinteres_pagar:=calcula_int_ord_linea(pprestamoid,pfecha);
-			xiva:=xiva+round(xinteres_pagar*0.16,2);
+		else
+			xinteres_pagar:=xinteres_corte; -- si no hay pasado la fecha limite todavia paga el interes del corte
 		end if;
 		
-		if xcapital_corte>0 then
+		xiva:=xiva+round(xinteres_pagar*0.16,2);
+		
+		if xcapital_corte>0 then --Si hay calculo de capital se verifica la mora
 			--Calculo del moratorio del periodo (si lo hay)
 			xcapital_pagar:=xcapital_corte+xcapital_vencido;
 			ndias_mora:=dias_mora_linea(pprestamoid,pfecha);
-			xmoratorio_pagar:=calcula_int_mor_linea(pprestamoid,pfecha);
+			xmoratorio_pagar:=calcula_int_mor_linea(pprestamoid,pfecha); --El interes moratorio siempre se calcula al vuelo
 			xiva:= xiva+round(xmoratorio_pagar*0.16,2);
 		else
 			xcapital_pagar:=xsaldo_linea;

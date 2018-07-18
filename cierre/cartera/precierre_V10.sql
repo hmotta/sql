@@ -95,7 +95,7 @@ select p.prestamoid,
        0 as saldovencidomayoravencido,
        0 as saldovencidomenoravencido,
        
-       ( case when tp.revolvente=0 then fechaultimapagada(p.prestamoid,pfechacorte) else NULL end) as fechaultamorpagada,
+       ( case when tp.revolvente=0 then fechaultimapagada(p.prestamoid,pfechacorte) else (select fecha_limite from corte_linea where (capital-capital_pagado)=0 and lineaid=p.prestamoid order by fecha_limite desc limit 1) end) as fechaultamorpagada,
 	   
        p.tipoprestamoid,p.montoprestamo,tp.clavefinalidad,p.tasanormal,p.tasa_moratoria,
 	   MAX(case when ((m.cuentaid=tp.cuentaactivo or m.cuentaid=tp.cuentaactivoren) and m.haber>0) and po.fechapoliza<dcorte then po.fechapoliza else p.fecha_otorga end) AS ultimoabono,
@@ -218,8 +218,8 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
      finteresdevmormayor:=0;
      --if r.saldoprestamo>0 then
 			
-			select dias_mora_linea into idiascapital from dias_mora_linea(r.prestamoid,pfechacorte);
-			select max(num) into idiasinteres from calcula_int_ord_linea(r.prestamoid,pfechacorte);
+			idiascapital:=dias_mora_linea(r.prestamoid,pfechacorte);
+			idiasinteres:=(case when (select fecha_limite from corte_linea where lineaid=r.prestamoid and int_ordinario>0 order by fecha_limite  limit 1)<=pfechacorte then (case when (r.fechaultamorpagada-r.ultimoabonointeres)-r.frecuencia > 0 then (r.fechaultamorpagada-r.ultimoabonointeres)-r.frecuencia else 0 end) else 0 end);
 			
 			-- Asignar a los dias vencidos lo que sea mayor interes o capital 
 			if idiascapital>idiasinteres then
@@ -245,9 +245,9 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
 			end if;
      --end if;
 	 
-	 update precorte set saldopromediodelmes=(select saldo_promedio from corte_linea where prestamoid=r.prestamoid and fecha_corte=pfechacorte) where fechacierre=pfechacorte and prestamoid=r.prestamoid;
+	 update precorte set saldopromediodelmes=saldopromedioprecorte(precorte.prestamoid,precorte.ejercicio,precorte.periodo) where fechacierre=pfechacorte and prestamoid=r.prestamoid;
 	 
-	 update precorte set interesdevengadomes=(select int_ord_dev_balance+int_ord_dev_cuent_orden from corte_linea where prestamoid=r.prestamoid and fecha_corte=pfechacorte) where fechacierre=pfechacorte and prestamoid=r.prestamoid; 
+	 update precorte set interesdevengadomes=interesdevengadoprecorte(precorte.prestamoid,precorte.ejercicio,precorte.periodo) where fechacierre=pfechacorte and prestamoid=r.prestamoid; 
      
 	 update precorte set primerincumplimiento=(select fecha_limite from corte_linea where fecha_corte<=(select fecha_corte from corte_linea where capital_vencido>0 and lineaid=precorte.prestamoid order by fecha_corte limit 1) and lineaid=precorte.prestamoid order by fecha_corte limit 1) where fechacierre=pfechacorte and prestamoid=r.prestamoid;
 	 
@@ -349,24 +349,6 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
 	
    
    
-   -- Asignar porcentaje de reserva
-	--calculo anterior
-   /*for r in
-     select p.precorteid,t.porcentajereserva,
-			t.factordisminucion,t.tablareservaid,p.prestamoid,
-            p.diasvencidos,p.finalidaddefault,p.tipocartera,p.depositogarantia,p.saldovencidomenoravencido,p.saldovencidomayoravencido,(case when  p.diasvencidos <= p.diastraspasoavencida then interesdevengadomenoravencido+interesdevmormenor else 0 end) as devengadovigente
-       from precorte p, tablareserva t
-      where p.fechacierre=pfechacorte and p.finalidaddefault=t.finalidaddefault and p.tipocartera=t.tipocartera and
-            p.diasvencidos>=t.diainicial and
-            p.diasvencidos<=t.diafinal
-   loop
-        update precorte set tablareservaid = r.tablareservaid,
-            porcentajeaplicado=r.porcentajereserva,
-            reservacalculada=(r.depositogarantia-(trunc(r.depositogarantia/500)*500))*(select min(porcentajereserva) from tablareserva where tipocartera=r.tipocartera),
-            reservaidnc=(r.saldovencidomenoravencido+r.saldovencidomayoravencido+r.devengadovigente-(r.depositogarantia-(trunc(r.depositogarantia/500)*500)))*r.porcentajereserva,
-            factoraplicado=r.factordisminucion
-        where precorteid=r.precorteid;
-   end loop;*/
    
    --nuevo calculo 2017/05/11
    for r in

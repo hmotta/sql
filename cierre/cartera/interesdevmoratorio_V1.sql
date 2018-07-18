@@ -103,12 +103,13 @@ begin
 			--se busca la fecha mas antigua de los cortes incumplidas
 			select min(fecha_limite) into dfechaprimeradeudo from corte_linea
 			where lineaid=pprestamoid and fecha_limite<pfechacorte and (capital-capital_pagado)>0;
+			raise notice 'dfechaprimeradeudo=%',dfechaprimeradeudo;
 			--se sacan los dias mayor a vencidos de la letra mas antigua es decir 1 dia si tiene 90, 2 si tiene 91,etc... con base a 89 dias --diasdespuesdevencido ya no cambia su valor
 			if dfechaprimeradeudo<dultimo_pago_capital then
 				dfechaprimeradeudo:=dultimo_pago_capital;
 			end if;
 			diasvencidosletra:=pfechacorte-dfechaprimeradeudo;
-			
+			raise notice 'dfechaprimeradeudo=%',dfechaprimeradeudo;
 			if diasvencidosletra>pdiastraspasovencida then
 				diasdespuesdevencido:=diasvencidosletra-pdiastraspasovencida;
 			else
@@ -119,11 +120,11 @@ begin
 			-- ya vencidas
 			for r in
 				select * from corte_linea
-				where lineaid=pprestamoid and fecha_limite<pfechacorte
+				where lineaid=pprestamoid and fecha_limite<pfechacorte and (capital-capital_pagado)>0
 				order by fecha_limite
 			loop
-				if fpagado<r.capital then
-					if r.fecha_limite<pfechacorte then
+				--if fpagado<r.capital then
+					--if r.fecha_limite<pfechacorte then
 						-- Calcular moratorio
 						if r.fecha_limite<dultimo_pago_capital then
 							diasvencidosletra:= pfechacorte-dultimo_pago_capital;
@@ -136,19 +137,21 @@ begin
 						else
 							diasvencidosmenor:= 0;
 						end if;
-
+						raise notice 'diasvencidosmenor=%',diasvencidosmenor;
+						
 						--los dias vencidos mayor son los dias despues de vencida la letra y se van adicionando las letras que vayan cayendo
 						diasvencidosmayor:= diasvencidosletra - diasvencidosmenor;
+						raise notice 'diasvencidosmayor=%',diasvencidosmayor;
 						if pmenorvencido='S'  then
-							fmormenor := fmormenor+(r.capital-fpagado)*diasvencidosmenor*ftasamoratorio/100/360;  
+							fmormenor := fmormenor+(r.capital-r.capital_pagado)*diasvencidosmenor*ftasamoratorio/100/360;  
 						else
-							fmormayor := fmormayor+(r.capital-fpagado)*diasvencidosmayor*ftasamoratorio/100/360;
+							fmormayor := fmormayor+(r.capital-r.capital_pagado)*diasvencidosmayor*ftasamoratorio/100/360;
 						end if;
-						fpagado:=0;
-					end if;
-				else
-					fpagado := fpagado - r.capital;
-				end if;
+						--fpagado:=0;
+					--end if;
+				--else
+				--	fpagado := fpagado - r.capital;
+				--end if;
 
 			end loop;
 

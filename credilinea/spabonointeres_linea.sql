@@ -46,7 +46,7 @@ begin
 		for r in
 			select *
 			from credito_linea_interes_devengado
-			where lineaid=pprestamoid and intere_diario-interes_pagado>0
+			where lineaid=pprestamoid and interes_diario-interes_pagado>0
 			order by fecha
 		loop
 			fAplicar := r.interes_diario - r.interes_pagado;

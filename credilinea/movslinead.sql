@@ -20,11 +20,20 @@ declare
  fmoratorio numeric;
  fiva numeric;
  fpago_total numeric;
- fsaldo_inicial numeric;
- 
+
+ nnum integer;
 begin
+	nnum:=0;
 	fsaldo := 0;
-	
+	  r.num_mov:=0;
+	  r.concepto:='Saldo Incial';
+	  r.debe := 0;
+	  r.haber := 0;
+	  r.tipomov := 0;
+	  r.saldo := fsaldo;
+	  return next r;
+	  nnum:=nnum+1;
+	  
     for r in
       select p.polizaid,0 as num_mov,p.fechapoliza as fecha,'' as concepto,0 as debe,0 as haber,0 as saldo
         from polizas p, movipolizas mp,tipoprestamo tp, prestamos pr
@@ -33,7 +42,7 @@ begin
 			 mp.prestamoid = pr.prestamoid and
 			 p.fechapoliza between pfecha1 and pfecha2 and 
              tp.tipoprestamoid = pr.tipoprestamoid  group by p.polizaid,p.fechapoliza
-    order by p.fechapoliza
+    order by p.polizaid,p.fechapoliza
 
     loop
         fcargo := 0;
@@ -101,74 +110,88 @@ begin
 		fmoratorio:=coalesce(fmoratorio,0);
 		fiva:=coalesce(fiva,0);
 
-		if fcapital_disp<>0 then
+		if fcapital_disp-(fseguro+fiva_seguro)<>0 then
+		  r.num_mov:=nnum;
           r.concepto:='Disposicion';
           r.debe := fcapital_disp-(fseguro+fiva_seguro);
           r.haber := 0;
 		  r.tipomov := 1;
-		  fsaldo_inicial := fsaldo_inicial - r.debe + r.haber;
-		  r.saldo := fsaldo_inicial;
+		  fsaldo := fsaldo + r.debe - r.haber;
+		  r.saldo := fsaldo;
           return next r;
+		  nnum:=nnum+1;
         end if;
 		
 		if fseguro<>0 then
+		  r.num_mov:=nnum;
           r.concepto:='Seguro de monto dispuesto';
           r.debe := fseguro+fiva_seguro;
           r.haber := 0;
 		  r.tipomov := 2;
-		  fsaldo_inicial := fsaldo_inicial - r.debe + r.haber;
-		  r.saldo := fsaldo_inicial;
+		  fsaldo := fsaldo + r.debe - r.haber;
+		  r.saldo := fsaldo;
           return next r;
+		  nnum:=nnum+1;
         end if;
 		
 		if pdesglose=0 then
 			fpago_total := fcapital_pag + fnormal + fmoratorio + fiva;
 			raise notice 'fpago_total=%',fpago_total;
 			if fpago_total<>0 then
+			  r.num_mov:=nnum;
 			  r.concepto:='Pago';
 			  r.debe := 0;
 			  r.haber := fpago_total;
 			  r.tipomov := 7;
-			  fsaldo_inicial := fsaldo_inicial - r.debe + fcapital_pag;
-			  r.saldo := fsaldo_inicial;
+			  fsaldo := fsaldo - r.debe + fcapital_pag;
+			  r.saldo := fsaldo;
 			  return next r;
+			  nnum:=nnum+1;
 			end if;
 		else
 			if fcapital_pag<>0 then
+			  r.num_mov:=nnum;
 			  r.concepto:='Abono Capital';
 			  r.debe := 0;
 			  r.haber := fcapital_pag;
 			  r.tipomov := 3;
-			  fsaldo_inicial := fsaldo_inicial - r.debe + r.haber;
-			  r.saldo := fsaldo_inicial;
+			  fsaldo := fsaldo + r.debe - r.haber;
+			  r.saldo := fsaldo;
 			  return next r;
+			  nnum:=nnum+1;
 			end if;
 			if fnormal<>0 then
+			  r.num_mov:=nnum;
 			  r.concepto:='Int. Normal';
 			  r.debe := 0;
 			  r.haber := fnormal;
 			  r.tipomov := 4;
-			  fsaldo_inicial := fsaldo_inicial;
-		      r.saldo := fsaldo_inicial;
+			  fsaldo := fsaldo;
+		      r.saldo := fsaldo;
 			  return next r;
+			  nnum:=nnum+1;
 			end if;
 			if fmoratorio<>0 then
+			  r.num_mov:=nnum;
 			  r.concepto:='Int. Morat.';
 			  r.debe := 0;
 			  r.haber := fmoratorio;
 			  r.tipomov := 5;
-			  fsaldo_inicial := fsaldo_inicial;
-		      r.saldo := fsaldo_inicial;
+			  fsaldo := fsaldo;
+		      r.saldo := fsaldo;
 			  return next r;
+			  nnum:=nnum+1;
 			end if;
 			if fiva<>0 then
+			  r.num_mov:=nnum;
 			  r.concepto:='IVA';
 			  r.debe := 0;
 			  r.haber := fiva;
 			  r.tipomov := 6;
-			  fsaldo_inicial := fsaldo_inicial;
-		      r.saldo := fsaldo_inicial;
+			  fsaldo := fsaldo;
+		      r.saldo := fsaldo;
 			  return next r;
+			  nnum:=nnum+1;
 			end if;
 		end if;
     end loop;

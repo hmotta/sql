@@ -109,15 +109,14 @@ declare
 	-- 
 	-- Interes ordinarios 
 	--
-	select sum(interes_diario) into xordinario from calcula_int_ord_linea(pprestamoid,pfecha);
-	xordinario:=coalesce(xordinario,0);
-	xiva:=xiva+round(xordinario*1.16,2);
+	xordinario:=calcula_int_ord_linea(pprestamoid,pfecha);
+	xiva:=round(xordinario*0.16,2);
 	-- 
 	-- Interes Moratorios
 	--
 	select calcula_int_mor_linea into xmoratorio from calcula_int_mor_linea(pprestamoid,pfecha);
 	xmoratorio:=coalesce(xmoratorio,0);
-	xiva:=xiva+round(xmoratorio*1.16,2);
+	xiva:=xiva+round(xmoratorio*0.16,2);
 	
 	xpago_minimo := xcapital  + xcapital_vencido + xordinario + xmoratorio + xiva;
 	
@@ -133,7 +132,7 @@ declare
 	
 	--Saco los dias de interes que debe
 	if xordinario>0 then
-		select max(num) into ndias_interes from calcula_int_ord_linea(pprestamoid,pfecha);
+		ndias_interes:=dias_interes_linea(pprestamoid,pfecha);
 		ndias_interes:=coalesce(ndias_interes,0);
 	end if;
 	

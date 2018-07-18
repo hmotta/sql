@@ -12,6 +12,7 @@ declare
 
   dfecha_otorga date;
   dfechaf date;
+  dfechai date;
   fmontoprestamo numeric;
   ftasanormal numeric;
   ftasareciprocidad numeric;
@@ -107,10 +108,23 @@ begin
 			--end if;
 		end if;
 	else
-		if pmenorvencido='S' then  
-			select sum(interes_diario) into finteres from calcula_int_ord_linea(r.prestamoid,pfechacorte) where num<=pdiastraspasovencida;
+		perform genera_interes_diario_linea(pprestamoid,pfechacorte);
+		if dias_interes_linea(pprestamoid,pfechacorte) > 0 then
+			select max(fecha_pago) into dfechai from credito_linea_interes_devengado where lineaid=pprestamoid and (interes_diario-interes_pagado)=0;
+			if dfechai is null then
+				select min(fecha) into dfechai from credito_linea_interes_devengado where lineaid=pprestamoid and (interes_diario-interes_pagado)>0;
+			end if;
+			dfechaf:=dfechai+pdiastraspasovencida;
+			raise notice 'dfechaf=%',dfechaf;
+			raise notice 'dfechai=%',dfechai;
+			if pmenorvencido='S' then
+				select sum(interes_diario) into finteres from credito_linea_interes_devengado where fecha between dfechai and dfechaf ;
+			else
+				select sum(interes_diario) into finteres from credito_linea_interes_devengado where fecha > dfechaf ;
+			end if;
+			finteres:=coalesce(finteres,0);
 		else
-			select sum(interes_diario) into finteres from calcula_int_ord_linea(r.prestamoid,pfechacorte) where num>pdiastraspasovencida;
+			finteres:=0;
 		end if;
 	end if;
 return finteres;
