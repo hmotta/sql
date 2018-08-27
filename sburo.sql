@@ -19,6 +19,3 @@ return stmp;
 end
 $_$
     LANGUAGE plpgsql SECURITY DEFINER;
-	
-	--aa--aa
-	
