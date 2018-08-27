@@ -56,7 +56,7 @@ declare
   swmora numeric;
   dfechapago date;
   dfecha_vencimiento date;
-  
+  nnumero_amort integer;
 
 begin
 
@@ -77,7 +77,7 @@ begin
 --
   icalculonormalid:=7;
 
-  select tasanormal,montoprestamo into ftasanormal,fsaldoinsoluto from prestamos where prestamoid=pprestamoid;
+  select tasanormal,montoprestamo,numero_de_amor into ftasanormal,fsaldoinsoluto,nnumero_amort from prestamos where prestamoid=pprestamoid;
   
   idiasint := 30;
   raise notice 'updateando calculo................';
@@ -111,29 +111,23 @@ begin
 --
 
 
-  icalculonormalid:=6;
-  
+  /*icalculonormalid:=6;
   raise notice 'updateando calculo................';
-
   update calculo
      set 
          saldoinsoluto = fsaldoinsoluto
    where calculoid=icalculonormalid;
-
-
   SELECT formula into sformula from calculo where calculoid=icalculonormalid;
-
   for rec in execute
       'SELECT round(' || sformula || ',2) as capital FROM calculo where calculoid='||icalculonormalid
   loop
-  
     if round(rec.capital,2)-trunc(round(rec.capital,2))>=0.50 then
       fcapital := round(trunc(rec.capital)+1,2);
     else
       fcapital := round(trunc(rec.capital),2);
     end if;
-  
-  end loop;
+  end loop;*/
+  fcapital:=fsaldoinsoluto/nnumero_amort;
   
 
   if gIVA>0 then
