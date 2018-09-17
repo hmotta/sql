@@ -2,17 +2,13 @@ CREATE or replace FUNCTION precierre(date) RETURNS integer
     AS $_$
 declare
   pfechacorte alias for $1;
-
   iejercicio int4;
   iperiodo   int4;
-
   iprocesado int4;
-
   r record;
   i record;
   so record;
   dcorte date;
-
   finteresdevengado numeric;
   finteresdevengadomenor numeric;
   fdevengadomayor numeric;
@@ -24,10 +20,8 @@ declare
   idiasinteres int4;
   dfechaprimeradeudo date;
   dultfechaexigibleint date;
-
   finteresdevmormenor numeric;
   finteresdevmormayor numeric;
-
   inoamorvencidas int4;
   scuentar char(24);
   stomaintervalo char(1);
@@ -135,9 +129,7 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
          p.fecha_1er_pago,tp.diastraspasoavencida,p.fecha_vencimiento,p.dias_de_cobro,p.meses_de_cobro,tp.clavefinalidad,p.fecha_otorga,p.monto_garantia,p.claveestadocredito,p.numero_de_amor,p.renovado,tp.revolvente,p.tipo_cartera_est
    order by prestamoid;
 
-	
-   --Con los parametros calculados anteriormente se calculan los interesesdevengados y los dias vencidos (creditos ordinarios)
-   ---------------------------------------------------------------------------------------------------------------------------------------------------------
+   --Con los parametros calculados anteriormente se calculan los interesesdevengados y los dias vencidos (creditos ordinarios)   ---------------------------------------------------------------------------------------------------------------------------------------------------------
    raise notice 'Procesando creditos ordinarios...';
    for r in
      select p.precorteid,p.saldoprestamo,p.fechaultamorpagada,p.prestamoid,
@@ -202,8 +194,7 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
    end loop;
    
    
-   --Con los parametros calculados anteriormente se calculan los interesesdevengados y los dias vencidos (Lineas de crédito)
-   ---------------------------------------------------------------------------------------------------------------------------------------------------------
+   --Con los parametros calculados anteriormente se calculan los interesesdevengados y los dias vencidos (Lineas de crédito)	--------------------------------------------------------------------------------------------------------------------------
    raise notice 'Procesando lineas de credito...';
    for r in
      select p.precorteid,p.saldoprestamo,p.fechaultamorpagada,p.prestamoid,
@@ -217,7 +208,6 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
 	 finteresdevmormenor:=0;
      finteresdevmormayor:=0;
      --if r.saldoprestamo>0 then
-			
 			idiascapital:=dias_mora_linea(r.prestamoid,pfechacorte);
 			idiasinteres:=(case when (select fecha_limite from corte_linea where lineaid=r.prestamoid and int_ordinario>0 order by fecha_limite  limit 1)<=pfechacorte then (case when (r.fechaultamorpagada-r.ultimoabonointeres)-r.frecuencia > 0 then (r.fechaultamorpagada-r.ultimoabonointeres)-r.frecuencia else 0 end) else 0 end);
 			
@@ -262,12 +252,6 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
    update precorte set pagosvencidos = (select (case when diasvencidos=0 then 0 else (case when diasvencidos>0 and diasvencidos<=diastraspasoavencida then 1 else 2 end) end)) where fechacierre=pfechacorte;
    
    delete from precorte  where fechacierre=pfechacorte and saldoprestamo=0 and interesdevengadomenoravencido=0 and interesdevengadomayoravencido=0 and pagocapitalenperiodo=0 and pagointeresenperiodo=0 and pagomoratorioenperiodo=0 and saldovencidomenoravencido=0 and saldovencidomayoravencido=0;
-   
-   
-   
-   update precorte set diascapital = 0 where fechacierre=pfechacorte and diascapital=0 and saldoprestamo=0;
-   update precorte set diascapital = 0 where fechacierre=pfechacorte and saldoprestamo=0;
-   --and primerincumplimiento > (fecha_otorga+frecuencia);
 
    -- Los que no han pagado nada dias capital
 
@@ -281,13 +265,10 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
 	--update precorte set tipo_cartera_est='tipo 1' where finalidaddefault='002' and fechacierre=pfechacorte;
 	--Hipotecarios (no se utiliza)
 		--002
-
 	--Vivienda (no se utiliza)
 	--update precorte set tipocartera='16' where finalidaddefault='003' and fechacierre=pfechacorte;
 	
-	
    -- Borrar el moratorio devengado de los que no tienen atraso
-
    update precorte
      set interesdevmormenor=0,interesdevmormayor=0
      where fechacierre=pfechacorte and diasvencidos=0;
@@ -299,7 +280,7 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
      select p.precorteid,p.saldoprestamo,p.fechaultamorpagada,p.prestamoid,p.tipoprestamoid,
             p.ultimoabono,p.diastraspasoavencida,p.frecuencia,p.diasvencidos,pr.pagosostenido,pr.diasmoraorigen,pr.renovado
        from precorte p, prestamos pr
-      where p.prestamoid=pr.prestamoid and p.fechacierre=pfechacorte and (p.tipoprestamoid in (select tipoprestamores from tipoprestamo group by tipoprestamores) or pr.renovado=1)
+      where p.prestamoid=pr.prestamoid and p.fechacierre=pfechacorte and (p.tipoprestamoid in (select tipoprestamores from tipoprestamo group by tipoprestamores) or pr.renovado=1) and p.saldoprestamo>0
 
    loop
 
@@ -330,25 +311,15 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
    end loop;
 --<<--
 	
+   update precorte set diascapital = 0 where fechacierre=pfechacorte and diascapital=0 and saldoprestamo=0;
+   update precorte set diascapital = 0 where fechacierre=pfechacorte and saldoprestamo=0;
+   
 	for r in 
 		select e.prestamoid,precorteid from emproblemados e, precorte p where p.prestamoid=e.prestamoid and p.fechacierre=pfechacorte
 	loop
 		update precorte set tipocartera='11' where precorteid=r.precorteid;
 		--update precorte set tipo_cartera_est='tipo 2' where precorteid=r.precorteid;
 	end loop;
-	
-	--for r in 
-	--	select prestamoid from prestamos where socioid in (select socioid from precorte p inner join prestamos pr on (p.prestamoid=pr.prestamoid) where p.tipo_cartera_est='tipo 2' limit 1)
-	--loop
-	--	update precorte set tipocartera='11' where prestamoid=r.prestamoid and fechacierre=pfechacorte;
-	--	update precorte set tipo_cartera_est='tipo 2' where prestamoid=r.prestamoid and fechacierre=pfechacorte;
-	--end loop;
-
-	--Correccion de reestructurado vigente en arteaga (le pagaron el mismo dia de la reestructura)
-	--update precorte set diascapital=174,diasvencidos=174 where prestamoid in (select prestamoid from prestamos where referenciaprestamo in ('015155-S')) and fechacierre=pfechacorte and exists (select sucid from empresa where sucid='005-');
-	
-   
-   
    
    --nuevo calculo 2017/05/11
    for r in

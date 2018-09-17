@@ -8,7 +8,7 @@ begin
 	perform genera_interes_diario_linea(pprestamoid,pfecha);
 	xinteres_acumulado:=0;
 	select sum(interes_diario-interes_pagado) into xinteres_acumulado from  credito_linea_interes_devengado where
-    (interes_diario-interes_pagado)>0 and fecha<=pfecha;	
+    (interes_diario-interes_pagado)>0 and fecha<=pfecha and lineaid=pprestamoid;	
 	xinteres_acumulado:=coalesce(xinteres_acumulado,0);
 	return xinteres_acumulado;
 end

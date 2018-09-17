@@ -97,7 +97,7 @@ begin
 			--El cálculo de interes cambio a petición de la sociedad. ex por día
 			xinteres_pagar:=calcula_int_ord_linea(pprestamoid,pfecha);
 		else
-			xinteres_pagar:=xinteres_corte; -- si no hay pasado la fecha limite todavia paga el interes del corte
+			xinteres_pagar:=calcula_int_ord_linea(pprestamoid,dfecha_corte); -- si no hay pasado la fecha limite todavia paga el interes del corte
 		end if;
 		
 		xiva:=xiva+round(xinteres_pagar*0.16,2);
