@@ -1,5 +1,5 @@
-CREATE OR REPLACE FUNCTION spabonoprestamo(integer, numeric) RETURNS integer
-    AS $_$
+CREATE OR REPLACE FUNCTION "public"."spabonoprestamo"(int4, numeric)
+  RETURNS "pg_catalog"."int4" AS $BODY$
 declare
   pprestamoid alias for $1;
   pabono alias for $2;
@@ -16,7 +16,7 @@ declare
 begin
 
   fAbono := round(pabono,2);
-  --raise notice ' Estoy en La funcion spabonoprestamo!!! ';
+
 --
 -- Actualizar tabla de prestamos, disminuir el saldo del prestamo y
 -- actualizar fecha de ultimo pago, importante ya que a partir de ahi calculamos
@@ -37,9 +37,9 @@ begin
 
   if lsaldoprestamo=0 then
     -- Cambiar estatus a pagado
-    update prestamos
-     set claveestadocredito='002'
-   where prestamoid=pprestamoid;
+    update prestamos set claveestadocredito='002' where prestamoid=pprestamoid;
+	 --Quitar todas las garantias liquidas ligadas al prestamo
+	 update controlgarantialiquida set aa=0,p3=0 where prestamoid=pprestamoid;
   end if;
 
 
@@ -77,5 +77,6 @@ begin
 
 return 1;
 end
-$_$
-    LANGUAGE plpgsql SECURITY DEFINER;
+$BODY$
+  LANGUAGE plpgsql VOLATILE SECURITY DEFINER
+  COST 100

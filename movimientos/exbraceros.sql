@@ -1,3 +1,0 @@
-COPY tipomovimiento (tipomovimientoid, cuentadeposito, cuentaretiro, cuentaintpagado, cuentaintcobrado, cuentaivamovimiento, cuentaisr, desctipomovimiento, aplicasaldo, tipopoliza, aceptadeposito, aceptaretiro, tasainteres, cuentaordenacredor, cuentaordendeudor, cuentaorden, cuentaprovisionisr, comision, porcomision, porivacomision, cuentacomision, cuentaivacomision, desglosaiva) FROM stdin;
-EX	1401070105              	1401070105              	99                      	99                      	99                      	99                      	PAGO A EXBRACEROS       	N	Y	N	S	0.000000	99                      	99                      	N	99                      	0	0	0	1                       	1                       	\N
-\.

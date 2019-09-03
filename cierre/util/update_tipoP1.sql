@@ -1,1 +1,0 @@
-update tipoprestamo set cuentaintnormalvencida='13020203020118' where tipoprestamoid='P1';

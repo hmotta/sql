@@ -13,19 +13,14 @@ CREATE OR REPLACE FUNCTION "public"."aplica_retiro_garantia"(int4, varchar, nume
 		xResto:=0;
 		IF ptipomovimientoid='AA' THEN
 			xResto=xmonto_aa-pmonto_retiro;
-			if xResto<0 then
-				xResto:=0;
-			end if;
 			update controlgarantialiquida set aa=xResto,ultimomov=current_date where prestamoid=pprestamoid;
 		END IF;
 		IF ptipomovimientoid='P3' THEN
 			xResto=xmonto_p3-pmonto_retiro;
-			if xResto<0 then
-				xResto:=0;
-			end if;
 			update controlgarantialiquida set p3=xResto,ultimomov=current_date where prestamoid=pprestamoid;
 		END IF;
 	RETURN 1;
 END
 $BODY$
   LANGUAGE plpgsql VOLATILE
+  COST 100

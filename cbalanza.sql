@@ -1,5 +1,5 @@
-CREATE OR REPLACE FUNCTION "public"."cbalanza"(int4, int4)
-  RETURNS SETOF "saldos" AS $BODY$
+CREATE OR REPLACE FUNCTION cbalanza(integer, integer) RETURNS SETOF sucursal15.saldos
+    AS $_$
 declare
   pejercicio alias for $1;
   pperiodo   alias for $2;
@@ -17,7 +17,7 @@ for f in
         raise notice 'Conectando sucursal % % ',f.basededatos,f.esquema;
 
         dblink1:='host='||f.host||' dbname='||f.basededatos||' user='||f.usuariodb||' password='||f.passworddb;
-        dblink2:='select * from saldos where ejercicio='||to_char(pejercicio,9999)||' and periodo='||to_char(pperiodo,99);
+        dblink2:='select * from '||f.esquema||'.saldos where ejercicio='||to_char(pejercicio,9999)||' and periodo='||to_char(pperiodo,99);
 
         raise notice 'dblink % % ',dblink1,dblink2;
 
@@ -40,5 +40,5 @@ for f in
 
 return;
 end
-$BODY$
-  LANGUAGE plpgsql VOLATILE SECURITY DEFINER
+$_$
+    LANGUAGE plpgsql SECURITY DEFINER;

@@ -1,1 +1,0 @@
-select p.referenciaprestamo,cd.nombreciudadmex from precorte pr,prestamos p,domicilio d, ciudadesmex cd,sujeto su,socio s where d.ciudadmexid=cd.ciudadmexid and d.sujetoid=su.sujetoid and su.sujetoid=s.sujetoid and s.socioid=p.socioid and p.prestamoid = pr.prestamoid and pr.fechacierre='2012-12-31';

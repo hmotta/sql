@@ -1,4 +1,4 @@
-CREATE FUNCTION sptablaamorcalculo(numeric, date, character, integer, integer, integer, integer, date, numeric, integer) RETURNS SETOF tablaamor
+CREATE or replace FUNCTION sptablaamorcalculo(numeric, date, character, integer, integer, integer, integer, date, numeric, integer) RETURNS SETOF tablaamor
     AS $_$
 declare
   pmonto          alias for $1;
@@ -63,7 +63,7 @@ select tantos,aplicaivaprestamo,tasa_normal
    where tipoprestamoid=ptipoprestamoid;
 
 ftasa_normal:=ptasanormal;
-
+raise notice ' ptasanormal %',ptasanormal;
 --if ptipoprestamoid not in ('N5 ','N17','N18','N53','N54') then
 if pcalculoid=1 then
 
@@ -88,20 +88,21 @@ if pcalculoid=1 then
     loop
 	 r.fechadepago:=r.fechadepago+1;      
     end loop;
-    -- <<== primer amortizacion dî¡
+    -- <<== primer amortizacion día
     
+	raise notice 'Tasa = % %',r.tasainteres,ftasa_normal;
     if saplicareciprocidad='S' then
       r.tasainteres := ftasa_normal;
       if ptipoprestamoid<>'CE1' then
         r.tasainteres          := tasareciprocidad(pmonto,pmonto,r.fechadepago,itantos);
       end if;
-      if r.tasainteres>ftasa_normal then
+      if r.tasainteres > ftasa_normal then
         r.tasainteres := ftasa_normal;
       end if;
     else
       r.tasainteres        := ftasa_normal;
     end if;
-
+	raise notice 'Tasa = % %',r.tasainteres,ftasa_normal;
     --r.importeamortizacion  := lpago1;
 
     -- ==>validando si unica amort
@@ -179,7 +180,7 @@ if pcalculoid=1 then
         r.tasainteres := 0;
       end if;
     else
-      r.tasainteres        := ftasa_normal;
+      r.tasainteres := ftasa_normal;
     end if;
 
     if j<>pnoamor then
@@ -281,10 +282,10 @@ raise notice 'pago fijoooo';
   
 
 -- Aplicando formula C=M(i/(1-(1+i)^(-n)))
-
+	raise notice 'pmonto %, ftasamensual %, pnoamor % ',pmonto,ftasamensual,pnoamor;
     limporteamor := pmonto*(ftasamensual/(1-(1+ftasamensual)^(-(pnoamor))));
 
---raise exception 'Importe amortizacione %',limporteamor;
+	raise notice 'limite importe amortizacion %',limporteamor;
   dfechai:=pfechaotorga;
   dfechaf:=ppago1;
 
@@ -308,7 +309,7 @@ raise notice 'pago fijoooo';
 --    end if;
 
     r.fechadepago:=dfechaf;
---    raise notice 'Amor %, fechaf %, fechai %, dias %',j,dfechaf,dfechai,dfechaf-dfechai;
+    
     --
 
 -- raise notice 'fsaldo % ftasassiniva% ',fsaldo,ftasasiniva;
@@ -319,7 +320,7 @@ raise notice 'pago fijoooo';
 --      r.interesnormal        := round(fsaldo*ftasasiniva,2);
       r.iva                  := round(r.interesnormal*gIVA,2);     
       lpago1                 := round(limporteamor-r.interesnormal-r.iva,2);
-
+		raise notice 'Amor %, fechaf %, fechai %, dias %,pago % ',j,dfechaf,dfechai,dfechaf-dfechai,lpago1;
     else
     
       r.interesnormal        := round(fsaldo*(dfechaf-dfechai)*ftasafijo,2);
@@ -411,7 +412,7 @@ else
 --    if saplicareciprocidad='S' then
       r.tasainteres        := ftasa_normal;
 --    end if;
-
+	raise notice 'Tasa = % %',r.tasainteres,ftasa_normal;
     --r.importeamortizacion  := lpago1;
     if pnoamor>1 then      
       r.importeamortizacion  := limporteamor;  -- Para dejar la ultima mayor
@@ -466,7 +467,7 @@ else
 --     validar saplicareciprocidad='S'
       r.tasainteres        := ftasa_normal;
 --    end if;
-
+	raise notice 'Tasa = % %',r.tasainteres,ftasa_normal;
     if j<>pnoamor then
       r.importeamortizacion := limporteamor;
     else

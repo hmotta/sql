@@ -91,8 +91,6 @@ AS $_$
 	prestamocontabilizado numeric;
 	iprestamosdeldia integer;
 	sdia character(2);
-	statusfuturo numeric;
-	statusfuturo1 numeric;
 begin
 	raise notice 'Movicaja...';
 	nmontopartesocial:=1000.00;	
@@ -128,14 +126,15 @@ begin
 	end if;	
 -----<< Termino de validar que no hagan remesa sino han pasado por caja sus inversiones.*/
 
-
-	if ptipomovimientoid='00' then
+------------comentar para poder pagar creditos de otros socios con un renovado
+	--if ptipomovimientoid='00' then
 	  -- Validar que el prestamo corresponda al socio
-	  select socioid into lsocioid from prestamos where prestamoid=pprestamoid;
-	  if lsocioid<>psocioid then
-		 raise exception 'Verifique el prestamo no corresponde al socio !!!';
-	  end if;
-	end if;
+	  --select socioid into lsocioid from prestamos where prestamoid=pprestamoid;
+	--  if lsocioid<>psocioid then
+	--	 raise exception 'Verifique el prestamo no corresponde al socio !!!';
+	--  end if;
+	--end if;
+------ fin de comentar para poder pagar creditos de otros socios con un renovado
 
 	if ptipomovimientoid='IN' then
 	  -- Validar que la inversion corresponda al socio
@@ -180,14 +179,14 @@ begin
 	select motivo into smotivobloqueo  from cuentasbloqueadas where bloqueovigente='S' and bloqueatodo='S' and socioid=psocioid;
 	if found then	
 		raise notice 'validare cuentas bloqueadas...';
-		raise exception 'Cuenta bloqueada % Favor de pasar con el gerente de sucursal.',smotivobloqueo;
+		raise exception 'Cuenta bloqueada % Favor de pasar con el gerente de sucursal.',smotivobloqueo;--Aca comenteee por lo de menores
 	end if;
 	--<<
 
 -- >> Validar tipos de movimiento permitidos por tipo de socio
 	if stiposocioid='01' and ptipomovimientoid in ('AF','AA','AO') then
 		raise notice 'Error. Menor con movimiento de mayor %',ptipomovimientoid;
-		raise exception 'El socio Menor no puede realizar el tipo de movimiento % ',ptipomovimientoid;
+		raise exception 'El socio Menor no puede realizar el tipo de movimiento % ',ptipomovimientoid; --Aca comenteee por lo de menores
 	end if;
 
 	if stiposocioid='02' and ptipomovimientoid in ('AI','AM') then
@@ -263,7 +262,7 @@ begin
 	raise notice 'Monto=% | MontoMinimo=% | MontoMaximo=% ',fmontomov,fmontominimo,fmontomaximo;
 	
 	if fmontomov > fmontomaximo then
-		--raise exception 'El saldo maximo para este tipo de cuenta % es de $ %.',ptipomovimientoid,fmontomaximo;
+		raise exception 'El saldo maximo para este tipo de cuenta % es de $ %.',ptipomovimientoid,fmontomaximo;
 	end if;
 		
 	if fmontomov < fmontominimo and fmontomov<>0 and fmontomov>0 and fretiro>0 then
@@ -329,8 +328,8 @@ end if;
 				raise notice 'inversionid== %',pinversionid;
 				select tipoinversionid into stipoinversionid from inversion where inversionid=pinversionid;
 		end if;
-		--si el movimiento es AA,P3,PSO,PSV Se valida el retiro
-		if (ptipomovimientoid in ('AA','P3') or stipoinversionid='PSO' or stipoinversionid='PSV') then 
+		
+		if ptipomovimientoid in ('AA','P3') or stipoinversionid='PSO' or stipoinversionid='PSV' then 
 			select coalesce(sum(saldo),0) into ngarantiaactual from spssaldosmov(psocioid) where tipomovimientoid in ('P3','AA');
 			raise notice 'Estoy aqui...';
 			if stipoinversionid='PSO' or stipoinversionid='PSV' then 
@@ -342,7 +341,7 @@ end if;
 			end if;
 			
 			raise notice 'garantiaactual==%',ngarantiaactual;
-			select coalesce(sum(monto_garantia),0) into ngarantiarequerida from prestamos where claveestadocredito='001' and  socioid=psocioid;
+			select coalesce(sum(monto_garantia),0) into ngarantiarequerida from prestamos where claveestadocredito='001' and clavegarantia='02' and socioid=psocioid;
 			raise notice '(ngarantiaactual-fretiro)==% , %',(ngarantiaactual-fretiro),ngarantiarequerida;
 			if (ngarantiaactual-fretiro)<ngarantiarequerida then 
 				raise exception 'El monto en garantía no puede ser menor a: %',round(ngarantiarequerida,2);
@@ -535,3 +534,4 @@ return currval('movicaja_movicajaid_seq');
 end
 $_$
 	 LANGUAGE plpgsql SECURITY DEFINER;
+

@@ -1,30 +1,29 @@
 
-drop TYPE rinversionpagadareinv cascade;
-CREATE TYPE rinversionpagadareinv AS (
+drop TYPE rinversionpagada cascade;
+CREATE TYPE rinversionpagada AS (
 	inversionid integer,
-	pagada character,
-	socioid integer
+	pagada character
 );
 
 
 
-CREATE or replace FUNCTION spsinversionpagadareinv(date) RETURNS SETOF rinversionpagadareinv
+CREATE or replace FUNCTION spsinversionpagada(integer,date) RETURNS SETOF rinversionpagada
     AS $_$
 declare
 
- 
-  pfecha alias for $1;
-  r rinversionpagadareinv%rowtype;
-  retirada numeric;
+  psocioid alias for $1;
+  pfecha alias for $2;
+  r rinversionpagada%rowtype;
+  nummovicaja int;
   
 begin
 
  
   for r in
-      select inversionid,'N',socioid  from inversion  where fechavencimiento=pfecha and depositoinversion<>retiroinversion and depositoinversion>0
+      select inversionid,'N'  from inversion  where fechavencimiento=pfecha and socioid=psocioid 
   loop
-    	select (depositoinversion-retiroinversion) into retirada  from inversion where inversionid=r.inversionid;
-	IF  retirada=0 then
+    	select count(*) into nummovicaja  from movicaja where inversionid=r.inversionid;
+	IF  nummovicaja=2 then
 			r.pagada:='S';
 			END IF;
     return next r;

@@ -1,2 +1,0 @@
-update tipoprestamo set tasa_normal=29.52,tasa_mora=44.28 where tipoprestamoid='N22';
-update tasastipoprestamo set tasanormal=29.52,tasamoratoria=44.28 where tipoprestamoid='N22' and reciprocidadinicial=0;

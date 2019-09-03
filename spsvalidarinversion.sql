@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION spsvalidarinversion(date) RETURNS SETOF rvalidarinversion
+CREATE FUNCTION spsvalidarinversion(date) RETURNS SETOF rvalidarinversion
     AS $_$
 declare
 

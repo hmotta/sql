@@ -1,4 +1,4 @@
-CREATE FUNCTION sburo(text) RETURNS text
+CREATE OR REPLACE FUNCTION sburo(text) RETURNS text
     AS $_$
 declare
   scampo alias for $1;
@@ -13,7 +13,7 @@ begin
   stmp:=replace(stmp,'Ú','U');
   stmp:=replace(stmp,'Ñ','N');
   stmp := regexp_replace(stmp, '[^a-z A-Z0-9]*' ,'', 'g');
-  stmp := regexp_replace(stmp, '[ ]*' ,' ');
+  stmp := regexp_replace(stmp, '  *' ,' ','g');
   
 return stmp;
 end

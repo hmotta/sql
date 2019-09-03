@@ -1,37 +1,4 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : server-fap.ddns.net
- Source Server Type    : PostgreSQL
- Source Server Version : 90514
- Source Host           : server-fap.ddns.net:5432
- Source Catalog        : cajayolo03
- Source Schema         : public
-
- Target Server Type    : PostgreSQL
- Target Server Version : 90514
- File Encoding         : 65001
-
- Date: 23/04/2019 19:07:00
-*/
-
-
--- ----------------------------
--- Type structure for rgarantias_disponibles
--- ----------------------------
-DROP TYPE IF EXISTS "rgarantias_disponibles";
-CREATE TYPE "rgarantias_disponibles" AS (
-  "prestamoid" int4,
-  "referencia" varchar COLLATE "pg_catalog"."default",
-  "estatus" varchar COLLATE "pg_catalog"."default",
-  "saldos" varchar COLLATE "pg_catalog"."default"
-);
-
--- ----------------------------
--- Function structure for garantias_disponibles
--- ----------------------------
-DROP FUNCTION IF EXISTS "garantias_disponibles"(int4);
-CREATE OR REPLACE FUNCTION "garantias_disponibles"(int4)
+CREATE OR REPLACE FUNCTION "public"."garantias_disponibles"(int4)
   RETURNS SETOF "public"."rgarantias_disponibles" AS $BODY$
 	DECLARE
 		psocioid alias for $1;
@@ -52,4 +19,4 @@ END
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100
-  ROWS 1000;
+  ROWS 1000

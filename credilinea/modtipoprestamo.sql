@@ -1,1 +1,0 @@
-alter table tipoprestamo add column revolvente integer default 0;

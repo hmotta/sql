@@ -1,1 +1,0 @@
-update estadosmex set abre_estado='CDMX' where estadomexid=9;

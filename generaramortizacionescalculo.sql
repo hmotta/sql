@@ -1,4 +1,4 @@
-CREATE FUNCTION generaramortizacionescalculo(character, numeric, date, integer) RETURNS integer
+CREATE OR REPLACE FUNCTION generaramortizacionescalculo(character, numeric, date, integer) RETURNS integer
     AS $_$
 declare
  

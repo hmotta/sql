@@ -115,10 +115,10 @@ begin
        (select clave from carteraclaveburo where prestamoid=pr.prestamoid),
 	   (select cuentaanterior from cuentaanterior where prestamoid=pr.prestamoid),
 	   pr.primerincumplimiento as fecha_primer_incum,
-	   (select sum(debe) from movicaja mc,movipolizas mp where mp.movipolizaid = mc.movipolizaid and mc.tipomovimientoid='00' and mc.prestamoid=p.prestamoid group by mc.fechahora order by mc.fechahora desc limit 1) as monto_ultimo_pago,
+	   (select coalesce(sum(debe),0) from movicaja mc,movipolizas mp where mp.movipolizaid = mc.movipolizaid and mc.tipomovimientoid='00' and mc.prestamoid=p.prestamoid group by mc.fechahora order by mc.fechahora desc limit 1 ) as monto_ultimo_pago,
 	   NULL as fecha_ult_pago_vencido,
 	   tp.revolvente,
-	   (case when tp.revolvente=1 then (select pago_minimo from corte_linea where lineaid=p.prestamoid and fecha_corte<=pfecha) else 0 end ) as pago_minimo,
+	   (case when tp.revolvente=1 then (select pago_minimo from corte_linea where lineaid=p.prestamoid and fecha_corte<=pfecha order by fecha_corte desc limit 1) else 0 end ) as pago_minimo,
 	   (select max(p1.fechapoliza) from polizas p1 natural join movipolizas mp1 inner join prestamos pr1 on (mp1.prestamoid=pr1.prestamoid) inner join tipoprestamo tp1 on (pr1.tipoprestamoid=tp1.tipoprestamoid) where mp1.prestamoid=p.prestamoid and (mp1.cuentaid = tp1.cuentaactivo or mp1.cuentaid=tp1.cuentaactivoren) and p1.fechapoliza<=pfecha and mp1.debe>0)
        from precorte pr, prestamos p, tipoprestamo tp, socio s, solicitudingreso so, sujeto su, domicilio d, colonia col, ciudadesmex c, estadosmex e
        where pr.fechacierre = pfecha and  s.tiposocioid = '02' and so.personajuridicaid = 0 and 			 
@@ -135,7 +135,7 @@ begin
   loop
     --r.clave:=i;
     --i:=i+1;
-	raise notice 'procesando prestamoid: %',r.prestamoid;
+	--raise notice 'procesando prestamoid: %',r.prestamoid;
 	if r.fecha_otorga >= '2011-05-25' then
 		if r.revolvente=1 then
 			

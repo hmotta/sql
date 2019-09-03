@@ -231,15 +231,15 @@ begin
 	if ptipomovimientoid in ('AF') and fretiro>0 then
 	-->>consulto en la tabla Libera Ahorro al socioid y la fecha de hoy	
 		select status into statusfuturo from liberaahorro where socioid=psocioid and fecha=current_date;
-           if statusfuturo=1 then
-           statusfuturo1=1;
-		   else
+          if statusfuturo=1 then
+          statusfuturo1=1;
+		  else
 		   statusfuturo1=0;
 		   end if;		   
 		
 		if statusfuturo1=0 then
 		select * into sdia from substr(now(),9,2);
-		raise notice 'validare el ahorro futuro AF ... Dia = %',sdia;
+		--raise notice 'validare el ahorro futuro AF ... Dia = %',sdia;
 		if sdia not in ('01','02','03','04','05') then
 		raise exception 'Este producto solo se puede retirar en los primeros 5 dias del mes.';
 		end if;
@@ -343,11 +343,11 @@ end if;
 			
 			raise notice 'garantiaactual==%',ngarantiaactual;
 			--Se suma solamente las garantias de los prestamos que ya han sido desembolsados
-			select coalesce(sum(monto_garantia),0) into ngarantiarequerida from prestamos where claveestadocredito='001' and  socioid=psocioid and prestamoid in (select prestamoid from movicaja where prestamoid is not null union select prestamoid from movibanco where prestamoid is not null);
-			raise notice '(ngarantiaactual-fretiro)==% , %',(ngarantiaactual-fretiro),ngarantiarequerida;
-			if (ngarantiaactual-fretiro)<ngarantiarequerida then 
-				raise exception 'El monto en garantía no puede ser menor a: %',round(ngarantiarequerida,2);
-			end if;
+			--select coalesce(sum(monto_garantia),0) into ngarantiarequerida from prestamos where claveestadocredito='001' and  socioid=psocioid and prestamoid in (select prestamoid from movicaja where prestamoid is not null union select prestamoid from movibanco where prestamoid is not null);
+			--raise notice '(ngarantiaactual-fretiro)==% , %',(ngarantiaactual-fretiro),ngarantiarequerida;
+			--if (ngarantiaactual-fretiro)<ngarantiarequerida then 
+			--	raise exception 'El monto en garantía no puede ser menor a: %',round(ngarantiarequerida,2);
+			--end if;
 		end if;
 
 	--	  if fretiro>fsaldo-freciprocidad and saplicasaldo='S' and ptipomovimientoid<>'IN' and ptipomovimientoid<>'RM' and ptipomovimientoid<>'RE' then
