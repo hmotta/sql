@@ -1,0 +1,1 @@
+ALTER TABLE bitacoraaccesos  ALTER COLUMN clavemodulo TYPE varchar(20);

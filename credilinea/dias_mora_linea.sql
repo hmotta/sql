@@ -10,6 +10,8 @@ declare
 	ndias_capital integer;
 begin
 	ndias_capital:=0;
+	--Si tiene saldo 0 se regresa 0
+	
 	--Se obtiene la fecha de ultimo pago a capital
 	select max(po.fechapoliza) into dultimo_pago_capital from polizas po,movipolizas mp,prestamos p,tipoprestamo tp  where po.polizaid=mp.polizaid and mp.prestamoid=p.prestamoid and p.tipoprestamoid=tp.tipoprestamoid and mp.haber>0 and p.prestamoid=pprestamoid and (mp.cuentaid = tp.cuentaactivo or mp.cuentaid = tp.cuentaactivoren) and po.fechapoliza<=pfecha;
 	raise notice 'dultimo_pago_capital=%',dultimo_pago_capital;

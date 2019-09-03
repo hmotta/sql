@@ -1,0 +1,1 @@
+alter table parametros_pld add column "activa" integer default 1;

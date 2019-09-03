@@ -156,7 +156,7 @@ group by p.tipoprestamoid,t.cuentaactivo,t.cuentaactivovencida,t.cuentaintdevnoc
 group by t.tipoprestamoid  
 
     loop
-	  
+	  raise notice 'r.tipoprestamoid % r1.tipoprestamoid %',r.tipoprestamoid,r1.tipoprestamoid ;
       -- 1era Parte
       if bprimer then
         monto1 := r.b;
@@ -165,7 +165,9 @@ group by t.tipoprestamoid
         monto1 := r.b-r1.b1;
 		--raise notice 'Estoy primera parte CASO2 monto1 % := r.b % - r1.b1 %   | tipoprestamoid= %',monto1,r.b,r1.b1,r.tipoprestamoid;
       end if;
-
+	  
+	  raise notice 'monto  % := r.b % - r1.b1 %',monto1,r.b,r1.b1;
+	  
       if monto1<>0 then
       if monto1>0 then
         scuentaid := r.cuentaactivovencida;
@@ -200,9 +202,12 @@ group by t.tipoprestamoid
         monto2 := r.c-r1.c1;
         monto21 := r.cc-r1.cc1;
 		--raise notice 'Estoy segunda parte monto2 % := r.c % - r1.c1 %   | tipoprestamoid= %',monto2,r.c,r1.c1,r.tipoprestamoid;
-		raise notice 'Estoy segunda parte monto21 % := r.cc % - r1.cc1 %   | tipoprestamoid= %',monto21,r.cc,r1.cc1,r.tipoprestamoid;
+		--raise notice 'Estoy segunda parte monto21 % := r.cc % - r1.cc1 %   | tipoprestamoid= %',monto21,r.cc,r1.cc1,r.tipoprestamoid;
       end if;
 
+	  raise notice 'monto2  % :=  r.c % -  r1.c1%',monto1,r.c,r1.c1;
+	  raise notice 'monto21  % :=  r.cc % -  r1.cc1 %',monto1,r.cc,r1.cc1;
+	  
       if monto2<>0 then
       if monto2>0 then
         scuentaid := r.cuentaintdevnocobres;
@@ -268,6 +273,7 @@ group by t.tipoprestamoid
         monto3 := r.d + r.dd - r1.d1 - r1.dd1;
       end if;
 
+	  raise notice 'monto3  % :=  r.d % + r.dd % - r1.d1 % - r1.dd1 %',monto3,r.d,r.dd,r1.d1,r1.dd1;
       if monto3<>0 then
         if monto3>0 then
           scuentaid := r.cuentaordeninteres;

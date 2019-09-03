@@ -16,7 +16,7 @@ CREATE TYPE restadocta AS (
 	comisiones numeric
 );
 
-CREATE OR REPLACE FUNCTION edocuenta(character, date) RETURNS SETOF restadocta
+CREATE OR REPLACE FUNCTION edocuenta(character, date) RETURNS SETOF restadocta --Esta es la funcion que se ejecuta
 	AS $_$
 declare
 	preferenciaprestamo alias for $1;
@@ -51,7 +51,7 @@ declare
 	fcomisiones numeric;
 	fivacomisiones numeric;
 	fserie character(2);
-	
+	nrevolvente integer;
 begin
 	raise notice 'Edo cta';
 
@@ -59,7 +59,9 @@ begin
 	into pprestamoid,fsaldoinicial
 	from prestamos 
 	where referenciaprestamo=preferenciaprestamo;
-
+	
+	select revolvente into nrevolvente from prestamos p inner join tipoprestamo tp on (p.tipoprestamoid=tp.tipoprestamoid) where p.prestamoid=pprestamoid;
+	
 	select cuentadeposito into fcuentacobranzas from tipomovimiento where tipomovimientoid='0A';
 
 	--Esto es para la primera linea del estado de cuenta, cuando se desembolsa el crédito y no va cuando es una linea
@@ -209,7 +211,7 @@ begin
 	if nrevolvente=1 then --Si es una linea de credito se toman en cuenta las disposiciones 
 		for l in
 			select 
-				p.fechapoliza,p.seriepoliza,p.numero_poliza,m.referenciacaja,m.polizaid,t.cuentaactivo,t.cuentaintnormal,t.cuentaintmora,t.cuentaiva
+				p.fechapoliza,p.seriepoliza,p.numero_poliza,m.referenciacaja,m.polizaid,t.cuentaactivo,t.cuentaactivoren,t.cuentaintnormal,t.cuentaintnormalren,t.cuentaintmora,t.cuentaintmoraren,t.cuentaiva
 			from 
 				movicaja m, prestamos pr, tipoprestamo t, polizas p
 			where 
@@ -227,6 +229,7 @@ begin
 			select sum(coalesce(haber-debe,0)) into fivacomisiones
             from movipolizas
 			where polizaid = l.polizaid and cuentaid = '2305090401' and debe=0;
+			
 			
 			--if fcapital+finteres+fmoratorio+fiva <> 0 then 
 				r.fecha := l.fechapoliza;
@@ -252,7 +255,7 @@ begin
 	r.comisiones := 0; --Ahora los pagos
 	for l in
 		select 
-			p.fechapoliza,p.seriepoliza,p.numero_poliza,m.referenciacaja,m.polizaid,t.cuentaactivo,t.cuentaintnormal,t.cuentaintmora,t.cuentaiva
+			p.fechapoliza,p.seriepoliza,p.numero_poliza,m.referenciacaja,m.polizaid,t.cuentaactivo,t.cuentaactivoren,t.cuentaintnormal,t.cuentaintnormalren,t.cuentaintmora,t.cuentaintmoraren,t.cuentaiva
 		from 
 			movicaja m, prestamos pr, tipoprestamo t, polizas p
 		where 
@@ -261,13 +264,13 @@ begin
 
 		select coalesce(sum(haber-debe),0) into fcapital
 		from movipolizas
-		where polizaid = l.polizaid and cuentaid = l.cuentaactivo and debe=0;
+		where polizaid = l.polizaid and (cuentaid = l.cuentaactivo or cuentaid = l.cuentaactivoren) and debe=0;
 		select coalesce(sum(haber-debe),0) into finteres
 		from movipolizas
-		where polizaid = l.polizaid and cuentaid = l.cuentaintnormal;
+		where polizaid = l.polizaid and (cuentaid = l.cuentaintnormal or  cuentaid = l.cuentaintnormalren);
 		select coalesce(sum(haber-debe),0) into fmoratorio
 		from movipolizas
-		where polizaid = l.polizaid and	cuentaid = l.cuentaintmora;
+		where polizaid = l.polizaid and	(cuentaid = l.cuentaintmora or cuentaid = l.cuentaintmoraren);
 		select coalesce(sum(haber-debe),0) into fiva
 		from movipolizas
 		where polizaid = l.polizaid and	cuentaid = l.cuentaiva;
@@ -277,7 +280,11 @@ begin
 		if FOUND then
 			select coalesce(sum(debe)-sum(haber),0)*-1 into fcobranzas from movipolizas where cuentaid = fcuentacobranzas and polizaid=fpolizaid;
 		end if;
-
+		raise notice 'fcapital:=%',fcapital;
+		raise notice 'finteres:=%',finteres;
+		raise notice 'fmoratorio:=%',fmoratorio;
+		raise notice 'fiva:=%',fiva;
+		
 		if fcapital+finteres+fmoratorio+fiva <> 0 then 
 			r.fecha := l.fechapoliza;
 			r.serie := l.seriepoliza;

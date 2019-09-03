@@ -81,9 +81,9 @@ select
 	pr.tasanormal,
 	pr.ultimoabono,
 	pr.pagocapitalenperiodo,
-	pr.ultimoabonointeres,
+	coalesce(pr.ultimoabonointeres,p.fecha_otorga),
 	pr.pagointeresenperiodo,
-	pr.primerincumplimiento,
+	coalesce(pr.primerincumplimiento,(select fecha_limite from corte_linea where fecha_corte>=pfecha and lineaid=p.prestamoid order by fecha_limite limit 1)),
 	pr.diascapital,
 	pr.diasvencidos,
 	pr.tipoprestamoid,
@@ -108,6 +108,7 @@ select
 	
 loop 
 	raise notice 'socioid=%',r.socioid;
+	
   return next r;
 
 end loop;
