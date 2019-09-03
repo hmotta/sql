@@ -45,7 +45,7 @@ begin
             from movicaja m, prestamos pr, cat_cuentas_tipoprestamo ct
            where m.movicajaid = r.movicajaid and
                  pr.prestamoid =  m.prestamoid and
-				(ct.tipoprestamoid = trim(pr.tipoprestamoid) and ct.clavefinalidad = pr.clavefinalidad and ct.renovado = pr.renovado)
+				(ct.tipoprestamoid = pr.tipoprestamoid and ct.clavefinalidad = pr.clavefinalidad and ct.renovado = pr.renovado)
 				 
                  
         loop
