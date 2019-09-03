@@ -300,15 +300,15 @@ end if;
 raise notice 'Validare ... %',ptipomovimientoid;
 --------
 if ptipomovimientoid='00' then 
-	select cuentaactivo into ccuentatipoprestamo from tipoprestamo tp, prestamos p where tp.tipoprestamoid=p.tipoprestamoid and prestamoid=pprestamoid;
-	select montoprestamo into fmontoprestamo from prestamos where prestamoid=pprestamoid;
-	select sum(debe) into prestamocontabilizado from movipolizas where cuentaid=ccuentatipoprestamo and polizaid in (select polizaid from movibanco where prestamoid=pprestamoid union all select polizaid from movicaja where prestamoid=pprestamoid);
-	prestamocontabilizado:=coalesce(prestamocontabilizado,0);
-	raise notice 'Prestamoid:%, Cuentaactivo:%, Montoprestamo:%, Retiro: %',pprestamoid,ccuentatipoprestamo,fmontoprestamo,prestamocontabilizado;
+	--select cuentaactivo into ccuentatipoprestamo from tipoprestamo tp, prestamos p where tp.tipoprestamoid=p.tipoprestamoid and prestamoid=pprestamoid;
+	--select montoprestamo into fmontoprestamo from prestamos where prestamoid=pprestamoid;
+	--select sum(debe) into prestamocontabilizado from movipolizas where cuentaid=ccuentatipoprestamo and polizaid in (select polizaid from movibanco where prestamoid=pprestamoid union all select polizaid from movicaja where prestamoid=pprestamoid);
+	--prestamocontabilizado:=coalesce(prestamocontabilizado,0);
+	--raise notice 'Prestamoid:%, Cuentaactivo:%, Montoprestamo:%, Retiro: %',pprestamoid,ccuentatipoprestamo,fmontoprestamo,prestamocontabilizado;
 
-	if prestamocontabilizado<fmontoprestamo then 
+	--if prestamocontabilizado<fmontoprestamo then 
 		--raise exception 'No se ha retirado el credito!';
-	end if;
+	--end if;
 end if;
 ----->> Validar reriro de PA
 --	if ptipomovimientoid='PA' and fretiro >0 and (fretiro>(fsaldo-nmontopartesocial)) then 
