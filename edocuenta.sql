@@ -211,11 +211,11 @@ begin
 	if nrevolvente=1 then --Si es una linea de credito se toman en cuenta las disposiciones 
 		for l in
 			select 
-				p.fechapoliza,p.seriepoliza,p.numero_poliza,m.referenciacaja,m.polizaid,t.cuentaactivo,t.cuentaactivoren,t.cuentaintnormal,t.cuentaintnormalren,t.cuentaintmora,t.cuentaintmoraren,t.cuentaiva
+				p.fechapoliza,p.seriepoliza,p.numero_poliza,m.referenciacaja,m.polizaid,ct.cuentaactivo,t.cuentaintnormal,t.cuentaintmora,t.cuentaiva
 			from 
-				movicaja m, prestamos pr, tipoprestamo t, polizas p
+				movicaja m, prestamos pr, cat_cuentas_tipoprestamo ct, polizas p
 			where 
-				m.prestamoid = pprestamoid and pr.prestamoid =  m.prestamoid and t.tipoprestamoid = pr.tipoprestamoid and p.polizaid = m.polizaid and p.fechapoliza < pfechacorte+1 order by p.fechapoliza
+				m.prestamoid = pprestamoid and pr.prestamoid =  m.prestamoid and (ct.tipoprestamoid = pr.tipoprestamoid and ct.clavefinalidad = pr.clavefinalidad and ct.renovado = pr.renovado) and p.polizaid = m.polizaid and p.fechapoliza < pfechacorte+1 order by p.fechapoliza
 		loop
 
 			select coalesce(sum(haber-debe),0) into fcapital
@@ -255,22 +255,22 @@ begin
 	r.comisiones := 0; --Ahora los pagos
 	for l in
 		select 
-			p.fechapoliza,p.seriepoliza,p.numero_poliza,m.referenciacaja,m.polizaid,t.cuentaactivo,t.cuentaactivoren,t.cuentaintnormal,t.cuentaintnormalren,t.cuentaintmora,t.cuentaintmoraren,t.cuentaiva
+			p.fechapoliza,p.seriepoliza,p.numero_poliza,m.referenciacaja,m.polizaid,ct.cuentaactivo,ct.cuentaintnormal,ct.cuentaintmora,ct.cuentaiva
 		from 
-			movicaja m, prestamos pr, tipoprestamo t, polizas p
+			movicaja m, prestamos pr, cat_cuentas_tipoprestamo ct, polizas p
 		where 
-			m.prestamoid = pprestamoid and pr.prestamoid =  m.prestamoid and t.tipoprestamoid = pr.tipoprestamoid and p.polizaid = m.polizaid and p.fechapoliza < pfechacorte+1 order by p.fechapoliza
+			m.prestamoid = pprestamoid and pr.prestamoid =  m.prestamoid and (ct.tipoprestamoid = pr.tipoprestamoid and ct.clavefinalidad = pr.clavefinalidad and ct.renovado = pr.renovado) and p.polizaid = m.polizaid and p.fechapoliza < pfechacorte+1 order by p.fechapoliza
 	loop
 
 		select coalesce(sum(haber-debe),0) into fcapital
 		from movipolizas
-		where polizaid = l.polizaid and (cuentaid = l.cuentaactivo or cuentaid = l.cuentaactivoren) and debe=0;
+	where polizaid = l.polizaid and cuentaid = l.cuentaactivo and debe=0;
 		select coalesce(sum(haber-debe),0) into finteres
 		from movipolizas
-		where polizaid = l.polizaid and (cuentaid = l.cuentaintnormal or  cuentaid = l.cuentaintnormalren);
+	where polizaid = l.polizaid and cuentaid = l.cuentaintnormal;
 		select coalesce(sum(haber-debe),0) into fmoratorio
 		from movipolizas
-		where polizaid = l.polizaid and	(cuentaid = l.cuentaintmora or cuentaid = l.cuentaintmoraren);
+	where polizaid = l.polizaid and	cuentaid = l.cuentaintmora;
 		select coalesce(sum(haber-debe),0) into fiva
 		from movipolizas
 		where polizaid = l.polizaid and	cuentaid = l.cuentaiva;

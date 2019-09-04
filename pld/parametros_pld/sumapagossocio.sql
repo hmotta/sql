@@ -9,16 +9,16 @@ declare
 	pfechaf alias for $3;
 	xSuma numeric;
 begin
-	select sum(m.haber) into xSuma from prestamos p, tipoprestamo tp, movicaja mc, polizas l, movipolizas m,socio s
+	select sum(m.haber) into xSuma from prestamos p, cat_cuentas_tipoprestamo ct, movicaja mc, polizas l, movipolizas m,socio s
  where s.socioid = lsocioid and p.socioid=s.socioid and l.fechapoliza between pfechai and pfechaf and 
-       tp.tipoprestamoid = p.tipoprestamoid and
+       (ct.tipoprestamoid = p.tipoprestamoid and ct.clavefinalidad = p.clavefinalidad and ct.renovado = p.renovado) and
        mc.prestamoid = p.prestamoid and
        m.polizaid = mc.polizaid and
        m.polizaid=l.polizaid  and
-       (m.cuentaid = tp.cuentaactivo or m.cuentaid = tp.cuentaactivoren or
-	   m.cuentaid = tp.cuentaiva or 
-	   m.cuentaid = tp.cuentaintnormal or m.cuentaid = tp.cuentaintnormalren
-	   or m.cuentaid = tp.cuentaintmora or m.cuentaid = tp.cuentaintmoraren);
+       (m.cuentaid = ct.cuentaactivo or
+	   m.cuentaid = ct.cuentaiva or 
+	   m.cuentaid = ct.cuentaintnormal
+	   or m.cuentaid = ct.cuentaintmora);
 	
 	xSuma := coalesce(xSuma,0);
 return xSuma;

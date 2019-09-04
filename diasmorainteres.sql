@@ -10,8 +10,8 @@ declare
 	
 	ndias integer;
 begin
-	select MAX(case when m.cuentaid=tp.cuentaintnormal and po.fechapoliza<=pfecha then po.fechapoliza else (case when m.cuentaid=tp.cuentaactivo and po.fechapoliza<=pfecha then po.fechapoliza else pr.fecha_otorga end) end) into dultimoabonointeres from movicaja mc, movipolizas m, polizas po, prestamos pr,  tipoprestamo tp where mc.prestamoid=pprestamoid and mc.tipomovimientoid='00' and pr.prestamoid = mc.prestamoid and tp.tipoprestamoid = pr.tipoprestamoid and m.polizaid = mc.polizaid and m.polizaid=po.polizaid;
-	--raise notice 'pfechaultimapagada %',pfechaultimapagada;
+	select MAX(case when m.cuentaid=ct.cuentaintnormal and po.fechapoliza<=pfecha then po.fechapoliza else (case when m.cuentaid=ct.cuentaactivo and po.fechapoliza<=pfecha then po.fechapoliza else pr.fecha_otorga end) end) into dultimoabonointeres from movicaja mc, movipolizas m, polizas po, prestamos pr,  cat_cuentas_tipoprestamo ct where mc.prestamoid=pprestamoid and mc.tipomovimientoid='00' and pr.prestamoid = mc.prestamoid and (ct.tipoprestamoid = pr.tipoprestamoid and ct.clavefinalidad = pr.clavefinalidad and ct.renovado = pr.renovado) and m.polizaid = mc.polizaid and m.polizaid=po.polizaid;
+--raise notice 'pfechaultimapagada %',pfechaultimapagada;
 	--raise notice 'dultimoabonointeres %',dultimoabonointeres;
 	--raise notice 'pfrecuencia %',pfrecuencia;
 	

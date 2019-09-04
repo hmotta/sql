@@ -121,7 +121,7 @@ begin
 	   NULL as fecha_ult_pago_vencido,
 	   tp.revolvente,
 	   (case when tp.revolvente=1 then (select (capital+capital_vencido+int_ordinario+int_moratorio) from corte_linea where lineaid=p.prestamoid and fecha_corte<=pfecha order by fecha_corte desc limit 1) else 0 end ) as pago_minimo,
-	   (select max(p1.fechapoliza) from polizas p1 natural join movipolizas mp1 inner join prestamos pr1 on (mp1.prestamoid=pr1.prestamoid) inner join tipoprestamo tp1 on (pr1.tipoprestamoid=tp1.tipoprestamoid) where mp1.prestamoid=p.prestamoid and (mp1.cuentaid = tp1.cuentaactivo or mp1.cuentaid=tp1.cuentaactivoren) and p1.fechapoliza<=pfecha and mp1.debe>0),
+	   (select max(p1.fechapoliza) from polizas p1 natural join movipolizas mp1 inner join prestamos pr1 on (mp1.prestamoid=pr1.prestamoid) inner join cat_cuentas_tipoprestamo ct on (ct.tipoprestamoid = pr1.tipoprestamoid and ct.clavefinalidad = pr1.clavefinalidad and ct.renovado = pr1.renovado) where mp1.prestamoid=p.prestamoid and (mp1.cuentaid = ct.cuentaactivo) and p1.fechapoliza<=pfecha and mp1.debe>0),
 	   (case when tp.revolvente=1 then (select max(debe) from movslinead(p.prestamoid,p.fecha_otorga,current_date,1) where tipomov=1 ) else p.montoprestamo end ),
 	   claveestadocredito
        from precorte pr, prestamos p, tipoprestamo tp, socio s, solicitudingreso so, sujeto su, domicilio d, colonia col, ciudadesmex c, estadosmex e
