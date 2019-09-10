@@ -119,11 +119,11 @@ select p.prestamoid,
 
     from prestamos p left join movicaja mc on p.prestamoid=mc.prestamoid 
                      left join polizas po on mc.polizaid = po.polizaid
-                     left join movipolizas m on po.polizaid=m.polizaid, 
+                     left join movipolizas m on po.polizaid=m.polizaid 
 					 inner join tipoprestamo tp on tp.tipoprestamoid = p.tipoprestamoid
 					 inner join cat_cuentas_tipoprestamo ct on (ct.tipoprestamoid = trim(p.tipoprestamoid) and ct.clavefinalidad = p.clavefinalidad and ct.renovado = p.renovado)
    where p.fecha_otorga <= pfechacorte and
-         p.claveestadocredito<>'008' and 
+         p.claveestadocredito<>'008' 
 group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
          p.clavefinalidad,p.tasanormal,p.tasa_moratoria,
          p.fecha_1er_pago,tp.diastraspasoavencida,p.fecha_vencimiento,p.dias_de_cobro,p.meses_de_cobro,tp.clavefinalidad,p.fecha_otorga,p.monto_garantia,p.claveestadocredito,p.numero_de_amor,p.renovado,tp.revolvente,p.tipo_cartera_est

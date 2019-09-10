@@ -1,5 +1,5 @@
-CREATE OR REPLACE FUNCTION "public"."genera_matriz_riesgo"(int4)
-  RETURNS "pg_catalog"."int4" AS $BODY$
+CREATE OR REPLACE FUNCTION genera_matriz_riesgo(int4)
+  RETURNS pg_catalog.int4 AS $BODY$
 	DECLARE
 		psocioid alias for $1;
 		nentero int4;

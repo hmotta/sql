@@ -44,7 +44,7 @@ BEGIN
 	
 	--8	Monto aproximado mensual de las Operaciones
 	ELSIF ppreguntaid=8 THEN
-		select montooperaciones into nvalor from datosingresoconceatucliente where socioid=psocioid;
+		select trunc(montooperaciones) into nvalor from datosingresoconceatucliente where socioid=psocioid;
 		
 	--9	Actividad principal
 	ELSIF ppreguntaid=9 THEN
@@ -64,7 +64,7 @@ BEGIN
 		
 	--13	Ingreso Total Mensual
 	ELSIF ppreguntaid=13 THEN
-		select ingresototal into nvalor from ingresoegresoconceatucliente where socioid=psocioid;
+		select trunc(ingresototal) into nvalor from ingresoegresoconceatucliente where socioid=psocioid;
 		
 	--14	Instrumento Monetario (Por Monto)
 	ELSIF ppreguntaid=14 THEN
@@ -100,7 +100,7 @@ BEGIN
 	
 	--22	Ingreso del Cónyuge
 	ELSIF ppreguntaid=22 THEN
-		select coalesce(ingresomensual,0) into nvalor from conyugeconceatucliente where socioid = psocioid;
+		select trunc(coalesce(ingresomensual,0)) into nvalor from conyugeconceatucliente where socioid = psocioid;
 		nvalor:=coalesce(nvalor,0);
 		raise notice '%',nvalor;
 		

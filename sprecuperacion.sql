@@ -1,11 +1,14 @@
-CREATE FUNCTION sprecuperacion(date, date, character, character) RETURNS SETOF rrecupera
-    AS $_$
+-- ----------------------------
+-- Function structure for sprecuperacion
+-- ----------------------------
+DROP FUNCTION IF EXISTS sprecuperacion(date, date);
+CREATE OR REPLACE FUNCTION sprecuperacion(date, date)
+  RETURNS SETOF rrecupera AS $BODY$
 declare
 
   pfechai     alias for $1;
   pfechaf     alias for $2;
-  psocioi     alias for $3;
-  psociof     alias for $4;
+
 
   r rrecupera%rowtype;
 
@@ -23,28 +26,28 @@ select substr(s.clavesocioint,1,4) as suc,pr.referenciaprestamo,pr.prestamoid,
        su.nombre||' '||su.paterno||' '||su.materno as nombresocio,
        pr.montoprestamo,
        pr.tipoprestamoid,
-       sum(case when m.cuentaid=t.cuentaactivo 
+       sum(case when m.cuentaid=ct.cuentaactivo
                 then m.haber
                 else 0 end) as capital,
-       sum(case when m.cuentaid=t.cuentaintnormal
+       sum(case when m.cuentaid=ct.cuentaintnormal
                 then m.haber
                 else 0 end) as interes,
-       sum(case when m.cuentaid=t.cuentaintmora
+       sum(case when m.cuentaid=ct.cuentaintmora
                 then m.haber
                 else 0 end) as moratorio,
-       sum(case when m.cuentaid=t.cuentaiva
+       sum(case when m.cuentaid=ct.cuentaiva
                 then m.haber
                 else 0 end) as iva,0 as ivacalculado,si.grupo
   from polizas p, movicaja mc, movipolizas m, prestamos pr,
-       tipoprestamo t, socio s, sujeto su, solicitudingreso si
+       cat_cuentas_tipoprestamo ct, socio s, sujeto su, solicitudingreso si
  where p.fechapoliza between pfechai and pfechaf and
        mc.polizaid=p.polizaid and
        mc.tipomovimientoid='00' and
        m.polizaid = p.polizaid and
        pr.prestamoid = mc.prestamoid and
-       t.tipoprestamoid = pr.tipoprestamoid and
+       (ct.tipoprestamoid = pr.tipoprestamoid and ct.clavefinalidad = pr.clavefinalidad and ct.renovado = pr.renovado) and
        s.socioid = mc.socioid and
-       s.clavesocioint>=psocioi and s.clavesocioint<=psociof and
+       s.clavesocioint>=(select min(clavesocioint) from socio) and s.clavesocioint<=(select max(clavesocioint) from socio) and
        su.sujetoid = s.sujetoid and 
        s.socioid=si.socioid
 group by pr.referenciaprestamo,s.clavesocioint,p.fechapoliza,su.nombre,su.paterno,su.materno,pr.prestamoid,
@@ -65,5 +68,5 @@ order by si.grupo,pr.tipoprestamoid,s.clavesocioint
 
 return;
 end
-$_$
-    LANGUAGE plpgsql SECURITY DEFINER;
+$BODY$
+  LANGUAGE plpgsql VOLATILE SECURITY DEFINER;

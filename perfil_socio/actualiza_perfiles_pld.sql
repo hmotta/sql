@@ -1,5 +1,5 @@
-CREATE OR REPLACE FUNCTION "public"."actualiza_perfiles_pld"()
-  RETURNS "pg_catalog"."int4" AS $BODY$
+CREATE OR REPLACE FUNCTION actualiza_perfiles_pld()
+  RETURNS pg_catalog.int4 AS $BODY$
 	DECLARE
 		r record;
 	BEGIN
