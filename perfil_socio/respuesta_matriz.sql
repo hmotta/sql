@@ -1,6 +1,6 @@
 CREATE or replace FUNCTION respuesta_matriz(integer,integer) RETURNS tvalorrespuestamat
     AS $_$
-declare
+	declare
 	psocioid alias for $1;
 	ppreguntaid alias for $2;
 	r tvalorrespuestamat%rowtype;

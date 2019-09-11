@@ -127,3 +127,4 @@ INSERT INTO cat_respuestas_matriz(preguntaid, descripcion_respuesta, valor_respu
 INSERT INTO cat_respuestas_matriz(preguntaid, descripcion_respuesta, valor_respuesta_minimo, valor_respuesta_maximo, nivelriesgoid) VALUES (6, 'DIVORCIADO(A)', 2, 2, 1);
 INSERT INTO cat_respuestas_matriz(preguntaid, descripcion_respuesta, valor_respuesta_minimo, valor_respuesta_maximo, nivelriesgoid) VALUES (6, 'UNIÓN LIBRE', 4, 4, 2);
 INSERT INTO cat_respuestas_matriz(preguntaid, descripcion_respuesta, valor_respuesta_minimo, valor_respuesta_maximo, nivelriesgoid) VALUES (6, 'VIUDO(A)', 3, 3, 1);
+INSERT INTO cat_respuestas_matriz(preguntaid, descripcion_respuesta, valor_respuesta_minimo, valor_respuesta_maximo, nivelriesgoid) VALUES (22, 'SIN INGRESOS', 0, 0, 3);

@@ -49,6 +49,7 @@ CREATE OR REPLACE FUNCTION actualiza_perfil_socio(int4)
 		--8 Monto aproximado mensual de las Operaciones (6 meses)
 		--select sum(debe) into xnumeric from movicaja mc inner join movipolizas mp on (mc.movipolizaid=mp.movipolizaid) where socioid=psocioid and (tipomovimientoid in (select tipomovimientoid from spsmovimientosmayor(1)) or tipomovimientoid in ('IN','00')) and date(mc.fechahora) between (current_date-180) and current_date;
 		select avg(debe) into xnumeric from movicaja mc inner join movipolizas mp on (mc.movipolizaid=mp.movipolizaid) where socioid=psocioid and mp.debe>0 and tipomovimientoid in ('AC') and (mc.efectivo is not null and mc.efectivo>0 and mc.efectivo<>3) and date(mc.fechahora) between (current_date-180) and current_date;
+		xnumeric:=coalesce(xnumeric,0);
 		if xnumeric>0 then
 			update datosingresoconceatucliente set montooperaciones=xnumeric where socioid=psocioid;
 		end if;
