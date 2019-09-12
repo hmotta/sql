@@ -1,0 +1,1 @@
+select * from socio so,sujeto su, domicilio d where su.sujetoid=so.sujetoid and d.sujetoid=su.sujetoid and so.socioid in (select socioid from prestamos where claveestadocredito='001' and fecha_otorga between '2011-12-01' and '2011-12-30' and socioid not in (select pr.socioid from precorte pc, prestamos pr where pr.prestamoid=pc.prestamoid and fechacierre='2011-11-30'));

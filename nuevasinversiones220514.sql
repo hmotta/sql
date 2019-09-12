@@ -1,0 +1,17 @@
+insert into tipoinversiones (tipoinversionid, cuentariesgocred, cuentaintinvernocob, calculoid, cuentapasivo, cuentapasivovencida, cuentaintinver, cuentaivainver, desctipoinversion, tasa_normal_inversion, plazo, aplicaivainversion, aplicaisr, reinvierteinteres, tipomovimientoid, cuentaprovisionisr, clasificacionid, montomaximo, montominimo, plazomaximo, indicadorid
+) values ('I1', 2305100102, 5102020113, 3, 2102010110, 2102010210, 5102020112, 99, '540 DIAS 1,000 A 9,999', 7.65, 540, 'N', 1, 1, 'AO', 99, 0,	9999.99, 1000, 547, '');
+
+insert into tipoinversiones (tipoinversionid, cuentariesgocred, cuentaintinvernocob, calculoid, cuentapasivo, cuentapasivovencida, cuentaintinver, cuentaivainver, desctipoinversion, tasa_normal_inversion, plazo, aplicaivainversion, aplicaisr, reinvierteinteres, tipomovimientoid, cuentaprovisionisr, clasificacionid, montomaximo, montominimo, plazomaximo, indicadorid
+) values ('I2', 2305100102, 5102020113, 3, 2102010110, 2102010210, 5102020112, 99, '540 DIAS 10,000 A 49,999', 7.8, 540, 'N', 1, 1, 'AO', 99, 0, 49999.99, 10000, 547,	,'');
+
+insert into tipoinversiones (tipoinversionid, cuentariesgocred, cuentaintinvernocob, calculoid, cuentapasivo, cuentapasivovencida, cuentaintinver, cuentaivainver, desctipoinversion, tasa_normal_inversion, plazo, aplicaivainversion, aplicaisr, reinvierteinteres, tipomovimientoid, cuentaprovisionisr, clasificacionid, montomaximo, montominimo, plazomaximo, indicadorid
+) values('I3', 2305100103, 5102020113, 3, 2102010110 ,2102010210 ,5102020112, 99, '540 DIAS 50,000 EN ADELANTE', 8.5, 540, 'N', 1, 1, 'AO', 99,	0, 9999999.99, 50000, 547,	,'');
+
+insert into tipoinversiones (tipoinversionid, cuentariesgocred, cuentaintinvernocob, calculoid, cuentapasivo, cuentapasivovencida, cuentaintinver, cuentaivainver, desctipoinversion, tasa_normal_inversion, plazo, aplicaivainversion, aplicaisr, reinvierteinteres, tipomovimientoid, cuentaprovisionisr, clasificacionid, montomaximo, montominimo, plazomaximo, indicadorid
+) values ('J1',	2305100102,	5102020115,	3, 2102010111, 2102010211, 5102020114, 99, '720 DIAS 1,000 A 9,999', 8.15, 720, 'N', 1, 1, 'AO', 99, 0, 9999.99, 1000, 725, '');
+
+insert into tipoinversiones (tipoinversionid, cuentariesgocred, cuentaintinvernocob, calculoid, cuentapasivo, cuentapasivovencida, cuentaintinver, cuentaivainver, desctipoinversion, tasa_normal_inversion, plazo, aplicaivainversion, aplicaisr, reinvierteinteres, tipomovimientoid, cuentaprovisionisr, clasificacionid, montomaximo, montominimo, plazomaximo, indicadorid
+) values ('J2',	2305100102,	5102020115,	3, 2102010111, 2102010211, 5102020114, 99, '720 DIAS 10,000 A 49,999', 8.20, 720, 'N', 1, 1, 'AO', 99, 0, 49999.99, 10000, 725,	'');
+
+insert into tipoinversiones (tipoinversionid, cuentariesgocred, cuentaintinvernocob, calculoid, cuentapasivo, cuentapasivovencida, cuentaintinver, cuentaivainver, desctipoinversion, tasa_normal_inversion, plazo, aplicaivainversion, aplicaisr, reinvierteinteres, tipomovimientoid, cuentaprovisionisr, clasificacionid, montomaximo, montominimo, plazomaximo, indicadorid
+) values ('J3', 2305100102, 5102020115, 3, 2102010111, 2102010211, 5102020114, 99, '720 DIAS 50,000 EN ADELANTE', 8.25, 720, 'N', 1, 1, 'AO', 99, 0, 9999999.99, 50000, 725, '');

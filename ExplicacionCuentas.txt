@@ -1,0 +1,29 @@
+tipoprestamoid - Clave de 2 a 3 caracteres para identificar el tipo de credito
+cuentaactivo - Cuenta contable de ACTIVO para  registrar/acumular el CAPITAL VIGENTE
+cuentaactivovencida - Cuenta contable de ACTIVO para registrar/acumular el CAPITAL VENCIDO
+cuentaintnormal - Cuenta contable de INGRESOS (RESULTADO) para registrar/acumular el INTERES NORMAL VIGENTE COBRADO
+cuentaintnormalvencida - Cuenta contable de ACTIVO para registrar/acumular el INTERES VENCIDO
+cuentaintnormalnocob - Cuenta contable de INGRESOS para registrar/acumular el INTERES DEVENGADO NO COBRADO
+cuentaintmora - Cuenta contable de INGRESOS para registrar/acumular el INTERES MORATORIO COBRADO
+cuentaiva  - Cuenta contable de IVA para registrar/acumular el IVA COBRADO
+
+
+cuentaintmoravencida  - Cuenta contable de INGRESOS para registrar/acumular el INTERES MORATORIO VENCIDO COBRADO
+cuentariesgocred  - Cuenta contable de ACTIVO  para registrar/acumular el LA ESTIMACION DEL CREDITO
+cuentaordeninteres -  Cuenta contable  de ORDEN (DEUDORA) para registrar/acumular el INT. DEV. NO COB VENCIDO
+cuentaintdevnocobres  - Cuenta contable de ACTIVO para registrar/acumular el INTERES NORMAL COBRADO
+cuentariesgocredres - Cuenta contable de MARGEN FINANCIERO para registrar/acumular el LA ESTIMACION DEL CREDITO
+cuentaintmoranocobact -  Cuenta contable  de ORDEN (DEUDORA) para registrar/acumular los CASTIGOS DE CARTERA
+cuentaintmoradevnocobres -  Cuenta contable  de ORDEN (ACREEDORA) para registrar/acumular los CASTIGOS DE CARTERA
+ordendeudornormalbonificado -  Cuenta contable  de ORDEN (DEUDORA) para registrar/acumular los CASTIGOS BONIFICACION DE INT
+ordenacredornormalbonificado -  Cuenta contable  de ORDEN (ACREEDORA) para registrar/acumular los CASTIGOS BONIFICACION DE INT
+cuentaintnormalresvencida - Cuenta contable de INGRESOS para registrar/acumular el INTERES NORMAL VENCIDO COBRADO
+ordeninteresacreedor  -  Cuenta contable  de ORDEN (ACREEDORA) para registrar/acumular el INT. DEV. NO COB VENCIDO
+cuentacomision -  Cuenta contable  de INGRESOS (COMISIONES Y TARIFAS COBRADAS) para registrar/acumular la comision en su caso
+cuentaivacomision -  Cuenta contable  para registrar/acumular el IVA de la comision
+moravigentebalance - Cuenta contable de ACTIVO para registrar/acumular el INTERES MORATORIO
+moravencidobalance - Cuenta contable de ACTIVO para registrar/acumular el INTERES MORATORIO VENCIDO
+moravigenteresultado  - Cuenta contable de INGRESOS (RESULTADO) para registrar/acumular el INTERES MORATORIO VIGENTE NO COB
+moravencidoresultado  - Cuenta contable de INGRESOS (RESULTADO) para registrar/acumular el INTERES MORATORIO VENCIDO NO COB
+moractaordendeudora - Cuenta contable  de ORDEN (DEUDORA) para registrar/acumular el INT MORA NO COB VEN
+moractaordenacredora - Cuenta contable  de ORDEN (ACREEDORA) para registrar/acumular el INT MORA NO COB VEN

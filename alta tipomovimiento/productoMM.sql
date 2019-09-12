@@ -1,0 +1,3 @@
+COPY tipomovimiento (tipomovimientoid, cuentadeposito, cuentaretiro, cuentaintpagado, cuentaintcobrado, cuentaivamovimiento, cuentaisr, desctipomovimiento, aplicasaldo, tipopoliza, aceptadeposito, aceptaretiro, tasainteres, cuentaordenacredor, cuentaordendeudor, cuentaorden, cuentaprovisionisr, comision, porcomision, porivacomision, cuentacomision, cuentaivacomision, desglosaiva) FROM stdin;
+MM	23051627              	23051627              	99                      	99                      	99                      	99                      	CTA CONCENTRADORA MENORES        	N	Y	S	N	0.000000	99                      	99                      	N	99                      	\N	\N	\N	\N	\N	\N
+\.

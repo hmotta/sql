@@ -1,0 +1,1 @@
+alter table solicitudprestamo drop constraint solicitudprestamo_consultaburoid_fkey;

@@ -1,0 +1,20 @@
+en la ultima póliza la 710701 cambia a --> 71060505
+ 720701 cambia a --> 72060505
+ 
+ en la penultima poliza la 13030101020101 es estimacion consumo
+ 13030101010101 - comercial
+ 13030101030101 - vivienda
+ 
+ agregar en el concepto de la poliza referencia y socio.
+ 
+ primer poliza
+ 
+ bonificacion de intereses normales
+ 71050102030101 - abono -haber
+ 72050102030101 - cargo - debe
+ 
+ 71060502 - abono
+ 72060502 - cargo
+ 
+ 
+ 

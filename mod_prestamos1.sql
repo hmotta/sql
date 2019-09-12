@@ -1,0 +1,1 @@
+alter table prestamos add column pagosostenido integer default 0;
