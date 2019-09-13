@@ -45,7 +45,7 @@ select substr(s.clavesocioint,1,4) as suc,pr.referenciaprestamo,pr.prestamoid,
        mc.tipomovimientoid='00' and
        m.polizaid = p.polizaid and
        pr.prestamoid = mc.prestamoid and
-       (ct.tipoprestamoid = pr.tipoprestamoid and ct.clavefinalidad = pr.clavefinalidad and ct.renovado = pr.renovado) and
+       (ct.cat_cuentasid = pr.cat_cuentasid) and
        s.socioid = mc.socioid and
        s.clavesocioint>=(select min(clavesocioint) from socio) and s.clavesocioint<=(select max(clavesocioint) from socio) and
        su.sujetoid = s.sujetoid and 

@@ -19,7 +19,7 @@ select prestamoid into pprestamoid from prestamos where referenciaprestamo=prefe
 
 -- Actualizar interes pagado
 
-  select sum(case when m.cuentaid=ct.cuentaactivo then m.haber else 0 end) as interes into finteres from movicaja mc, movipolizas m, prestamos pr,  cat_cuentas_tipoprestamo ct where mc.prestamoid=pprestamoid and mc.tipomovimientoid='00' and pr.prestamoid = mc.prestamoid and (ct.tipoprestamoid = pr.tipoprestamoid and ct.clavefinalidad = pr.clavefinalidad and ct.renovado = pr.renovado) and m.polizaid = mc.polizaid;
+  select sum(case when m.cuentaid=ct.cuentaactivo then m.haber else 0 end) as interes into finteres from movicaja mc, movipolizas m, prestamos pr,  cat_cuentas_tipoprestamo ct where mc.prestamoid=pprestamoid and mc.tipomovimientoid='00' and pr.prestamoid = mc.prestamoid and (ct.cat_cuentasid = pr.cat_cuentasid) and m.polizaid = mc.polizaid;
 
   update amortizaciones set abonopagado=0 where prestamoid=pprestamoid;
 

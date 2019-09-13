@@ -105,7 +105,7 @@ begin
   susuarioid1:='castigos';
   
 
-select p.montoprestamo-sum(m.haber) into fcapital  from prestamos p, cat_cuentas_tipoprestamo ct, movicaja mc, movipolizas m where p.prestamoid = pprestamoid and (ct.tipoprestamoid = p.tipoprestamoid and ct.clavefinalidad = p.clavefinalidad and ct.renovado = p.renovado) and mc.prestamoid = p.prestamoid and m.polizaid = mc.polizaid and m.cuentaid = ct.cuentaactivo group by p.saldoprestamo,p.montoprestamo;
+select p.montoprestamo-sum(m.haber) into fcapital  from prestamos p, cat_cuentas_tipoprestamo ct, movicaja mc, movipolizas m where p.prestamoid = pprestamoid and (ct.cat_cuentasid = p.cat_cuentasid) and mc.prestamoid = p.prestamoid and m.polizaid = mc.polizaid and m.cuentaid = ct.cuentaactivo group by p.saldoprestamo,p.montoprestamo;
 
  
 
@@ -133,7 +133,7 @@ select p.montoprestamo-sum(m.haber) into fcapital  from prestamos p, cat_cuentas
 	--Se parametriza las cuentas contables dependiendo si es un crédito renovado o normal
 	
 		select cuentaactivo,cuentariesgocred,cuentaintnormal,cuentaintmora,cuentaiva,OrdenDeudorNormalBonificado,OrdenAcredorNormalBonificado,CuentaIntMoraDevNoCobRes,CuentaIntMoraNoCobAct,cuentaintdevnocobres,cuentaordeninteres,ordeninteresacreedor,cuentaintnormalvencida,moravencidobalance
-		into scuentaactivo,scuentariesgocred,scuentaintnormal,scuentaintmora,scuentaiva,scuentadeudornormal,scuentaacrenormal,scuentadeudormora,scuentaacremora,scuentaintdevnocobres,scuentaordeninteres,sordeninteresacreedor,scuentaintnormalvencida,smoravencidobalance from cat_cuentas_tipoprestamo ct , prestamos pr  where (ct.tipoprestamoid = pr.tipoprestamoid and ct.clavefinalidad = pr.clavefinalidad and ct.renovado = pr.renovado) and pr.prestamoid=pprestamoid;
+		into scuentaactivo,scuentariesgocred,scuentaintnormal,scuentaintmora,scuentaiva,scuentadeudornormal,scuentaacrenormal,scuentadeudormora,scuentaacremora,scuentaintdevnocobres,scuentaordeninteres,sordeninteresacreedor,scuentaintnormalvencida,smoravencidobalance from cat_cuentas_tipoprestamo ct , prestamos pr  where (ct.cat_cuentasid = pr.cat_cuentasid) and pr.prestamoid=pprestamoid;
 
   
   select serie_user,cuentacaja into pserie_user,scuentacaja from parametros where usuarioid=susuarioid1;   
@@ -331,7 +331,7 @@ select coalesce(max(referenciacaja),0)
  
 -- ********************* Encabezado de la poliza 2 ***************************** --
       	--Se vuelve a calcular el capital despues de aplicar los haberes
-	select  p.montoprestamo-sum(m.haber) into fcapitalaplicado  from prestamos p, cat_cuentas_tipoprestamo ct, movicaja mc, movipolizas m where p.prestamoid = pprestamoid and (ct.tipoprestamoid = p.tipoprestamoid and ct.clavefinalidad = p.clavefinalidad and ct.renovado = p.renovado) and mc.prestamoid = p.prestamoid and m.polizaid = mc.polizaid and m.cuentaid = ct.cuentaactivo group by p.saldoprestamo,p.montoprestamo;
+	select  p.montoprestamo-sum(m.haber) into fcapitalaplicado  from prestamos p, cat_cuentas_tipoprestamo ct, movicaja mc, movipolizas m where p.prestamoid = pprestamoid and (ct.cat_cuentasid = p.cat_cuentasid) and mc.prestamoid = p.prestamoid and m.polizaid = mc.polizaid and m.cuentaid = ct.cuentaactivo group by p.saldoprestamo,p.montoprestamo;
 
 
 
@@ -418,7 +418,7 @@ raise notice '**Consulta de saldo después de aplicar haberes';
 --Dar de alta la poliza contable
 --
 
-select cuentaactivo,cuentaactivovencida into scuentaactivo,scuentaactivovencida from cat_cuentas_tipoprestamo ct, prestamos pr where ct.tipoprestamoid = 'CAS' and ct.clavefinalidad = pr.clavefinalidad and pr.prestamoid=pprestamoid;
+select cuentaactivo,cuentaactivovencida into scuentaactivo,scuentaactivovencida from cat_cuentas_tipoprestamo ct, prestamos pr where ct.cat_cuentasid = pr.cat_cuentasid and pr.prestamoid=pprestamoid;
 
   select *
     into pnumero_poliza,preferencia

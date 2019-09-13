@@ -79,7 +79,7 @@ begin
 	-- Recalcular el saldo en base a pagos y disposiciones
 	select p.saldoprestamo, p.montoprestamo into fsaldoact,fmonto_inicial from prestamos p where p.prestamoid = lprestamoid;
 
-	select sum(mp.debe),sum(mp.haber) into fcargos,fabonos from movipolizas mp,prestamos p,cat_cuentas_tipoprestamo ct  where mp.prestamoid=p.prestamoid and (ct.tipoprestamoid = p.tipoprestamoid and ct.clavefinalidad = p.clavefinalidad and ct.renovado = p.renovado) and p.prestamoid=lprestamoid and (mp.cuentaid = ct.cuentaactivo);
+	select sum(mp.debe),sum(mp.haber) into fcargos,fabonos from movipolizas mp,prestamos p,cat_cuentas_tipoprestamo ct  where mp.prestamoid=p.prestamoid and (ct.cat_cuentasid = p.cat_cuentasid) and p.prestamoid=lprestamoid and (mp.cuentaid = ct.cuentaactivo);
 
 	fsaldoact:=coalesce(fsaldoact,0);
 

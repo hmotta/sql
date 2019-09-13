@@ -27,7 +27,7 @@ begin
 			RAISE NOTICE 'not found';
 			indice_amort := 1;
 			capital_pagado:=0;
-			select (case when pr.renovado=1 then t.cuentaactivoren else t.cuentaactivo end),(case when pr.renovado=1 then t.cuentaintmoraren else t.cuentaintmora end)  into cuentas from tipoprestamo t,prestamos pr where pr.prestamoid = pprestamoid  and t.tipoprestamoid = pr.tipoprestamoid;
+			select ct.cuentaactivo,ct.cuentaintmora  into cuentas from cat_cuentas_tipoprestamo ct,prestamos pr where pr.prestamoid = pprestamoid  and ct.cat_cuentasid=pr.cat_cuentasid;
 			select count(*) into num_amort from amortizaciones where prestamoid=pprestamoid;
 			select importeamortizacion,fechadepago,amortizacionid into importe_amort,fecha_amort,re.amortizacionid from amortizaciones where prestamoid=pprestamoid and numamortizacion = indice_amort;
 			for r in select mc.polizaid,p.fechapoliza,m.debe,m.haber,mc.movicajaid from movicaja mc,polizas p, movipolizas m,tipomovimiento t where p.polizaid = mc.polizaid and m.movipolizaid = mc.movipolizaid and mc.tipomovimientoid='00' and t.tipomovimientoid = mc.tipomovimientoid and mc.prestamoid = pprestamoid order by p.fechapoliza

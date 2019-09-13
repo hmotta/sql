@@ -12,11 +12,11 @@ declare
 begin
 	
 		select pz.fechapoliza into dispIni
-		from prestamos p, tipoprestamo tp, movipolizas mp, polizas pz
+		from prestamos p, cat_cuentas_tipoprestamo ct, movipolizas mp, polizas pz
 		where p.prestamoid = pprestamoid
 		and mp.prestamoid = pprestamoid
-		and p.tipoprestamoid = tp.tipoprestamoid
-		and mp.cuentaid in(tp.cuentaactivo, tp.cuentaactivoren)
+		and (ct.cat_cuentasid = p.cat_cuentasid)
+		and mp.cuentaid = ct.cuentaactivo
 		and mp.debe <> 0
 		and pz.polizaid = mp.polizaid
 		group by pz.polizaid, pz.fechapoliza, mp.cuentaid, mp.debe, mp.haber

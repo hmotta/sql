@@ -1,7 +1,3 @@
--- ----------------------------
--- Function structure for spsprestamos
--- ----------------------------
-DROP FUNCTION IF EXISTS spsprestamos(bpchar);
 CREATE OR REPLACE FUNCTION spsprestamos(bpchar)
   RETURNS SETOF prestamos AS $BODY$
 declare
@@ -27,7 +23,7 @@ select p.saldoprestamo, p.montoprestamo-sum(m.haber)
   from movipolizas m, movicaja mc, prestamos p, cat_cuentas_tipoprestamo ct
  where p.prestamoid = lprestamoid and
 --p.referenciaprestamo = preferenciaprestamo and
-       (ct.tipoprestamoid = p.tipoprestamoid and ct.clavefinalidad = p.clavefinalidad and ct.renovado = p.renovado) and
+       ct.cat_cuentasid = p.cat_cuentasid and
        mc.prestamoid = p.prestamoid and
        m.polizaid = mc.polizaid and
        (m.cuentaid = ct.cuentaactivo)
@@ -80,4 +76,4 @@ group by p.saldoprestamo,p.montoprestamo;
 return;
 end
 $BODY$
-  LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
+  LANGUAGE plpgsql VOLATILE SECURITY DEFINER

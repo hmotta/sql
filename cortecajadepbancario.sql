@@ -1,7 +1,3 @@
--- ----------------------------
--- Function structure for cortecajadepbancario
--- ----------------------------
-DROP FUNCTION IF EXISTS cortecajadepbancario(bpchar, date, int4);
 CREATE OR REPLACE FUNCTION cortecajadepbancario(bpchar, date, int4)
   RETURNS SETOF rcortecaja AS $BODY$
 declare
@@ -107,7 +103,7 @@ for l in
           s.clavesocioint,
           p.fechapoliza as fecha, 0 as capital, 0 as interes, 0 as moratorio, 0 as iva,
           0 as deposito, 0 as retiro, m.tipomovimientoid, 0 as cobranza, p.polizaid,
-		 ct.cuentaactivo,ct.cuentaintnormal,ct.cuentaintmora ,ct.cuentaiva, pr.tipoprestamoid,ct.cuentafondorecuperacion
+		 ct.cuentaactivo,ct.cuentaintnormal,ct.cuentaintmora ,ct.cuentaiva, pr.tipoprestamoid
      from movicaja m, polizas p, movipolizas mp,socio s, prestamos pr, tipoprestamo t, cat_cuentas_tipoprestamo ct
     where (m.seriecaja = pserie or pserie=' ') and
           p.polizaid = m.polizaid and
@@ -120,7 +116,7 @@ for l in
           m.tipomovimientoid='00' and
           pr.prestamoid = m.prestamoid and
           t.tipoprestamoid = pr.tipoprestamoid and 
-		  (ct.tipoprestamoid = pr.tipoprestamoid and ct.clavefinalidad = pr.clavefinalidad and ct.renovado = pr.renovado)
+		  (ct.cat_cuentasid = pr.cat_cuentasid)
  order by m.referenciacaja
 
  loop 
@@ -251,4 +247,3 @@ return;
 end;
 $BODY$
   LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
-

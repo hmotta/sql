@@ -103,10 +103,10 @@ select p.saldoprestamo, p.montoprestamo-sum(m.haber),p.claveestadocredito
   into fsaldoact,fsaldocalculado,sclaveestadocredito
   from prestamos p, cat_cuentas_tipoprestamo ct, movicaja mc, movipolizas m
  where p.prestamoid = lprestamoid and
-       (ct.cat_cuentasid = p.cat_cuentasid) and
+       ct.cat_cuentasid = p.cat_cuentasid and
        mc.prestamoid = p.prestamoid and
        m.polizaid = mc.polizaid and
-		m.cuentaid = ct.cuentaactivo
+       m.cuentaid = ct.cuentaactivo
 group by p.saldoprestamo,p.montoprestamo,p.claveestadocredito;
 
   fsaldoact:=coalesce(fsaldoact,0);

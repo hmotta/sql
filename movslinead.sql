@@ -60,7 +60,7 @@ begin
             from movipolizas mp, prestamos pr, cat_cuentas_tipoprestamo ct
            where mp.polizaid = r.polizaid and
                  pr.prestamoid =  mp.prestamoid and
-                 (ct.tipoprestamoid = pr.tipoprestamoid and ct.clavefinalidad = pr.clavefinalidad and ct.renovado = pr.renovado)
+                 (ct.cat_cuentasid = pr.cat_cuentasid)
                  
         loop
 
