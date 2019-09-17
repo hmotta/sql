@@ -121,7 +121,7 @@ select p.prestamoid,
                      left join polizas po on mc.polizaid = po.polizaid
                      left join movipolizas m on po.polizaid=m.polizaid 
 					 inner join tipoprestamo tp on tp.tipoprestamoid = p.tipoprestamoid
-					 inner join cat_cuentas_tipoprestamo ct on (ct.tipoprestamoid = trim(p.tipoprestamoid) and ct.clavefinalidad = p.clavefinalidad and ct.renovado = p.renovado)
+					 inner join cat_cuentas_tipoprestamo ct on (ct.cat_cuentasid=p.cat_cuentasid)
    where p.fecha_otorga <= pfechacorte and
          p.claveestadocredito<>'008' 
 group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
@@ -209,7 +209,7 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
      finteresdevmormayor:=0;
      --if r.saldoprestamo>0 then
 			idiascapital:=dias_mora_linea(r.prestamoid,pfechacorte);
-			idiasinteres:=(case when (select fecha_limite from corte_linea where lineaid=r.prestamoid and int_ordinario>0 order by fecha_limite  limit 1)<=pfechacorte then (case when (r.fechaultamorpagada-r.ultimoabonointeres)-r.frecuencia > 0 then (r.fechaultamorpagada-r.ultimoabonointeres)-r.frecuencia else 0 end) else 0 end);
+			idiasinteres:=(case when (dias_interes_linea(r.prestamoid,pfechacorte)-r.frecuencia)>0 then (dias_interes_linea(r.prestamoid,pfechacorte)-r.frecuencia) else 0 end);
 			
 			-- Asignar a los dias vencidos lo que sea mayor interes o capital 
 			if idiascapital>idiasinteres then

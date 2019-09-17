@@ -123,7 +123,7 @@ begin
                  
   from precorte p
 			inner join prestamos pr on (p.prestamoid=pr.prestamoid)
-			inner join cat_cuentas_tipoprestamo on (ct.tipoprestamoid = pr.tipoprestamoid and ct.clavefinalidad = pr.clavefinalidad and ct.renovado = pr.renovado)
+			inner join cat_cuentas_tipoprestamo on (ct.cat_cuentasid = pr.cat_cuentasid)
  where p.fechacierre = pfechaactual and p.tipoprestamoid <> 'CAS'
 group by p.tipoprestamoid,ct.cuentaactivo,ct.cuentaactivovencida,ct.cuentaintdevnocobres,
        ct.cuentaintnormalnocob,ct.cuentaordeninteres,ct.ordeninteresacreedor,
@@ -409,7 +409,7 @@ group by t.tipoprestamoid
                  --then (p.reservacalculada+p.reservaidnc+p.reservagarantia)*p.factoraplicado else 0 end)) as reservacalculada   
   from precorte p 
 				inner join prestamos pr on (p.prestamoid=pr.prestamoid)
-				inner join cat_cuentas_tipoprestamo on (ct.tipoprestamoid = pr.tipoprestamoid and ct.clavefinalidad = pr.clavefinalidad and ct.renovado = pr.renovado)
+				inner join cat_cuentas_tipoprestamo on (ct.cat_cuentasid = pr.cat_cuentasid)
   where p.fechacierre = pfechaactual and p.tipoprestamoid <> 'CAS' 
   group by p.tipoprestamoid,t.moravigentebalance,t.moravencidobalance,t.moravigenteresultado,
        t.moravencidoresultado,t.moractaordendeudora,t.moractaordenacredora,pr.renovado--,p.factoraplicado 
