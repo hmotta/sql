@@ -31,11 +31,8 @@ declare
 	fiva        numeric;
 	ftotal      numeric;
 	flinea      numeric;
-
 	l record;
-
 	pprestamoid int4;
-
 	dfechapoliza date;
 	sseriepoliza char(2);
 	lnumero_poliza int4;
@@ -53,12 +50,9 @@ declare
 	fserie character(2);
 	nrevolvente integer;
 begin
-	raise notice 'Edo cta';
+	--raise notice 'Edo cta';
 
-	select prestamoid,montoprestamo 
-	into pprestamoid,fsaldoinicial
-	from prestamos 
-	where referenciaprestamo=preferenciaprestamo;
+	select prestamoid,montoprestamo into pprestamoid,fsaldoinicial from prestamos where referenciaprestamo=preferenciaprestamo;
 	
 	select revolvente into nrevolvente from prestamos p inner join tipoprestamo tp on (p.tipoprestamoid=tp.tipoprestamoid) where p.prestamoid=pprestamoid;
 	
@@ -155,10 +149,7 @@ begin
 	ftotal      := 0;
 
 
-	select p.fechapoliza,p.seriepoliza,p.numero_poliza,
-	0,mp.haber 
-	into dfechapoliza, sseriepoliza, lnumero_poliza,
-	lreferenciamovi, fmontoprestamo
+	select p.fechapoliza,p.seriepoliza,p.numero_poliza,0,mp.haber into dfechapoliza, sseriepoliza, lnumero_poliza,lreferenciamovi, fmontoprestamo
 	from movibanco m,polizas p, movipolizas mp
 	where m.prestamoid=pprestamoid and
 	p.polizaid=m.polizaid and
@@ -172,10 +163,7 @@ begin
 		--return next r;
 	else
 
-		select p.fechapoliza,p.seriepoliza,p.numero_poliza,
-		m.referenciacaja,mp.haber
-		into dfechapoliza, sseriepoliza, lnumero_poliza,
-		lreferenciamovi, fmontoprestamo
+		select p.fechapoliza,p.seriepoliza,p.numero_poliza,m.referenciacaja,mp.haber into dfechapoliza, sseriepoliza, lnumero_poliza,lreferenciamovi, fmontoprestamo
 		from movicaja m,polizas p, movipolizas mp
 		where m.prestamoid=pprestamoid and
 		p.polizaid=m.polizaid and
@@ -211,11 +199,11 @@ begin
 	if nrevolvente=1 then --Si es una linea de credito se toman en cuenta las disposiciones 
 		for l in
 			select 
-				p.fechapoliza,p.seriepoliza,p.numero_poliza,m.referenciacaja,m.polizaid,ct.cuentaactivo,t.cuentaintnormal,t.cuentaintmora,t.cuentaiva
+				p.fechapoliza,p.seriepoliza,p.numero_poliza,m.referenciacaja,m.polizaid,ct.cuentaactivo,ct.cuentaintnormal,ct.cuentaintmora,ct.cuentaiva
 			from 
 				movicaja m, prestamos pr, cat_cuentas_tipoprestamo ct, polizas p
 			where 
-				m.prestamoid = pprestamoid and pr.prestamoid =  m.prestamoid and (ct.tipoprestamoid = pr.tipoprestamoid and ct.clavefinalidad = pr.clavefinalidad and ct.renovado = pr.renovado) and p.polizaid = m.polizaid and p.fechapoliza < pfechacorte+1 order by p.fechapoliza
+				m.prestamoid = pprestamoid and pr.prestamoid =  m.prestamoid and (ct.cat_cuentasid = pr.cat_cuentasid) and p.polizaid = m.polizaid and p.fechapoliza < pfechacorte+1 order by p.fechapoliza
 		loop
 
 			select coalesce(sum(haber-debe),0) into fcapital
@@ -259,7 +247,7 @@ begin
 		from 
 			movicaja m, prestamos pr, cat_cuentas_tipoprestamo ct, polizas p
 		where 
-			m.prestamoid = pprestamoid and pr.prestamoid =  m.prestamoid and (ct.tipoprestamoid = pr.tipoprestamoid and ct.clavefinalidad = pr.clavefinalidad and ct.renovado = pr.renovado) and p.polizaid = m.polizaid and p.fechapoliza < pfechacorte+1 order by p.fechapoliza
+			m.prestamoid = pprestamoid and pr.prestamoid =  m.prestamoid and (ct.cat_cuentasid = pr.cat_cuentasid) and p.polizaid = m.polizaid and p.fechapoliza < pfechacorte+1 order by p.fechapoliza
 	loop
 
 		select coalesce(sum(haber-debe),0) into fcapital
@@ -280,10 +268,10 @@ begin
 		if FOUND then
 			select coalesce(sum(debe)-sum(haber),0)*-1 into fcobranzas from movipolizas where cuentaid = fcuentacobranzas and polizaid=fpolizaid;
 		end if;
-		raise notice 'fcapital:=%',fcapital;
-		raise notice 'finteres:=%',finteres;
-		raise notice 'fmoratorio:=%',fmoratorio;
-		raise notice 'fiva:=%',fiva;
+		--raise notice 'fcapital:=%',fcapital;
+		--raise notice 'finteres:=%',finteres;
+		--raise notice 'fmoratorio:=%',fmoratorio;
+		--raise notice 'fiva:=%',fiva;
 		
 		if fcapital+finteres+fmoratorio+fiva <> 0 then 
 			r.fecha := l.fechapoliza;
@@ -307,161 +295,3 @@ begin
 end
 $_$
 LANGUAGE plpgsql SECURITY DEFINER;
-
-
-
-CREATE OR REPLACE FUNCTION edocuenta(character, character, date) RETURNS SETOF restadocta
-    AS $_$
-declare
-  pclavesocioint      alias for $1;
-  preferenciaprestamo alias for $2;
-  pfechacorte         alias for $3;
-
-  r restadocta%rowtype;
-
-  fimporte    numeric;
-  fcapital    numeric;
-  finteres    numeric;
-  fmoratorio  numeric;
-  fiva        numeric;
-  ftotal      numeric;
-
-  l record;
-
-  pprestamoid int4;
-
-  dfechapoliza date;
-  sseriepoliza char(2);
-  lnumero_poliza int4;
-  lreferenciamovi int4;
-  fmontoprestamo numeric;
-
-  dfecha_otorga date;
-  nrevolvente integer;
-begin
-
-  select prestamoid into pprestamoid
-   from prestamos where referenciaprestamo=preferenciaprestamo;
-
-  fimporte    :=0;
-  fcapital    :=0;
-  finteres    :=0;
-  fmoratorio  :=0;
-  fiva        :=0;
-  ftotal      :=0;
-
-raise notice 'Prestamoid = %',pprestamoid;
-
-  select 
-	p.fechapoliza,p.seriepoliza,p.numero_poliza,cast(substr(referenciamovi,4) as int4),mp.haber,t.revolvente 
-  into 
-	dfechapoliza, sseriepoliza, lnumero_poliza, lreferenciamovi, fmontoprestamo, nrevolvente
-  from 
-	movibanco m,polizas p, movipolizas mp, tipoprestamo t, prestamos pr
-  where 
-	pr.prestamoid=pprestamoid and m.prestamoid=pprestamoid and p.polizaid=m.polizaid and mp.polizaid=p.polizaid and  t.tipoprestamoid=pr.tipoprestamoid and
-    mp.cuentaid = t.cuentaactivo and mp.haber>0;
-
-  if FOUND then
-    r.fecha := dfechapoliza;
-    r.serie := sseriepoliza;
-    r.nopoliza := lnumero_poliza;
-    r.referenciacaja := lreferenciamovi;
-    r.monto_prestamo := fmontoprestamo;
-    return next r;
-  else
-
-    select p.fechapoliza,p.seriepoliza,p.numero_poliza,
-           m.referenciacaja,mp.haber
-      into dfechapoliza, sseriepoliza, lnumero_poliza,
-           lreferenciamovi, fmontoprestamo
-      from movicaja m,polizas p, movipolizas mp
-     where m.prestamoid=pprestamoid and
-           p.polizaid=m.polizaid and
-           mp.movipolizaid=m.movipolizaid and
-           mp.haber>0;
-
-    if FOUND then
-      r.fecha := dfechapoliza;
-      r.serie := sseriepoliza;
-      r.nopoliza := lnumero_poliza;
-      r.referenciacaja := lreferenciamovi;
-      r.monto_prestamo := fmontoprestamo;
-      return next r;
-    else
-      -- Regresar el monto por que no se encontro el movimiento
-      -- ni en bancos ni en movicaja
-      select montoprestamo,fecha_otorga
-        into fmontoprestamo,dfecha_otorga
-        from prestamos
-       where referenciaprestamo=preferenciaprestamo;             
-
-      r.fecha := dfecha_otorga;
-      r.serie := 'Z';
-      r.nopoliza := 0;
-      r.referenciacaja := 0;
-      r.monto_prestamo := fmontoprestamo;
-      return next r;
-
-    end if;
-
-
-  end if;
-
-
-
-  for l in
-    select p.fechapoliza,p.seriepoliza,p.numero_poliza,
-           m.referenciacaja,
-           m.polizaid,t.cuentaactivo,t.cuentaintnormal,t.cuentaintmora,t.cuentaiva
-      from movicaja m, prestamos pr, tipoprestamo t, polizas p
-     where m.prestamoid = pprestamoid and
-           pr.prestamoid =  m.prestamoid and
-           t.tipoprestamoid = pr.tipoprestamoid and
-           p.polizaid = m.polizaid and
-           p.fechapoliza < pfechacorte+1
-    order by p.fechapoliza
-           
-  loop
-
-    select sum(coalesce(haber-debe,0)) into fcapital
-      from movipolizas
-     where polizaid = l.polizaid and
-           cuentaid = l.cuentaactivo and debe=0;
-    select sum(coalesce(haber-debe,0)) into finteres
-      from movipolizas
-     where polizaid = l.polizaid and
-           cuentaid = l.cuentaintnormal;
-    select sum(coalesce(haber-debe,0)) into fmoratorio
-      from movipolizas
-     where polizaid = l.polizaid and
-           cuentaid = l.cuentaintmora;
-    select sum(coalesce(haber-debe,0)) into fiva
-      from movipolizas
-     where polizaid = l.polizaid and
-           cuentaid = l.cuentaiva;
-
-    r.fecha := l.fechapoliza;
-    r.serie := l.seriepoliza;
-    r.nopoliza := l.numero_poliza;
-    r.referenciacaja := l.referenciacaja;
-    r.monto_prestamo := 0;
-    r.capital := coalesce(fcapital,0);
-    r.interes := coalesce(finteres,0);
-    r.moratorio := coalesce(fmoratorio,0);
-    r.iva := coalesce(fiva,0);
-    r.total := r.capital + r.interes + r.moratorio + r.iva;
-
-    return next r;
-    
-  end loop;
-  
-  --Unicamente si es una linea de credito se toman en cuenta las disposiciones
-  --if () then
-  
-  --end if;
-
-return;
-end
-$_$
-    LANGUAGE plpgsql SECURITY DEFINER;

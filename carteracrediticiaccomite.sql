@@ -1,7 +1,8 @@
-CREATE or replace FUNCTION carteracrediticiaccomite(date) RETURNS SETOF tcarteracrediticiacomite
-    AS $_$
+CREATE OR REPLACE FUNCTION carteracrediticiaccomite(int4, int4)
+  RETURNS SETOF tcarteracrediticiacomite AS $BODY$
 declare
-  pfechacierre alias for $1;
+  pejercicio alias for $1;
+  pperiodo   alias for $2;
 
   r tcarteracrediticiacomite%rowtype;
 
@@ -22,7 +23,7 @@ for f in
      select s.clavesocioint,pr.referenciaprestamo,p.ejercicio,p.periodo,p.fechacierre,
             p.diasvencidos,p.porcentajeaplicado,p.factoraplicado,p.saldoprestamo,
             p.reservacalculada,p.interesdevengadomenoravencido,
-            p.interesdevengadomayoravencido,p.pagocapitalenperiodo,
+            (p.interesdevengadomayoravencido + p.interesdevmormayor),p.pagocapitalenperiodo,
             p.pagointeresenperiodo,p.pagomoratorioenperiodo,
             p.bonificacionintenperiodo,p.bonificacionmorenperiodo,
             p.noamorvencidas,p.saldovencidomenoravencido,p.saldovencidomayoravencido,
@@ -35,8 +36,9 @@ for f in
             d.calle,d.numero_ext,d.colonia,d.comunidad,d.codpostal,c.nombreciudadmex,
             p.ultimoabono,p.diastraspasoavencida,p.ultimoabonointeres,
 			--pr.numero_de_amor,
-            round(CAST((pr.fecha_vencimiento-pr.fecha_otorga)as numeric)/30),  ---------
-			pr.fecha_otorga, fi.descripcionfinalidad,
+			--select prestamoid,round(CAST((fecha_vencimiento-fecha_otorga) as numeric)/30) as dif from prestamos
+                                round(CAST((pr.fecha_vencimiento-pr.fecha_otorga)as numeric)/30),
+            pr.fecha_otorga, f.descripcionfinalidad,
             (case when p.fecha_vencimiento>p.fechacierre and
                        p.saldoprestamo>0
                   then p.fecha_vencimiento-p.fechacierre
@@ -44,37 +46,43 @@ for f in
             (case when p.dias_de_cobro > 0 then p.dias_de_cobro else p.meses_de_cobro*30 end),
             interesdevmormenor,interesdevmormayor,
                         (case when pr.numero_de_amor > 1 then '||''''||'Pagos periodicos de principal e intereses'||''''||' else '||''''||'Pago Unico de principal e intereses '||''''||' end) as condicionpago,
-                        (case when p.diasvencidos <= p.diastraspasoavencida and p.tipoprestamoid not in ('||''''||'T1'||''''||','||''''||'T2'||''''||','||''''||'T3'||''''||','||''''||'R1'||''''||','||''''||'R2'||''''||','||''''||'R3'||''''||') then '||''''||'Normal'||''''||' else
+                        (case when pr.renovado=1 and pr.diasmoraorigen=0 then ''Renovado 1'' else
+						(case when pr.renovado=1 and pr.diasmoraorigen>0 then ''Renovado 2'' else
+						(case when p.diasvencidos <= p.diastraspasoavencida and p.tipoprestamoid not in ('||''''||'T1'||''''||','||''''||'T2'||''''||','||''''||'T3'||''''||','||''''||'R1'||''''||','||''''||'R2'||''''||','||''''||'R3'||''''||') then '||''''||'Normal'||''''||' else
                         (case when p.diasvencidos > p.diastraspasoavencida and p.tipoprestamoid not in ('||''''||'T1'||''''||','||''''||'T2'||''''||','||''''||'T3'||''''||','||''''||'R1'||''''||','||''''||'R2'||''''||','||''''||'R3'||''''||') then '||''''||'Normal'||''''||' else
                         (case when p.diasvencidos <= p.diastraspasoavencida and p.tipoprestamoid in ('||''''||'T1'||''''||','||''''||'T2'||''''||','||''''||'T3'||''''||') then '||''''||'Reestructurado'||''''||' else
                         (case when p.diasvencidos > p.diastraspasoavencida and p.tipoprestamoid in ('||''''||'T1'||''''||','||''''||'T2'||''''||','||''''||'T3'||''''||') then '||''''||'Reestructurado'||''''||' else
                         (case when p.diasvencidos <= p.diastraspasoavencida and p.tipoprestamoid in ('||''''||'R1'||''''||','||''''||'R2'||''''||','||''''||'R3'||''''||') then '||''''||'Renovado'||''''||' else
-                        (case when p.diasvencidos > p.diastraspasoavencida and p.tipoprestamoid in ('||''''||'R1'||''''||','||''''||'R2'||''''||','||''''||'R3'||''''||') then '||''''||'Renovado'||''''||' end) end) end) end) end) end) as estacion,(case when p.dias_de_cobro > 0 then p.dias_de_cobro else p.meses_de_cobro*30 end),pr.prestamodescontado,
+                        (case when p.diasvencidos > p.diastraspasoavencida and p.tipoprestamoid in ('||''''||'R1'||''''||','||''''||'R2'||''''||','||''''||'R3'||''''||') then '||''''||'Renovado'||''''||' end) end) end) end) end) end) end) end) as estacion,
+						(case when p.dias_de_cobro > 0 then p.dias_de_cobro else p.meses_de_cobro*30 end),'''',
                         (case when p.diasvencidos <= p.diastraspasoavencida and p.tipoprestamoid not in ('||''''||'T1'||''''||','||''''||'T2'||''''||','||''''||'T3'||''''||','||''''||'R1'||''''||','||''''||'R2'||''''||','||''''||'R3'||''''||') then '||''''||'Vigente'||''''||' else
                         (case when p.diasvencidos > p.diastraspasoavencida and p.tipoprestamoid not in ('||''''||'T1'||''''||','||''''||'T2'||''''||','||''''||'T3'||''''||','||''''||'R1'||''''||','||''''||'R2'||''''||','||''''||'R3'||''''||') then '||''''||'Vencido'||''''||' else
                         (case when p.diasvencidos <= p.diastraspasoavencida and p.tipoprestamoid in ('||''''||'T1'||''''||','||''''||'T2'||''''||','||''''||'T3'||''''||') then '||''''||'Vigente'||''''||' else
                         (case when p.diasvencidos > p.diastraspasoavencida and p.tipoprestamoid in ('||''''||'T1'||''''||','||''''||'T2'||''''||','||''''||'T3'||''''||') then '||''''||'Vencido'||''''||' else
                         (case when p.diasvencidos <= p.diastraspasoavencida and p.tipoprestamoid in ('||''''||'R1'||''''||','||''''||'R2'||''''||','||''''||'R3'||''''||') then '||''''||'Vigente'||''''||' else
-                        (case when p.diasvencidos > p.diastraspasoavencida and p.tipoprestamoid in ('||''''||'R1'||''''||','||''''||'R2'||''''||','||''''||'R3'||''''||') then '||''''||'Vencido'||''''||' end) end) end) end) end) end) as estacion1,pr.norenovaciones,pr.clavegarantia,pr.monto_garantia,devengadoanterior(p.prestamoid,p.fechacierre) as interesanterior,(case when  p.diasvencidos <= p.diastraspasoavencida then interesdevengadomenoravencido+interesdevmormenor else 0 end) as devengadovigente,
-                        (case when  p.diasvencidos > p.diastraspasoavencida then interesdevengadomenoravencido+interesdevmormenor else 0 end) as devengadovencido,p.primerincumplimiento,pr.fecha_1er_pago,
+                        (case when p.diasvencidos > p.diastraspasoavencida and p.tipoprestamoid in ('||''''||'R1'||''''||','||''''||'R2'||''''||','||''''||'R3'||''''||') then '||''''||'Vencido'||''''||' end) end) end) end) end) end) as estacion1,
+						pr.norenovaciones,pr.clavegarantia,pr.monto_garantia,devengadoanterior(p.prestamoid,p.fechacierre) as interesanterior,(case when  p.diasvencidos <= p.diastraspasoavencida then interesdevengadomenoravencido + interesdevmormenor  else 0 end) as devengadovigente,
+                        (case when  p.diasvencidos > p.diastraspasoavencida then interesdevengadomenoravencido + interesdevmormenor  else 0 end) as devengadovencido,p.primerincumplimiento,pr.fecha_1er_pago,
                         su.rfc,
-                        pr.fechavaluaciongarantia,
+                        null,
                         (select coalesce(count(avalid),0) from avales where prestamoid=p.prestamoid) as numeroavales,
-                        (select su.nombre||'' ''||su.paterno||'' ''||su.materno as nombresocio from sujeto su where su.sujetoid=pr.sujetoid) as sujetoidrelacionado,
-                        t.cuentaactivo as clasificacioncontable,(case when p.pagosvencidos = 0 then '||''''||'Sin pagos vencidos'||''''||' else (case when p.pagosvencidos = 1 then '||''''||'Con pagos vencidos'||''''||' else '||''''||'Cobranza administrativa'||''''||' end) end),(case when si.personajuridicaid = 0 then '||''''||'FISICA'||''''||' else  '||''''||'MORAL'||''''||' end),p.reservaidnc,p.diascapital,p.diasinteres ,t.desctipoprestamo, (select sucid from empresa where empresaid=1) 
-
+                        null,
+                        (select cuentaactivo from cat_cuentas_tipoprestamo where cat_cuentasid=pr.cat_cuentasid) as clasificacioncontable,(case when p.pagosvencidos = 0 then '||''''||'Sin pagos vencidos'||''''||' else (case when p.pagosvencidos = 1 then '||''''||'Con pagos vencidos'||''''||' else '||''''||'Cobranza administrativa'||''''||' end) end),(case when si.personajuridicaid = 0 then '||''''||'FISICA'||''''||' else  '||''''||'MORAL'||''''||' end),p.reservaidnc,p.diascapital,p.diasinteres , t.desctipoprestamo, (select sucid from empresa where empresaid=1), (select puesto from empleado e, relacionados re where re.socioidem=e.socioid and re.socioidre=s.socioid limit 1), (case when pr.monto_garantia > 0 then  '||''''||'AHORRO SOLUCION'||''''||' else  '||''''||' '||''''||' end),
+	(select p3 from controlgarantialiquida where prestamoid=p.prestamoid),					
+	(select aa from controlgarantialiquida where prestamoid=p.prestamoid)	
       from precorte p,prestamos pr,socio s,tipoprestamo t, sujeto su, solicitudingreso si, domicilio d,
-           ciudadesmex c, finalidades fi
-     where p.fechacierre='||''''||pfechacierre||''''||' and pr.prestamoid=p.prestamoid and s.socioid=pr.socioid and t.tipoprestamoid = pr.tipoprestamoid and
+           ciudadesmex c, finalidades f
+     where p.ejercicio='||pejercicio||' and p.periodo='||pperiodo||' and pr.prestamoid=p.prestamoid and pr.tipoprestamoid <>''CAS'' and
+           s.socioid=pr.socioid and t.tipoprestamoid = pr.tipoprestamoid and
            su.sujetoid=s.sujetoid and s.socioid=si.socioid and d.sujetoid=s.sujetoid and
-           c.ciudadmexid = d.ciudadmexid and fi.clavefinalidad=p.clavefinalidad
+           c.ciudadmexid = d.ciudadmexid and f.clavefinalidad=p.clavefinalidad
   order by p.diasvencidos,s.clavesocioint;';
 
   for r in
    select * from
     dblink(dblink1,dblink2) as 
 t (
-  clavesocioint      char(15),
+ clavesocioint      char(15),
  referenciaprestamo char(18),
  ejercicio          int4,
  periodo            int4,
@@ -103,7 +111,7 @@ t (
  tasanormal         numeric,
  tasa_moratoria     numeric,
  nombresocio        char(82),
- calle              varchar(50),
+ calle              varchar(30),
  numero_ext         varchar(15),
  colonia            varchar(50),
  comunidad          varchar(50),
@@ -144,7 +152,11 @@ t (
  diascapital integer,
  diasinteres integer,
  desctipoprestamo2 character(30),
- sucid char(4)
+ sucid char(4),
+ cargo_del_acreditado_parte_relacionada character varying (30),
+ cuenta_de_reciprocidad character varying (30),
+ p3 numeric,
+ aa numeric
 )
 
   loop
@@ -158,5 +170,5 @@ end loop;
 
 return;
 end
-$_$
-    LANGUAGE plpgsql SECURITY DEFINER;
+$BODY$
+  LANGUAGE plpgsql VOLATILE SECURITY DEFINER;

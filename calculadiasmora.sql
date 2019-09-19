@@ -22,7 +22,7 @@ declare
 begin
 	select tipoprestamoid,claveestadocredito into tipo_producto,clavecredito from prestamos where prestamoid=pprestamoid;
 	if tipo_producto <> 'N10' and tipo_producto <> 'V10' then
-		select amortizacionid,numamortizacion,diasmora,fechadepago,fechadepagoreal into re from clasificacioncartera natural join amortizaciones where prestamoid=pprestamoid;
+		/*select amortizacionid,numamortizacion,diasmora,fechadepago,fechadepagoreal into re from clasificacioncartera natural join amortizaciones where prestamoid=pprestamoid;
 		if NOT FOUND then
 			RAISE NOTICE 'not found';
 			indice_amort := 1;
@@ -89,12 +89,14 @@ begin
 			loop
 				return next re;
 			end loop;
-		end if;
+		end if;*/
+		for re in
+			select amortizacionid,numamortizacion,dias_mora_capital,fechadepago,ultimoabono from amortizaciones where prestamoid=pprestamoid order by numamortizacion
+		loop
+			return next re;
+		end loop;
 	end if;
-   ---By Hugo Mota, Coop. Yolomecatl
 return;
 end
 $BODY$
   LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
-ALTER FUNCTION calculadiasmora(integer)
-  OWNER TO sistema;

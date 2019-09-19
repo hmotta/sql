@@ -1,4 +1,5 @@
-CREATE OR REPLACE FUNCTION spiprestamos(bpchar, numeric, numeric, int4, date, date, bpchar, numeric, numeric, int4, int4, int4, int4, date, bpchar, numeric, bpchar, int4, int4, int4, int4, int4, int4, numeric)
+ï»¿drop function if exists spiprestamos(bpchar, numeric, numeric, int4, date, date, bpchar, numeric, numeric, int4, int4, int4, int4, date, bpchar, numeric, bpchar, int4, int4, int4, int4, int4, int4, numeric);
+CREATE OR REPLACE FUNCTION spiprestamos(bpchar, numeric, numeric, int4, date, date, bpchar, numeric, numeric, int4, int4, int4, int4, date, bpchar, numeric, bpchar, int4, int4, int4, int4, char, int4, numeric)
   RETURNS pg_catalog.int4 AS $BODY$
 declare
 
@@ -58,7 +59,7 @@ declare
    ndictaminaid integer;
 begin
  --icondicionid:=pcondicionid;
- iclasificacioncreditoid:=pclasificacioncreditoid;
+ --iclasificacioncreditoid:=pclasificacioncreditoid;
   select clavesocioint,tiposocioid,estatussocio
     into sclavesocioint,stiposocioid,iestatussocio
     from socio
@@ -102,12 +103,12 @@ begin
 
   
    
--- Validar duplicidad de generacion de crédito
+-- Validar duplicidad de generacion de crÃ©dito
    select count(*) into iprestamosgenerados from prestamos where claveestadocredito<>'008' and solicitudprestamoid=psolicitudprestamoid and tipoprestamoid=ptipoprestamoid;
 raise notice 'Encontrados %.',iprestamosgenerados;
 if iprestamosgenerados>0 then
       --raise exception 'Solicitud de prestamo con credito duplicado!!!';
-    raise exception 'Ya se ha generado un crédito con esta solicitud, verifique!';
+    raise exception 'Ya se ha generado un crÃ©dito con esta solicitud, verifique!';
   end if;
 ---
 
@@ -177,12 +178,16 @@ if iprestamosgenerados>0 then
    -- Obtenemos los parametros de [renovado,referenciaorigen,diasmoraorigen] de la solicitud
    select  renovado,trim(referenciaprestamoorigen),diasmoraorigen into nrenovado,sreferenciaorigen,ndiasmoraorigen from solicitudprestamo where solicitudprestamoid=psolicitudprestamoid;
    
-   --Obtenemos las cuentas contables del prestamos que utilizará dependiendo de:
+   --Obtenemos las cuentas contables del prestamos que utilizar dependiendo de:
    --[tipoprestamoid,renovado,clasificacion]
    select cat_cuentasid into ncat_cuentasid from cat_cuentas_tipoprestamo where tipoprestamoid=ptipoprestamoid and renovado=nrenovado and clavefinalidad=pclavefinalidad;
+   ncat_cuentasid:=coalesce(ncat_cuentasid,0);
+   if ncat_cuentasid=0 then
+	raise exception 'No existen las cuentas contables para este tipo de prestamo.';
+   end if;
    
-   insert into prestamos(referenciaprestamo,montoprestamo,saldoprestamo,numero_de_amor,fecha_otorga,fecha_vencimiento,tipoprestamoid,tasanormal,tasa_moratoria,socioid,dias_de_cobro,meses_de_cobro,dia_mes_cobro,fecha_1er_pago,clavegarantia,monto_garantia,usuarioid,calculonormalid,calculomoratorioid,solicitudprestamoid,norenovaciones,clasificacioncreditoid,tipoacreditadoid,ahorrocompromiso,claveestadocredito,clavefinalidad,fechaultimopago,renovado,referenciaprestamoorigen,diasmoraorigen,cat_cuentasid)
-    values( preferenciaprestamo,pmontoprestamo,psaldoprestamo,pnumero_de_amor,pfecha_otorga,pfecha_vencimiento,ptipoprestamoid,ptasanormal,ptasa_moratoria,psocioid,pdias_de_cobro,pmeses_de_cobro,pdia_mes_cobro,pfecha_1er_pago,pclavegarantia,pmonto_garantia,pautorizaprestamo,pcalculonormalid,pcalculomoratorioid,psolicitudprestamoid,pnorenovaciones,pclasificacioncreditoid,ptipoacreditadoid,pahorrocompromiso,'001',pclavefinalidad,pfecha_otorga,nrenovado,sreferenciaorigen,ndiasmoraorigen,ncat_cuentasid);
+   insert into prestamos(referenciaprestamo,montoprestamo,saldoprestamo,numero_de_amor,fecha_otorga,fecha_vencimiento,tipoprestamoid,tasanormal,tasa_moratoria,socioid,dias_de_cobro,meses_de_cobro,dia_mes_cobro,fecha_1er_pago,clavegarantia,monto_garantia,usuarioid,calculonormalid,calculomoratorioid,solicitudprestamoid,norenovaciones,tipoacreditadoid,ahorrocompromiso,claveestadocredito,clavefinalidad,fechaultimopago,renovado,referenciaprestamoorigen,diasmoraorigen,cat_cuentasid)
+    values( preferenciaprestamo,pmontoprestamo,psaldoprestamo,pnumero_de_amor,pfecha_otorga,pfecha_vencimiento,ptipoprestamoid,ptasanormal,ptasa_moratoria,psocioid,pdias_de_cobro,pmeses_de_cobro,pdia_mes_cobro,pfecha_1er_pago,pclavegarantia,pmonto_garantia,pautorizaprestamo,pcalculonormalid,pcalculomoratorioid,psolicitudprestamoid,pnorenovaciones,ptipoacreditadoid,pahorrocompromiso,'001',pclavefinalidad,pfecha_otorga,nrenovado,sreferenciaorigen,ndiasmoraorigen,ncat_cuentasid);
     
 	nprestamoid:=currval('prestamos_prestamoid_seq');
 	

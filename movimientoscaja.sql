@@ -1,6 +1,5 @@
-
-CREATE or replace FUNCTION movimientoscaja(character, character) RETURNS SETOF rmovimientoscaja
-    AS $_$
+CREATE OR REPLACE FUNCTION movimientoscaja(bpchar, bpchar)
+  RETURNS SETOF rmovimientoscaja AS $BODY$
 declare
   r rmovimientoscaja%rowtype;
   pclavesocioint alias for $1;
@@ -19,18 +18,19 @@ begin
     for r in
       select p.fechapoliza,p.seriepoliza,p.numero_poliza,mc.seriecaja,mc.referenciacaja,
              t.desctipomovimiento,refmovimiento(mc.prestamoid,mc.inversionid),m.debe,m.haber,
-             t.tipomovimientoid,mc.movicajaid
+             t.tipomovimientoid,mc.movicajaid,(case when p.fechapoliza>='2014-11-21' then (case when p.seriepoliza='ZA' then 'Devengamiento' else (case when mc.efectivo=1 then 'Efectivo' else (case when mc.efectivo=2 then 'Cheque' else (case when mc.efectivo=3 or mc.efectivo=0 then 'Transferencia Int.' else (case when mc.efectivo=4 then 'Dep. Ban./Efec' else  (case when mc.efectivo=5 then 'Dep. Ban./Ch' else 'Dep. Ban./Trasf' end) end) end) end) end) end) else '' end)
         from movicaja mc,polizas p, movipolizas m,tipomovimiento t, socio s
        where s.clavesocioint = pclavesocioint and
              mc.socioid = s.socioid and
              p.polizaid = mc.polizaid and
              m.movipolizaid = mc.movipolizaid and
              (ptipomovimientoid='  ' or mc.tipomovimientoid=ptipomovimientoid) and
-             t.tipomovimientoid = mc.tipomovimientoid 
+             t.tipomovimientoid not in ('ID') and t.tipomovimientoid = mc.tipomovimientoid 
     order by p.fechapoliza,mc.movicajaid
 
     loop
       if r.tipomovimientoid not in ('00','IN') then
+		r.refmovimiento:='';
         return next r;
       else
         if r.tipomovimientoid='00' then 
@@ -41,11 +41,12 @@ begin
         fiva := 0;
 
         for l in
-          select m.polizaid,t.cuentaactivo,t.cuentaintnormal,t.cuentaintmora,t.cuentaiva
-            from movicaja m, prestamos pr, tipoprestamo t
+          select m.polizaid,ct.cuentaactivo,ct.cuentaintnormal,ct.cuentaintmora,ct.cuentaiva
+            from movicaja m, prestamos pr, cat_cuentas_tipoprestamo ct
            where m.movicajaid = r.movicajaid and
                  pr.prestamoid =  m.prestamoid and
-                 t.tipoprestamoid = pr.tipoprestamoid
+				(ct.cat_cuentasid = pr.cat_cuentasid)
+				 
                  
         loop
 
@@ -162,6 +163,5 @@ begin
 
 return;
 end
-$_$
-    LANGUAGE plpgsql SECURITY DEFINER;
-
+$BODY$
+  LANGUAGE plpgsql VOLATILE SECURITY DEFINER;

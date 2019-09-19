@@ -76,4 +76,4 @@ group by p.saldoprestamo,p.montoprestamo;
 return;
 end
 $BODY$
-  LANGUAGE plpgsql VOLATILE SECURITY DEFINER
+  LANGUAGE plpgsql VOLATILE SECURITY DEFINER;

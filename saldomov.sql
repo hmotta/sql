@@ -1,5 +1,5 @@
-CREATE OR REPLACE FUNCTION saldomov(integer, character, date) RETURNS numeric
-    AS $_$
+CREATE OR REPLACE FUNCTION saldomov(int4, bpchar, date)
+  RETURNS pg_catalog.numeric AS $BODY$
 declare
   psocioid alias for $1;
   ptipomovimientoid alias for $2;
@@ -10,7 +10,7 @@ declare
   ftotalprestamos numeric;
   fmontoprestamo numeric;
   fmontoprestamos numeric;
-  ssucid character(4);
+
   r record;
 
 begin
@@ -68,12 +68,12 @@ begin
 
       select p.montoprestamo-sum(m.haber)
         into fmontoprestamo
-        from prestamos p, tipoprestamo tp, movicaja mc, movipolizas m
+        from prestamos p, cat_cuentas_tipoprestamo ct, movicaja mc, movipolizas m
        where p.prestamoid=r.prestamoid and
-             tp.tipoprestamoid = p.tipoprestamoid and
+             ct.cat_cuentasid = p.cat_cuentasid and
              mc.prestamoid = p.prestamoid and
              m.polizaid = mc.polizaid and
-             m.cuentaid = tp.cuentaactivo
+             m.cuentaid = ct.cuentaactivo
     group by p.montoprestamo;
 
       if not found then
@@ -89,8 +89,8 @@ begin
 
 
   if ptipomovimientoid='PA' then
-		fsaldo:=0;
-      select coalesce(sum(mp.debe)-sum(mp.haber),0) as saldo
+
+      select sum(mp.debe)-sum(mp.haber) as saldo
         into fsaldo
         from movicaja mc, movipolizas mp, tipomovimiento tm
        where mc.socioid=psocioid and
@@ -98,19 +98,10 @@ begin
              mc.tipomovimientoid='PA' and
              tm.tipomovimientoid=mc.tipomovimientoid and
              tm.aplicasaldo='S';
-	   
-	   select sucid into ssucid from empresa where sucid='008-';
-	   
-	   if found then
-			raise notice 'Estoy en la sucursal 8...';
-			if psocioid=1533 then --Socio que se ocupa para oportunidades de sucursal tlacotepec
-				fsaldo=1000.00;
-			end if;
-	   end if;
 
   end if;
 
 return fsaldo;
 end
-$_$
-    LANGUAGE plpgsql SECURITY DEFINER;
+$BODY$
+  LANGUAGE plpgsql VOLATILE SECURITY DEFINER;

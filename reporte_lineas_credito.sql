@@ -1,5 +1,5 @@
-drop type rlineascredito cascade;
-create type rlineascredito as (
+--drop type rlineascredito cascade;
+/*create type rlineascredito as (
 	sucursal varchar(4),
 	nombre varchar(60),
 	clavesocioint varchar(20),
@@ -26,7 +26,7 @@ create type rlineascredito as (
 	desc_ultimo_mov varchar(20),
 	prestamoid integer,
 	claveestadocredito varchar(3)
-);
+);*/
 CREATE or replace FUNCTION reporte_lineas_credito(date) RETURNS SETOF rlineascredito
     AS $_$
 declare
