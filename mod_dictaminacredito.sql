@@ -1,0 +1,1 @@
+alter table dictaminacredito add column clavefinalidad char(3) references cat_finalidad_contable(clavefinalidad);
