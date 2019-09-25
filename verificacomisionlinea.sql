@@ -30,7 +30,7 @@ select tipoprestamoid into ptipoprestamoid from prestamos where prestamoid=ppres
 
 select porcentaje into pporcentaje from cargoprestamo where tipoprestamoid = ptipoprestamoid ;
 
-select substr(age(fecha_nacimiento),1,2) into nedad from sujeto su, socio s, prestamos p  where su.sujetoid=s.sujetoid and s.socioid=p.socioid and p.prestamoid=pprestamoid;
+select date_part('year', age(fecha_nacimiento)) into nedad from sujeto su, socio s, prestamos p  where su.sujetoid=s.sujetoid and s.socioid=p.socioid and p.prestamoid=pprestamoid;
 
 pporcentaje := coalesce(pporcentaje,0);
 
