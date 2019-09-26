@@ -199,7 +199,7 @@ begin
 	if nrevolvente=1 then --Si es una linea de credito se toman en cuenta las disposiciones 
 		for l in
 			select 
-				p.fechapoliza,p.seriepoliza,p.numero_poliza,m.referenciacaja,m.polizaid,ct.cuentaactivo,ct.cuentaintnormal,ct.cuentaintmora,ct.cuentaiva
+				p.fechapoliza,p.seriepoliza,p.numero_poliza,m.referenciacaja,m.polizaid,ct.cta_cap_vig,ct.cta_int_vig_resultados,ct.cta_mora_vig_resultados,ct.cta_iva
 			from 
 				movicaja m, prestamos pr, cat_cuentas_tipoprestamo ct, polizas p
 			where 
@@ -208,7 +208,7 @@ begin
 
 			select coalesce(sum(haber-debe),0) into fcapital
 			from movipolizas
-			where polizaid = l.polizaid and cuentaid = l.cuentaactivo and haber=0;
+			where polizaid = l.polizaid and cuentaid = l.cta_cap_vig and haber=0;
 			
 			select sum(coalesce(haber-debe,0)) into fcomisiones
             from movipolizas
@@ -243,7 +243,7 @@ begin
 	r.comisiones := 0; --Ahora los pagos
 	for l in
 		select 
-			p.fechapoliza,p.seriepoliza,p.numero_poliza,m.referenciacaja,m.polizaid,ct.cuentaactivo,ct.cuentaintnormal,ct.cuentaintmora,ct.cuentaiva
+			p.fechapoliza,p.seriepoliza,p.numero_poliza,m.referenciacaja,m.polizaid,ct.cta_cap_vig,ct.cta_int_vig_resultados,ct.cta_mora_vig_resultados,ct.cta_iva
 		from 
 			movicaja m, prestamos pr, cat_cuentas_tipoprestamo ct, polizas p
 		where 
@@ -252,16 +252,16 @@ begin
 
 		select coalesce(sum(haber-debe),0) into fcapital
 		from movipolizas
-	where polizaid = l.polizaid and cuentaid = l.cuentaactivo and debe=0;
+	where polizaid = l.polizaid and cuentaid = l.cta_cap_vig and debe=0;
 		select coalesce(sum(haber-debe),0) into finteres
 		from movipolizas
-	where polizaid = l.polizaid and cuentaid = l.cuentaintnormal;
+	where polizaid = l.polizaid and cuentaid = l.cta_int_vig_resultados;
 		select coalesce(sum(haber-debe),0) into fmoratorio
 		from movipolizas
-	where polizaid = l.polizaid and	cuentaid = l.cuentaintmora;
+	where polizaid = l.polizaid and	cuentaid = l.cta_mora_vig_resultados;
 		select coalesce(sum(haber-debe),0) into fiva
 		from movipolizas
-		where polizaid = l.polizaid and	cuentaid = l.cuentaiva;
+		where polizaid = l.polizaid and	cuentaid = l.cta_iva;
 
 		--Gastos de Cobranza
 		select polizaid into fpolizaid from movicaja where referenciacaja=l.referenciacaja and seriecaja=l.seriepoliza and tipomovimientoid='0A';

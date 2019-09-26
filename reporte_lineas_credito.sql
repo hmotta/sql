@@ -56,7 +56,7 @@ begin
 		0,
 		(select spssaldoadeudolinea from spssaldoadeudolinea(p.prestamoid)),
 		(select coalesce(sum(capital-capital_pagado),0) from corte_linea where lineaid=p.prestamoid and fecha_limite<pfecha and (capital-capital_pagado)>0),
-		(select max(po.fechapoliza) from polizas po,movipolizas mp,prestamos p1,cat_cuentas_tipoprestamo ct  where po.polizaid=mp.polizaid and mp.prestamoid=p1.prestamoid and (ct.cat_cuentasid = p1.cat_cuentasid) and mp.haber>0 and p1.prestamoid=p.prestamoid and (mp.cuentaid = ct.cuentaactivo) and po.fechapoliza<=pfecha),
+		(select max(po.fechapoliza) from polizas po,movipolizas mp,prestamos p1,cat_cuentas_tipoprestamo ct  where po.polizaid=mp.polizaid and mp.prestamoid=p1.prestamoid and (ct.cat_cuentasid = p1.cat_cuentasid) and mp.haber>0 and p1.prestamoid=p.prestamoid and (mp.cuentaid = ct.cta_cap_vig) and po.fechapoliza<=pfecha),
 		(select min(fecha) from creditos_lineas_bloqueo where estatus='B' and lineaid=p.prestamoid),
 		(select max(fecha) from creditos_lineas_bloqueo where estatus='B' and lineaid=p.prestamoid),
 		'',

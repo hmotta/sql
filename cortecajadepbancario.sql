@@ -103,7 +103,7 @@ for l in
           s.clavesocioint,
           p.fechapoliza as fecha, 0 as capital, 0 as interes, 0 as moratorio, 0 as iva,
           0 as deposito, 0 as retiro, m.tipomovimientoid, 0 as cobranza, p.polizaid,
-		 ct.cuentaactivo,ct.cuentaintnormal,ct.cuentaintmora ,ct.cuentaiva, pr.tipoprestamoid
+		 ct.cta_cap_vig,ct.cta_int_vig_resultados,ct.cta_mora_vig_resultados ,ct.cta_iva, pr.tipoprestamoid
      from movicaja m, polizas p, movipolizas mp,socio s, prestamos pr, tipoprestamo t, cat_cuentas_tipoprestamo ct
     where (m.seriecaja = pserie or pserie=' ') and
           p.polizaid = m.polizaid and
@@ -129,21 +129,21 @@ for l in
    select (case when l.tipoprestamoid <> 'CAS' then sum(coalesce(haber,0)) else abs(sum(coalesce(debe,0))-sum(coalesce(haber,0))) end) into fcapital
      from movipolizas
     where polizaid = l.polizaid and
-          cuentaid = l.cuentaactivo;
+          cuentaid = l.cta_cap_vig;
    select sum(coalesce(haber,0)) into fnormal
      from movipolizas
     where polizaid = l.polizaid and
-          cuentaid = l.cuentaintnormal;
+          cuentaid = l.cta_int_vig_resultados;
 
    select sum(coalesce(haber,0)) into fmoratorio
      from movipolizas
     where polizaid = l.polizaid and
-          cuentaid = l.cuentaintmora;
+          cuentaid = l.cta_mora_vig_resultados;
 
    select sum(coalesce(haber,0)) into fiva
      from movipolizas
     where polizaid = l.polizaid and
-          cuentaid = l.cuentaiva;
+          cuentaid = l.cta_iva;
 
    select sum(coalesce(haber,0)) into fcobranza
      from movipolizas
@@ -178,7 +178,7 @@ for l in
    select m.referenciacaja as folio,p.numero_poliza as referencia,m.seriecaja as serie,
           m.socioid,s.clavesocioint,p.fechapoliza as fecha,
           0 as capital, 0 as interes, 0 as moratorio, 0 as iva,0 as deposito, 0 as retiro,
-          m.tipomovimientoid, p.polizaid, t.cuentaintinver,t.cuentaivainver,t.cuentapasivo,t.cuentariesgocred,0 as cobranza
+          m.tipomovimientoid, p.polizaid, t.cuentaintinver,t.cuentaivainver,t.cuentapasivo,t.cta_estimacion,0 as cobranza
      from movicaja m, polizas p, movipolizas mp, socio s, inversion ix, tipoinversion t, parametros pa
     where (m.seriecaja = pserie or pserie=' ') and 
           p.polizaid = m.polizaid and
@@ -194,7 +194,7 @@ for l in
           t.tipoinversionid = ix.tipoinversionid
 group by m.referenciacaja,p.numero_poliza,m.seriecaja,
           m.socioid,s.clavesocioint,p.fechapoliza,
-          m.tipomovimientoid, p.polizaid, t.cuentaintinver,t.cuentaivainver,t.cuentapasivo,t.cuentariesgocred
+          m.tipomovimientoid, p.polizaid, t.cuentaintinver,t.cuentaivainver,t.cuentapasivo,t.cta_estimacion
    order by m.referenciacaja
 
  loop 
@@ -218,7 +218,7 @@ group by m.referenciacaja,p.numero_poliza,m.seriecaja,
    select coalesce(SUM(haber-debe),0) into fiva
      from movipolizas
     where polizaid = l.polizaid and
-          cuentaid = l.cuentariesgocred;
+          cuentaid = l.cta_estimacion;
 
    -- Formar renglon
    r.folio := l.folio;

@@ -18,7 +18,7 @@ begin
        m.polizaid = mc.polizaid and
        m.polizaid=l.polizaid  and
        sp.grupo=pgrupo and 
-       m.cuentaid in (ct.cuentaactivo,ct.cuentaactivoren,ct.cuentaintnormal,ct.cuentaintnormalren,ct.cuentaintmora,ct.cuentaintmoraren,ct.cuentaiva);
+       m.cuentaid in (ct.cta_cap_vig,ct.cta_int_vig_resultados,ct.cta_mora_vig_resultados,ct.cta_iva);
 	
 	xSuma := coalesce(xSuma,0);
 return xSuma;

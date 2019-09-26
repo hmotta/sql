@@ -73,7 +73,7 @@ begin
              ct.cat_cuentasid = p.cat_cuentasid and
              mc.prestamoid = p.prestamoid and
              m.polizaid = mc.polizaid and
-             m.cuentaid = ct.cuentaactivo
+             m.cuentaid = ct.cta_cap_vig
     group by p.montoprestamo;
 
       if not found then

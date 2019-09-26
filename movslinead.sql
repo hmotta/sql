@@ -56,7 +56,7 @@ begin
 		fiva := 0;
 
         for l in
-          select mp.polizaid,ct.cuentaactivo,ct.cuentaintnormal,ct.cuentaintmora,ct.cuentaiva
+          select mp.polizaid,ct.cta_cap_vig,ct.cta_int_vig_resultados,ct.cta_mora_vig_resultados,ct.cta_iva
             from movipolizas mp, prestamos pr, cat_cuentas_tipoprestamo ct
            where mp.polizaid = r.polizaid and
                  pr.prestamoid =  mp.prestamoid and
@@ -67,7 +67,7 @@ begin
 		select sum(coalesce(debe-haber,0)) into fcapital_disp
             from movipolizas
            where polizaid = l.polizaid and
-                 cuentaid = l.cuentaactivo and haber=0;
+                 cuentaid = l.cta_cap_vig and haber=0;
 				 
 		select sum(coalesce(haber-debe,0)) into fseguro
             from movipolizas
@@ -82,23 +82,23 @@ begin
           select sum(coalesce(haber-debe,0)) into fcapital_pag
             from movipolizas
            where polizaid = l.polizaid and
-                 cuentaid = l.cuentaactivo and debe=0;
+                 cuentaid = l.cta_cap_vig and debe=0;
 				 raise notice 'fcapital_pag=%',fcapital_pag;
 	
           select sum(coalesce(haber-debe,0)) into fnormal
             from movipolizas
            where polizaid = l.polizaid and
-                 cuentaid = l.cuentaintnormal and debe=0;
+                 cuentaid = l.cta_int_vig_resultados and debe=0;
 				 
           select sum(coalesce(haber-debe,0)) into fmoratorio
             from movipolizas
            where polizaid = l.polizaid and
-                 cuentaid = l.cuentaintmora and debe=0;
+                 cuentaid = l.cta_mora_vig_resultados and debe=0;
 				 
           select sum(coalesce(haber-debe,0)) into fiva
             from movipolizas
            where polizaid = l.polizaid and
-                 cuentaid = l.cuentaiva and debe=0;
+                 cuentaid = l.cta_iva and debe=0;
            
         end loop;
 		

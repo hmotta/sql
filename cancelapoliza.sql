@@ -86,7 +86,7 @@ begin
        where p.prestamoid = lprestamoid and
              ct.cat_cuentasid = p.cat_cuentasid and
              m.polizaid = ppolizaid and
-             m.cuentaid = tp.cuentaactivo;
+             m.cuentaid = tp.cta_cap_vig;
 
       fcapital := coalesce(fcapital,0);
 

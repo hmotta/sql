@@ -16,7 +16,7 @@ begin
 		where p.prestamoid = pprestamoid
 		and mp.prestamoid = pprestamoid
 		and (ct.cat_cuentasid = p.cat_cuentasid)
-		and mp.cuentaid = ct.cuentaactivo
+		and mp.cuentaid = ct.cta_cap_vig
 		and mp.debe <> 0
 		and pz.polizaid = mp.polizaid
 		group by pz.polizaid, pz.fechapoliza, mp.cuentaid, mp.debe, mp.haber

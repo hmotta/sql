@@ -93,20 +93,20 @@ begin
 
   for r in
   select p.tipoprestamoid,
-		ct.cuentaactivo,
-		ct.cuentaactivovencida,
-		ct.cuentaintdevnocobres,
-        ct.cuentaintnormalnocob,
-	    ct.cuentaordeninteres,
-	    ct.ordeninteresacreedor,
-        ct.cuentaintnormal,
-	    ct.cuentaintmora,
-	    ct.cuentaintnormalresvencida,
-        ct.cuentaintnormalvencida,
-	    ct.cuentaintmoravencida,
-	    ct.cuentaintnormalresvigente,
-       ct.cuentariesgocred, --
-	   ct.cuentariesgocredres, -- 
+		ct.cta_cap_vig,
+		ct.cta_cap_ven,
+		ct.cta_int_vig_balance,
+        ct.cta_int_vig_dev_nocob_resultados,
+	    ct.cta_int_ven_orden_deudora,
+	    ct.cta_int_ven_orden_acreedora,
+        ct.cta_int_vig_resultados,
+	    ct.cta_mora_vig_resultados,
+	    ct.cta_int_ven_resultados,
+        ct.cta_int_ven_balance,
+	    ct.cta_mora_ven_resultados,
+	    ct.cta_int_ven_dev_nocob_resultados,
+       ct.cta_estimacion, --
+	   ct.cta_estimacion_resultados, -- 
        sum((case when p.fechacierre= pfechaactual then p.saldovencidomenoravencido else 0 end)) as A, 
        sum((case when p.fechacierre= pfechaactual then p.saldovencidomayoravencido else 0 end)) as B,
        sum((case when p.diasvencidos <= p.diastraspasoavencida then p.interesdevengadomenoravencido else 0 end)) as C,
@@ -123,15 +123,15 @@ begin
                  
   from precorte p
 			inner join prestamos pr on (p.prestamoid=pr.prestamoid)
-			inner join cat_cuentas_tipoprestamo on (ct.cat_cuentasid = pr.cat_cuentasid)
+			inner join cat_cuentas_tipoprestamo ct on (ct.cat_cuentasid = pr.cat_cuentasid)
  where p.fechacierre = pfechaactual and p.tipoprestamoid <> 'CAS'
-group by p.tipoprestamoid,ct.cuentaactivo,ct.cuentaactivovencida,ct.cuentaintdevnocobres,
-       ct.cuentaintnormalnocob,ct.cuentaordeninteres,ct.ordeninteresacreedor,
-       ct.cuentaintnormal,ct.cuentaintmora,ct.cuentaintnormalresvencida,
-       ct.cuentaintnormalvencida,ct.cuentaintmoravencida,ct.cuentaintnormalresvigente,
-       ct.cuentariesgocred,ct.cuentariesgocredres,pr.renovado--,p.factoraplicado 
+group by p.tipoprestamoid,ct.cta_cap_vig,ct.cta_cap_ven,ct.cta_int_vig_balance,
+       ct.cta_int_vig_dev_nocob_resultados,ct.cta_int_ven_orden_deudora,ct.cta_int_ven_orden_acreedora,
+       ct.cta_int_vig_resultados,ct.cta_mora_vig_resultados,ct.cta_int_ven_resultados,
+       ct.cta_int_ven_balance,ct.cta_mora_ven_resultados,ct.cta_int_ven_dev_nocob_resultados,
+       ct.cta_estimacion,ct.cta_estimacion_resultados,pr.renovado--,p.factoraplicado 
   loop
-	raise notice 'cuenta=%, tipoprestamoid = %',r.cuentaactivo,r.tipoprestamoid;
+	raise notice 'cuenta=%, tipoprestamoid = %',r.cta_cap_vig,r.tipoprestamoid;
     for r1 in
 	  select t.tipoprestamoid,
        sum((case when p.fechacierre=pfechaanterior then p.saldovencidomenoravencido else 0 end)) as A1, 
@@ -168,23 +168,23 @@ group by t.tipoprestamoid
 	  
       if monto1<>0 then
       if monto1>0 then
-        scuentaid := r.cuentaactivovencida;
+        scuentaid := r.cta_cap_ven;
         select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','C',monto1,0,' ',' ',
                              'Trasp. activo vig. a ven.'||r.tipoprestamoid);
-        scuentaid := r.cuentaactivo;
+        scuentaid := r.cta_cap_vig;
         select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','A',0,monto1,' ',' ',
                              'Disminuir la cartera vig.'||r.tipoprestamoid);
       else
-        scuentaid := r.cuentaactivo;
+        scuentaid := r.cta_cap_vig;
         select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','C',abs(monto1),0,' ',
                              ' ','Trasp. activo vig. a ven.'||r.tipoprestamoid);
-        scuentaid := r.cuentaactivovencida;
+        scuentaid := r.cta_cap_ven;
         select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','A',0,abs(monto1),' ',
@@ -208,23 +208,23 @@ group by t.tipoprestamoid
 	  
       if monto2<>0 then
       if monto2>0 then
-        scuentaid := r.cuentaintdevnocobres;
+        scuentaid := r.cta_int_vig_balance;
         select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','C',monto2,0,' ',' ',
                              'Activo int. dev. no cob.'||r.tipoprestamoid);
-        scuentaid := r.cuentaintnormalnocob;
+        scuentaid := r.cta_int_vig_dev_nocob_resultados;
         select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','A',0,monto2,' ',' ',
                              'Ingreso int. dev. no cob.'||r.tipoprestamoid); 
       else
-        scuentaid := r.cuentaintnormalnocob;        
+        scuentaid := r.cta_int_vig_dev_nocob_resultados;        
         select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','C',abs(monto2),0,' ',
                ' ','Activo int. dev. no cob.'||r.tipoprestamoid);
-        scuentaid := r.cuentaintdevnocobres;
+        scuentaid := r.cta_int_vig_balance;
         select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','A',0,abs(monto2),' ',
@@ -234,12 +234,12 @@ group by t.tipoprestamoid
 
       if monto21<>0 then
         if monto21>0 then
-          scuentaid := r.cuentaintnormalvencida;
+          scuentaid := r.cta_int_ven_balance;
           select *
             into pmovipolizaid
            from spimovipoliza(ppolizaid,scuentaid,' ','C',monto21,0,' ',' ',
                              'Orden int. dev. venc.'||r.tipoprestamoid);
- 	   scuentaid := r.CuentaIntNormalResVigente;
+ 	   scuentaid := r.cta_int_ven_dev_nocob_resultados;
         
         select *
           into pmovipolizaid
@@ -247,14 +247,14 @@ group by t.tipoprestamoid
                              'Orden int. dev. venc.'||r.tipoprestamoid);         
         else 
 
-	  scuentaid := r.CuentaIntNormalResVigente;
+	  scuentaid := r.cta_int_ven_dev_nocob_resultados;
           
           select *
             into pmovipolizaid
             from spimovipoliza(ppolizaid,scuentaid,' ','C',abs(monto21),0,' ',
                ' ','Orden int. dev. venc.'||r.tipoprestamoid);
-          --scuentaid := r.cuentaintdevnocobres;  Esta cuenta estaba mal
-          scuentaid := r.cuentaintnormalvencida;
+          --scuentaid := r.cta_int_vig_balance;  Esta cuenta estaba mal
+          scuentaid := r.cta_int_ven_balance;
           select *
             into pmovipolizaid
             from spimovipoliza(ppolizaid,scuentaid,' ','A',0,abs(monto21),' ',
@@ -274,27 +274,27 @@ group by t.tipoprestamoid
 	  raise notice 'monto3  % :=  r.d % + r.dd % - r1.d1 % - r1.dd1 %',monto3,r.d,r.dd,r1.d1,r1.dd1;
       if monto3<>0 then
         if monto3>0 then
-          scuentaid := r.cuentaordeninteres;
+          scuentaid := r.cta_int_ven_orden_deudora;
           select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','C',monto3,0,' ',' ',
-                             'CuentaOrdenInteres'||r.tipoprestamoid);
-          scuentaid := r.ordeninteresacreedor;
+                             'cta_int_ven_orden_deudora'||r.tipoprestamoid);
+          scuentaid := r.cta_int_ven_orden_acreedora;
           select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','A',0,monto3,' ',' ',
-                             'OrdenInteresAcreedor'||r.tipoprestamoid); 
+                             'cta_int_ven_orden_acreedora'||r.tipoprestamoid); 
         else
-          scuentaid := r.ordeninteresacreedor;
+          scuentaid := r.cta_int_ven_orden_acreedora;
           select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','C',abs(monto3),0,' ',
-               ' ','OrdenInteresAcreedor'||r.tipoprestamoid);
-          scuentaid := r.cuentaordeninteres;
+               ' ','cta_int_ven_orden_acreedora'||r.tipoprestamoid);
+          scuentaid := r.cta_int_ven_orden_deudora;
           select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','A',0,abs(monto3),' ',
-               ' ','CuentaOrdenInteres'||r.tipoprestamoid); 
+               ' ','cta_int_ven_orden_deudora'||r.tipoprestamoid); 
         end if;
       end if;
       
@@ -302,14 +302,14 @@ group by t.tipoprestamoid
       monto5 := r.moratorio;
 
       if monto4>0 then
-        scuentaid := r.cuentaintnormal;
+        scuentaid := r.cta_int_vig_resultados;
         select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','C',monto4,0,' ',' ',
                              'Reclasificacion int vigente'||r.tipoprestamoid);
       end if;
       if monto5>0 then
-        scuentaid := r.cuentaintmora;
+        scuentaid := r.cta_mora_vig_resultados;
         select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','C',monto5,0,' ',' ',
@@ -317,14 +317,14 @@ group by t.tipoprestamoid
       end if;
       
       if monto4>0 then
-        scuentaid := r.cuentaintnormalresvencida;
+        scuentaid := r.cta_int_ven_resultados;
         select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','A',0,monto4,
                ' ',' ','Interes cartera vencida'||r.tipoprestamoid); 
       end if;
       if monto5>0 then
-        scuentaid := r.cuentaintmoravencida;
+        scuentaid := r.cta_mora_ven_resultados;
         select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','A',0,monto5,
@@ -357,15 +357,15 @@ group by t.tipoprestamoid
           factorreserva:=(freservacalculada-freservacreada)/freservacalculada;
          
           monto6:=round(monto6*factorreserva,2);         
-          raise notice 'Reserva %|%|% ',r.cuentariesgocred,monto6,pfechaactual;
+          raise notice 'Reserva %|%|% ',r.cta_estimacion,monto6,pfechaactual;
          
-          scuentaid := r.cuentariesgocredres;
+          scuentaid := r.cta_estimacion_resultados;
           select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','C',monto6,0,' ',' ',
                              'Creacion de Reserva');
                              
-          scuentaid := r.cuentariesgocred;
+          scuentaid := r.cta_estimacion;
           select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','A',0,monto6,' ',' ',
@@ -395,12 +395,12 @@ group by t.tipoprestamoid
   --Cierre Actual
   for r in
 	  select p.tipoprestamoid,
-	   ct.moravigentebalance,
-	   ct.moravencidobalance,
-	   ct.moravigenteresultado,
-       ct.moravencidoresultado,
-	   ct.moractaordendeudora,
-	   ct.moractaordenacredora,
+	   ct.cta_mora_vig_balance,
+	   ct.cta_mora_ven_balance,
+	   ct.cta_mora_vig_dev_nocob_resultados,
+       ct.cta_mora_ven_dev_nocob_resultados,
+	   ct.cta_mora_ven_orden_deudora,
+	   ct.cta_mora_ven_orden_acreedora,
        sum((case when p.diasvencidos <= p.diastraspasoavencida then p.interesdevmormenor else 0 end)) as MoratorioVigente,
        sum((case when p.diasvencidos > p.diastraspasoavencida then p.interesdevmormenor else 0 end)) as MoratorioVencido,
        sum((case when p.diasvencidos > p.diastraspasoavencida then p.interesdevmormayor else 0 end)) as MoratorioCtasOrden,
@@ -409,10 +409,10 @@ group by t.tipoprestamoid
                  --then (p.reservacalculada+p.reservaidnc+p.reservagarantia)*p.factoraplicado else 0 end)) as reservacalculada   
   from precorte p 
 				inner join prestamos pr on (p.prestamoid=pr.prestamoid)
-				inner join cat_cuentas_tipoprestamo on (ct.cat_cuentasid = pr.cat_cuentasid)
+				inner join cat_cuentas_tipoprestamo ct on (ct.cat_cuentasid = pr.cat_cuentasid)
   where p.fechacierre = pfechaactual and p.tipoprestamoid <> 'CAS' 
-  group by p.tipoprestamoid,t.moravigentebalance,t.moravencidobalance,t.moravigenteresultado,
-       t.moravencidoresultado,t.moractaordendeudora,t.moractaordenacredora,pr.renovado--,p.factoraplicado 
+  group by p.tipoprestamoid,ct.cta_mora_vig_balance,ct.cta_mora_ven_balance,ct.cta_mora_vig_dev_nocob_resultados,
+       ct.cta_mora_ven_dev_nocob_resultados,ct.cta_mora_ven_orden_deudora,ct.cta_mora_ven_orden_acreedora,pr.renovado--,p.factoraplicado 
   loop
 	  --Cierre Anterior
 	  for r1 in
@@ -431,14 +431,14 @@ group by t.tipoprestamoid
 			raise notice 'monto  % :=r.MoratorioVigente  % -r1.MoratorioVigenteAnt  %',monto,r.MoratorioVigente,r1.MoratorioVigenteAnt;
 			if monto<>0 then
 				if monto>0 then
-					scuentaid := r.moravigentebalance;
+					scuentaid := r.cta_mora_vig_balance;
 					select * into pmovipolizaid from spimovipoliza(ppolizaid,scuentaid,' ','C',monto,0,' ',' ','+ Mora Vigente Balance '||r.tipoprestamoid);
-					scuentaid := r.moravigenteresultado;  
+					scuentaid := r.cta_mora_vig_dev_nocob_resultados;  
 					select * into pmovipolizaid from spimovipoliza(ppolizaid,scuentaid,' ','A',0,monto,' ',' ','+ Mora Vigente Resultados '||r.tipoprestamoid);
 				else
-					scuentaid := r.moravigenteresultado;
+					scuentaid := r.cta_mora_vig_dev_nocob_resultados;
 					select * into pmovipolizaid from spimovipoliza(ppolizaid,scuentaid,' ','C',abs(monto),0,' ',' ','- Mora Vigente Resultados '||r.tipoprestamoid);
-					scuentaid := r.moravigentebalance;
+					scuentaid := r.cta_mora_vig_balance;
 					select * into pmovipolizaid from spimovipoliza(ppolizaid,scuentaid,' ','A',0,abs(monto),' ',' ','- Mora Vigente Balance'||r.tipoprestamoid);
 				end if;
 				
@@ -448,14 +448,14 @@ group by t.tipoprestamoid
 			raise notice 'monto  % :=r.MoratorioVencido  % -r1.MoratorioVencidoAnt  %',monto,r.MoratorioVencido,r1.MoratorioVencidoAnt;
 			if monto<>0 then
 				if monto>0 then
-					scuentaid := r.moravencidobalance;
+					scuentaid := r.cta_mora_ven_balance;
 					select * into pmovipolizaid from spimovipoliza(ppolizaid,scuentaid,' ','C',monto,0,' ',' ','+ Mora Vencido Balance '||r.tipoprestamoid);
-					scuentaid := r.moravencidoresultado;
+					scuentaid := r.cta_mora_ven_dev_nocob_resultados;
 					select * into pmovipolizaid from spimovipoliza(ppolizaid,scuentaid,' ','A',0,monto,' ',' ','+ Mora Vencido Resultados '||r.tipoprestamoid); 
 				else
-					scuentaid := r.moravencidoresultado;
+					scuentaid := r.cta_mora_ven_dev_nocob_resultados;
 					select * into pmovipolizaid from spimovipoliza(ppolizaid,scuentaid,' ','C',abs(monto),0,' ',' ','- Mora Vencido Balance '||r.tipoprestamoid);
-					scuentaid := r.moravencidobalance;
+					scuentaid := r.cta_mora_ven_balance;
 					select * into pmovipolizaid from spimovipoliza(ppolizaid,scuentaid,' ','A',0,abs(monto),' ',' ','- Mora Vencido Resultados '||r.tipoprestamoid); 
 				end if;
 			end if;
@@ -464,14 +464,14 @@ group by t.tipoprestamoid
 			raise notice 'monto  % :=r.MoratorioCtasOrden  % -r1.MoratorioCtasOrdenAnt  %',monto,r.MoratorioCtasOrden,r1.MoratorioCtasOrdenAnt;
 			if monto<>0 then
 				if monto>0 then
-					scuentaid := r.moractaordendeudora;
+					scuentaid := r.cta_mora_ven_orden_deudora;
 					select * into pmovipolizaid from spimovipoliza(ppolizaid,scuentaid,' ','C',monto,0,' ',' ','+ Mora Orden Deudora '||r.tipoprestamoid);
-					scuentaid := r.moractaordenacredora;
+					scuentaid := r.cta_mora_ven_orden_acreedora;
 					select * into pmovipolizaid from spimovipoliza(ppolizaid,scuentaid,' ','A',0,monto,' ',' ','+ Mora Orden Acreedora '||r.tipoprestamoid); 
 				else
-					scuentaid := r.moractaordenacredora;
+					scuentaid := r.cta_mora_ven_orden_acreedora;
 					select * into pmovipolizaid from spimovipoliza(ppolizaid,scuentaid,' ','C',abs(monto),0,' ',' ','- Mora Orden Deudora '||r.tipoprestamoid);
-					scuentaid := r.moractaordendeudora;
+					scuentaid := r.cta_mora_ven_orden_deudora;
 					select * into pmovipolizaid from spimovipoliza(ppolizaid,scuentaid,' ','A',0,abs(monto),' ',' ','- Mora Orden Acreedora '||r.tipoprestamoid); 
 				end if;
 			end if;

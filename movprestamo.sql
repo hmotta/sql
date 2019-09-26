@@ -45,7 +45,7 @@ begin
     from prestamos
    where referenciaprestamo=preferenciaprestamo;   
   
-  select cuentaactivo,cuentaintnormal,cuentaintmora,cuentaiva
+  select cta_cap_vig,cta_int_vig_resultados,cta_mora_vig_resultados,cta_iva
     into scuentaactivo,scuentaintnormal,scuentaintmora,scuentaiva
     from cat_cuentas_tipoprestamo ct, prestamos p
    where ct.cat_cuentasid=p.cat_cuentasid and p.prestamoid=lprestamoid;

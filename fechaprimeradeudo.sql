@@ -20,7 +20,7 @@ begin
 	--end if;
     select fechadepago into dfecha from amortizaciones where prestamoid=pprestamoid and importeamortizacion>0 order by fechadepago limit 1;
   --suma lo pagado en capital
-  select sum(case when (m.cuentaid=ct.cuentaactivo) then m.haber else 0 end) as capital into fcapital from movicaja mc, movipolizas m, polizas p, prestamos pr,  cat_cuentas_tipoprestamo ct where mc.prestamoid=pprestamoid and mc.tipomovimientoid='00' and pr.prestamoid = mc.prestamoid and (ct.cat_cuentasid = pr.cat_cuentasid) and m.polizaid = mc.polizaid and m.polizaid=p.polizaid and p.fechapoliza <= pfechacorte;
+  select sum(case when (m.cuentaid=ct.cta_cap_vig) then m.haber else 0 end) as capital into fcapital from movicaja mc, movipolizas m, polizas p, prestamos pr,  cat_cuentas_tipoprestamo ct where mc.prestamoid=pprestamoid and mc.tipomovimientoid='00' and pr.prestamoid = mc.prestamoid and (ct.cat_cuentasid = pr.cat_cuentasid) and m.polizaid = mc.polizaid and m.polizaid=p.polizaid and p.fechapoliza <= pfechacorte;
 
   fcapital:=coalesce(fcapital,0);
   --raise notice 'capital pagado = %',fcapital;

@@ -26,16 +26,16 @@ select substr(s.clavesocioint,1,4) as suc,pr.referenciaprestamo,pr.prestamoid,
        su.nombre||' '||su.paterno||' '||su.materno as nombresocio,
        pr.montoprestamo,
        pr.tipoprestamoid,
-       sum(case when m.cuentaid=ct.cuentaactivo
+       sum(case when m.cuentaid=ct.cta_cap_vig
                 then m.haber
                 else 0 end) as capital,
-       sum(case when m.cuentaid=ct.cuentaintnormal
+       sum(case when m.cuentaid=ct.cta_int_vig_resultados
                 then m.haber
                 else 0 end) as interes,
-       sum(case when m.cuentaid=ct.cuentaintmora
+       sum(case when m.cuentaid=ct.cta_mora_vig_resultados
                 then m.haber
                 else 0 end) as moratorio,
-       sum(case when m.cuentaid=ct.cuentaiva
+       sum(case when m.cuentaid=ct.cta_iva
                 then m.haber
                 else 0 end) as iva,0 as ivacalculado,si.grupo
   from polizas p, movicaja mc, movipolizas m, prestamos pr,

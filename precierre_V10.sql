@@ -75,15 +75,15 @@ select p.prestamoid,
        iejercicio as ejercicio,
        iperiodo as periodo,
        pfechacorte as fechacierre,
-       (case when p.claveestadocredito<>'002' then ( case when tp.revolvente=0 then (p.montoprestamo-(SUM(case when (m.cuentaid=ct.cuentaactivo) and po.fechapoliza<dcorte then m.haber else 0 end))) else (select spssaldoadeudolinea from spssaldoadeudolinea(p.prestamoid)) end) else 0 end) as saldoprestamo,
+       (case when p.claveestadocredito<>'002' then ( case when tp.revolvente=0 then (p.montoprestamo-(SUM(case when (m.cuentaid=ct.cta_cap_vig) and po.fechapoliza<dcorte then m.haber else 0 end))) else (select spssaldoadeudolinea from spssaldoadeudolinea(p.prestamoid)) end) else 0 end) as saldoprestamo,
        0 as interesdevengadomenoravencido,
        0 as interesdevengadomayoravencido,
 
-	   SUM(case when (m.cuentaid=ct.cuentaactivo) and po.periodo=iperiodo and po.ejercicio=iejercicio then m.haber else 0 end) as pagocapitalenperiodo,
-	   SUM(case when (m.cuentaid=ct.cuentaintnormal) and po.ejercicio=iejercicio and po.periodo=iperiodo then m.haber else 0 end) as pagointeresenperiodo,
-	   SUM(case when (m.cuentaid=ct.cuentaintmora) and po.ejercicio=iejercicio and po.periodo=iperiodo then m.haber else 0 end) as pagomoratorioenperiodo,
-	   SUM(case when (m.cuentaid=ct.ordendeudornormalbonificado) and po.ejercicio=iejercicio and po.periodo=iperiodo then m.haber else 0 end) as bonificacionintenperiodo,
-	   SUM(case when (m.cuentaid=ct.ordenacredornormalbonificado) and po.ejercicio=iejercicio and po.periodo=iperiodo then m.haber else 0 end) as bonificacionmorenperiodo,
+	   SUM(case when (m.cuentaid=ct.cta_cap_vig) and po.periodo=iperiodo and po.ejercicio=iejercicio then m.haber else 0 end) as pagocapitalenperiodo,
+	   SUM(case when (m.cuentaid=ct.cta_int_vig_resultados) and po.ejercicio=iejercicio and po.periodo=iperiodo then m.haber else 0 end) as pagointeresenperiodo,
+	   SUM(case when (m.cuentaid=ct.cta_mora_vig_resultados) and po.ejercicio=iejercicio and po.periodo=iperiodo then m.haber else 0 end) as pagomoratorioenperiodo,
+	   SUM(case when (m.cuentaid=ct.cta_int_castigo_orden_deudora) and po.ejercicio=iejercicio and po.periodo=iperiodo then m.haber else 0 end) as bonificacionintenperiodo,
+	   SUM(case when (m.cuentaid=ct.cta_int_castigo_orden_acreedora) and po.ejercicio=iejercicio and po.periodo=iperiodo then m.haber else 0 end) as bonificacionmorenperiodo,
 		
        0 as noamorvencidas,
        0 as saldovencidomayoravencido,
@@ -92,7 +92,7 @@ select p.prestamoid,
        ( case when tp.revolvente=0 then fechaultimapagada(p.prestamoid,pfechacorte) else (select fecha_limite from corte_linea where (capital-capital_pagado)=0 and lineaid=p.prestamoid order by fecha_limite desc limit 1) end) as fechaultamorpagada,
 	   
        p.tipoprestamoid,p.montoprestamo,tp.clavefinalidad,p.tasanormal,p.tasa_moratoria,
-	   MAX(case when ((m.cuentaid=ct.cuentaactivo) and m.haber>0) and po.fechapoliza<dcorte then po.fechapoliza else p.fecha_otorga end) AS ultimoabono,
+	   MAX(case when ((m.cuentaid=ct.cta_cap_vig) and m.haber>0) and po.fechapoliza<dcorte then po.fechapoliza else p.fecha_otorga end) AS ultimoabono,
        (case when tp.revolvente=1 then 29 else (case when (p.numero_de_amor=1) then 29 else (
 			case when (select count(*) from amortizaciones where prestamoid=p.prestamoid and importeamortizacion<>0)=1 then -1 else 
 				(case when p.dias_de_cobro=7 then 20 else 
@@ -106,8 +106,8 @@ select p.prestamoid,
 			end)
 		end) end) as diastraspasoavencida,
        p.fecha_vencimiento,
-       MAX(case when (m.cuentaid=ct.cuentaintnormal) and po.fechapoliza<dcorte
-                then po.fechapoliza else (case when tp.revolvente=0 then (case when (m.cuentaid=ct.cuentaactivo) and
+       MAX(case when (m.cuentaid=ct.cta_int_vig_resultados) and po.fechapoliza<dcorte
+                then po.fechapoliza else (case when tp.revolvente=0 then (case when (m.cuentaid=ct.cta_cap_vig) and
                                                        po.fechapoliza<dcorte
                 then po.fechapoliza else p.fecha_otorga end) else null end) end) AS ultimoabonointeres,
        0 as interesdevmormenor,

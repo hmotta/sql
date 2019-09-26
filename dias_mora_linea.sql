@@ -15,7 +15,7 @@ declare
 begin
 	ndias_capital:=0;
 	--Se obtiene la fecha de ultimo pago a capital
-	select max(po.fechapoliza) into dultimo_pago_capital from polizas po,movipolizas mp,prestamos p,cat_cuentas_tipoprestamo ct  where po.polizaid=mp.polizaid and mp.prestamoid=p.prestamoid and (ct.cat_cuentasid = p.cat_cuentasid) and mp.haber>0 and p.prestamoid=pprestamoid and (mp.cuentaid = ct.cuentaactivo) and po.fechapoliza<=pfecha;
+	select max(po.fechapoliza) into dultimo_pago_capital from polizas po,movipolizas mp,prestamos p,cat_cuentas_tipoprestamo ct  where po.polizaid=mp.polizaid and mp.prestamoid=p.prestamoid and (ct.cat_cuentasid = p.cat_cuentasid) and mp.haber>0 and p.prestamoid=pprestamoid and (mp.cuentaid = ct.cta_cap_vig) and po.fechapoliza<=pfecha;
 	raise notice 'dultimo_pago_capital=%',dultimo_pago_capital;
 	
 	select fecha_limite into dfecha_primer_adeudo from corte_linea where lineaid=pprestamoid and fecha_limite<pfecha and (capital-capital_pagado)>0 order by fecha_limite limit 1;

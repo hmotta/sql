@@ -42,7 +42,7 @@ begin
 	where p.prestamoid = pprestamoid and
 		t.tipoprestamoid = p.tipoprestamoid;
 
-	select max(po.fechapoliza) into dultimo_pago_capital from polizas po,movipolizas mp,prestamos p,cat_cuentas_tipoprestamo ct  where po.polizaid=mp.polizaid and mp.prestamoid=p.prestamoid and (ct.cat_cuentasid = pr.cat_cuentasid) and mp.haber>0 and p.prestamoid=pprestamoid and (mp.cuentaid = ct.cuentaactivo) and po.fechapoliza<=pfechacorte;
+	select max(po.fechapoliza) into dultimo_pago_capital from polizas po,movipolizas mp,prestamos p,cat_cuentas_tipoprestamo ct  where po.polizaid=mp.polizaid and mp.prestamoid=p.prestamoid and (ct.cat_cuentasid = p.cat_cuentasid) and mp.haber>0 and p.prestamoid=pprestamoid and (mp.cuentaid = ct.cta_cap_vig) and po.fechapoliza<=pfechacorte;
 	
 	-- Calcular solo para los prestamos activos
 

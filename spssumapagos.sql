@@ -15,7 +15,7 @@ begin
        mc.prestamoid = p.prestamoid and
        m.polizaid = mc.polizaid and
        m.polizaid=l.polizaid  and
-       (m.cuentaid = ct.cuentaactivo);
+       (m.cuentaid = ct.cta_cap_vig);
 	
 	xSuma := coalesce(xSuma,0);
 return xSuma;

@@ -13,7 +13,7 @@ select p.montoprestamo-sum(m.haber)
        ct.cat_cuentasid = p.cat_cuentasid and
        mc.prestamoid = p.prestamoid and
        m.polizaid = mc.polizaid and
-       m.cuentaid = ct.cuentaactivo
+       m.cuentaid = ct.cta_cap_vig
 group by p.saldoprestamo,p.montoprestamo
 having p.saldoprestamo<>p.montoprestamo-sum(m.haber);
 

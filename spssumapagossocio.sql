@@ -14,10 +14,10 @@ begin
        mc.prestamoid = p.prestamoid and
        m.polizaid = mc.polizaid and
        m.polizaid=l.polizaid  and
-       (m.cuentaid = ct.cuentaactivo or
-	   m.cuentaid = ct.cuentaiva or 
-	   m.cuentaid = ct.cuentaintnormal
-	   or m.cuentaid = ct.cuentaintmora);
+       (m.cuentaid = ct.cta_cap_vig or
+	   m.cuentaid = ct.cta_iva or 
+	   m.cuentaid = ct.cta_int_vig_resultados
+	   or m.cuentaid = ct.cta_mora_vig_resultados);
 	
 	xSuma := coalesce(xSuma,0);
 return xSuma;
