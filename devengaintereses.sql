@@ -278,23 +278,23 @@ group by t.tipoprestamoid
           select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','C',monto3,0,' ',' ',
-                             'cta_int_ven_orden_deudora'||r.tipoprestamoid);
+                             'CuentaOrdenInteres'||r.tipoprestamoid);
           scuentaid := r.cta_int_ven_orden_acreedora;
           select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','A',0,monto3,' ',' ',
-                             'cta_int_ven_orden_acreedora'||r.tipoprestamoid); 
+                             'OrdenInteresAcreedor'||r.tipoprestamoid); 
         else
           scuentaid := r.cta_int_ven_orden_acreedora;
           select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','C',abs(monto3),0,' ',
-               ' ','cta_int_ven_orden_acreedora'||r.tipoprestamoid);
+               ' ','OrdenInteresAcreedor'||r.tipoprestamoid);
           scuentaid := r.cta_int_ven_orden_deudora;
           select *
           into pmovipolizaid
           from spimovipoliza(ppolizaid,scuentaid,' ','A',0,abs(monto3),' ',
-               ' ','cta_int_ven_orden_deudora'||r.tipoprestamoid); 
+               ' ','CuentaOrdenInteres'||r.tipoprestamoid); 
         end if;
       end if;
       

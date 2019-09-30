@@ -8,10 +8,10 @@
 \i calcula_int_mor_linea.sql
 \i calculadiasmora.sql
 \i cancelapoliza.sql
-\i carga_todo.sql
 \i carteracrediticiaccomite.sql
 \i carteracrediticiasioef.sql
 \i castigoprestamo.sql
+\i tabla_prestamos_castigados.sql
 \i corrige_tablas_amortizaciones.sql
 \i cortecajadepbancario.sql
 \i cortecajaefectivo.sql

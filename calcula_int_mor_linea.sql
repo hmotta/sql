@@ -18,7 +18,7 @@ begin
 	select tasa_moratoria into xtasa_moratoria from prestamos where prestamoid=pprestamoid;
 	
 	--Se obtiene la fecha de ultimo pago a capital
-	select max(po.fechapoliza) into dultimo_pago_capital from polizas po,movipolizas mp,prestamos p,cat_cuentas_tipoprestamo ct  where po.polizaid=mp.polizaid and (ct.cat_cuentasid= p.cat_cuentasid) and mp.prestamoid=p.prestamoid and p.tipoprestamoid=tp.tipoprestamoid and mp.haber>0 and p.prestamoid=pprestamoid and (mp.cuentaid = tp.cta_cap_vig) and po.fechapoliza<=pfecha;
+	select max(po.fechapoliza) into dultimo_pago_capital from polizas po,movipolizas mp,prestamos p,cat_cuentas_tipoprestamo ct  where po.polizaid=mp.polizaid and (ct.cat_cuentasid= p.cat_cuentasid) and mp.prestamoid=p.prestamoid and p.cat_cuentasid=ct.cat_cuentasid and mp.haber>0 and p.prestamoid=pprestamoid and (mp.cuentaid = ct.cta_cap_vig) and po.fechapoliza<=pfecha;
 	raise notice 'dultimo_pago_capital=%',dultimo_pago_capital;
 	
 	--Por cada corte vencido se obtiene el monto correspondiente de moratorio	

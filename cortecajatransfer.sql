@@ -180,7 +180,7 @@ for l in
    select m.referenciacaja as folio,p.numero_poliza as referencia,m.seriecaja as serie,
           m.socioid,s.clavesocioint,p.fechapoliza as fecha,
           0 as capital, 0 as interes, 0 as moratorio, 0 as iva,0 as deposito, 0 as retiro,
-          m.tipomovimientoid, p.polizaid, t.cuentaintinver,t.cuentaivainver,t.cuentapasivo,t.cta_estimacion,0 as cobranza
+          m.tipomovimientoid, p.polizaid, t.cuentaintinver,t.cuentaivainver,t.cuentapasivo,t.cuentariesgocred,0 as cobranza
      from movicaja m, polizas p, movipolizas mp, socio s, inversion ix, tipoinversion t, parametros pa
     where (m.seriecaja = pserie or pserie=' ') and 
           p.polizaid = m.polizaid and
@@ -195,7 +195,7 @@ for l in
           t.tipoinversionid = ix.tipoinversionid
 group by m.referenciacaja,p.numero_poliza,m.seriecaja,
           m.socioid,s.clavesocioint,p.fechapoliza,
-          m.tipomovimientoid, p.polizaid, t.cuentaintinver,t.cuentaivainver,t.cuentapasivo,t.cta_estimacion
+          m.tipomovimientoid, p.polizaid, t.cuentaintinver,t.cuentaivainver,t.cuentapasivo,t.cuentariesgocred
    order by m.referenciacaja
 
  loop 
@@ -219,7 +219,7 @@ group by m.referenciacaja,p.numero_poliza,m.seriecaja,
    select coalesce(SUM(haber-debe),0) into fiva
      from movipolizas
     where polizaid = l.polizaid and
-          cuentaid = l.cta_estimacion;
+          cuentaid = l.cuentariesgocred;
 
    -- Formar renglon
    r.folio := l.folio;
