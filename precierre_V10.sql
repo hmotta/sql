@@ -91,7 +91,7 @@ select p.prestamoid,
        
        ( case when tp.revolvente=0 then fechaultimapagada(p.prestamoid,pfechacorte) else (select fecha_limite from corte_linea where (capital-capital_pagado)=0 and lineaid=p.prestamoid order by fecha_limite desc limit 1) end) as fechaultamorpagada,
 	   
-       p.tipoprestamoid,p.montoprestamo,tp.clavefinalidad,p.tasanormal,p.tasa_moratoria,
+       p.tipoprestamoid,p.montoprestamo,p.clavefinalidad,p.tasanormal,p.tasa_moratoria,
 	   MAX(case when ((m.cuentaid=ct.cta_cap_vig) and m.haber>0) and po.fechapoliza<dcorte then po.fechapoliza else p.fecha_otorga end) AS ultimoabono,
        (case when tp.revolvente=1 then 29 else (case when (p.numero_de_amor=1) then 29 else (
 			case when (select count(*) from amortizaciones where prestamoid=p.prestamoid and importeamortizacion<>0)=1 then -1 else 
@@ -112,7 +112,7 @@ select p.prestamoid,
                 then po.fechapoliza else p.fecha_otorga end) else null end) end) AS ultimoabonointeres,
        0 as interesdevmormenor,
        0 as interesdevmormayor,p.dias_de_cobro,p.meses_de_cobro,(case when p.dias_de_cobro > 0 then p.dias_de_cobro else p.meses_de_cobro*30 end) as frecuencia,
-	   tp.clavefinalidad,p.fecha_otorga,0 as estatusvive,p.monto_garantia,
+	   p.clavefinalidad,p.fecha_otorga,0 as estatusvive,p.monto_garantia,
        0 as diasvencidos,
 	   p.renovado,
 	   (case when p.tipo_cartera_est is not null and p.tipo_cartera_est<>'' then p.tipo_cartera_est else (select tipo_cartera_est from precorte where prestamoid=p.prestamoid order by fechacierre desc limit 1) end)
