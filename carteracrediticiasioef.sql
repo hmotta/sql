@@ -148,7 +148,7 @@ begin
 	p.interesdevmormayor,p.tipo_cartera_est,p.porcent_eprc,p.monto_eprc_cap,p.monto_eprc_intven,p.total_eprc,
 	(select  * from spsgarantiaprestamo(pr.prestamoid)) as tipogar
       from precorte p,prestamos pr,socio s,tipoprestamo t, sujeto su, solicitudingreso si, domicilio d,
-           ciudadesmex c, finalidades f
+           ciudadesmex c, cat_finalidad_contable f
      where p.ejercicio=pejercicio and p.periodo=pperiodo and pr.tipoprestamoid <> 'CAS' and  pr.prestamoid=p.prestamoid and 
 	       s.socioid=pr.socioid and t.tipoprestamoid = pr.tipoprestamoid and
            su.sujetoid=s.sujetoid and s.socioid=si.socioid and d.sujetoid=s.sujetoid and
