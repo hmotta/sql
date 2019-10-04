@@ -101,7 +101,7 @@ begin
             p.pagointeresenperiodo,p.pagomoratorioenperiodo,
             p.bonificacionintenperiodo,p.bonificacionmorenperiodo,
             p.noamorvencidas,p.saldovencidomenoravencido,p.saldovencidomayoravencido,
-            p.fechaultamorpagada,finalidaddefault(pr.tipoprestamoid),p.montoprestamo,pr.fecha_vencimiento,
+            p.fechaultamorpagada,f.descripcionfinalidad,p.montoprestamo,pr.fecha_vencimiento,
             t.tantos,p.depositogarantia,
             pr.tasanormal,pr.tasa_moratoria,
             fnombresocio(su.nombre,su.paterno,su.materno) AS nombresocio,
