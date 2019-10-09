@@ -66,6 +66,7 @@ declare
   swmora numeric;
   dfechapago date;
   dfecha_vencimiento date;
+  nrevolvente integer;
   
   sreferenciaprestamo character varying(18);
 
@@ -77,10 +78,13 @@ begin
 
 --raise notice 'Calculando';
 
-select fecha_otorga,fechaultimopago,trim(referenciaprestamo)
-  into dfechaprestamo,dfecha2,sreferenciaprestamo
-  from prestamos where prestamoid=lprestamoid;
+select p.fecha_otorga,p.fechaultimopago,trim(p.referenciaprestamo),t.revolvente
+  into dfechaprestamo,dfecha2,sreferenciaprestamo,nrevolvente
+  from prestamos p inner join tipoprestamo t on (p.tipoprestamoid=t.tipoprestamoid) where p.prestamoid=lprestamoid;
 
+  if nrevolvente=1 then
+	raise exception 'La funcion spscalculopago solo aplica para creditos no revolventes';
+  end if;
 
   if dfecha2<dfechaprestamo then
 

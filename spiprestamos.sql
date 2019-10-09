@@ -198,7 +198,7 @@ if iprestamosgenerados>0 then
 	update garantiahipotecaria  set prestamoid=nprestamoid  where solicitudprestamoid=psolicitudprestamoid;
 	--Updeteamos si tiene liquidacion con otro prestamo
 	if nrenovado=1 then
-		select dicatminaid into ndictaminaid from dictaminacredito where solicitudprestamoid=psolicitudprestamoid;
+		select dictaminaid into ndictaminaid from dictaminacredito where solicitudprestamoid=psolicitudprestamoid;
 		update liquidaconrenovado set nuevoprestamoid=nprestamoid where dictaminaid=ndictaminaid;
 	end if;
 	
