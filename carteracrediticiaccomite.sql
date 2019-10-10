@@ -27,7 +27,7 @@ for f in
             p.pagointeresenperiodo,p.pagomoratorioenperiodo,
             p.bonificacionintenperiodo,p.bonificacionmorenperiodo,
             p.noamorvencidas,p.saldovencidomenoravencido,p.saldovencidomayoravencido,
-            p.fechaultamorpagada,finalidaddefault(pr.tipoprestamoid),p.montoprestamo,pr.fecha_vencimiento,
+            p.fechaultamorpagada,f.descripcionfinalidad,p.montoprestamo,pr.fecha_vencimiento,
             t.tantos,
 			p.depositogarantia-trunc((p.depositogarantia/500))*(500),
 			--p.depositogarantia,
@@ -71,7 +71,7 @@ for f in
 	(select p3 from controlgarantialiquida where prestamoid=p.prestamoid),					
 	(select aa from controlgarantialiquida where prestamoid=p.prestamoid)	
       from precorte p,prestamos pr,socio s,tipoprestamo t, sujeto su, solicitudingreso si, domicilio d,
-           ciudadesmex c, finalidades f
+           ciudadesmex c, cat_finalidad_contable f
      where p.ejercicio='||pejercicio||' and p.periodo='||pperiodo||' and pr.prestamoid=p.prestamoid and pr.tipoprestamoid <>''CAS'' and
            s.socioid=pr.socioid and t.tipoprestamoid = pr.tipoprestamoid and
            su.sujetoid=s.sujetoid and s.socioid=si.socioid and d.sujetoid=s.sujetoid and
