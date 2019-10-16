@@ -328,13 +328,13 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
 			t.tablareservaid,
 			p.prestamoid,
             p.diasvencidos,
-			p.finalidaddefault,
+			p.clavefinalidad,
 			p.tipocartera,
 			(p.saldovencidomenoravencido+p.saldovencidomayoravencido) as total_capital,
 			(case when  p.diasvencidos <= p.diastraspasoavencida then interesdevengadomenoravencido+interesdevmormenor else 0 end) as total_devengadovigente,
 			(case when  p.diasvencidos <= p.diastraspasoavencida then 0 else interesdevengadomenoravencido+interesdevmormenor end) as total_devengadovencido
        from precorte p, tablareserva t
-      where p.fechacierre=pfechacorte and p.finalidaddefault=t.finalidaddefault and p.tipocartera=t.tipocartera and
+      where p.fechacierre=pfechacorte and p.clavefinalidad=t.clavefinalidad and p.tipocartera=t.tipocartera and
             p.diasvencidos>=t.diainicial and
             p.diasvencidos<=t.diafinal
    loop

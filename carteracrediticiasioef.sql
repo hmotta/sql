@@ -145,7 +145,7 @@ begin
 	t.desctipoprestamo,
 	(case when  p.diasvencidos <= p.diastraspasoavencida then interesdevmormenor else 0 end) as devengadomoravigente,
         (case when  p.diasvencidos > p.diastraspasoavencida then  interesdevmormenor else 0 end) as devengadomoravencido,
-	p.interesdevmormayor,p.tipo_cartera_est,p.porcent_eprc,p.monto_eprc_cap,p.monto_eprc_intven,p.total_eprc,
+	p.interesdevmormayor,(case p.tipo_cartera_est when 2 then 'tipo 2' else 'tipo 1' end),p.porcent_eprc,p.monto_eprc_cap,p.monto_eprc_intven,p.total_eprc,
 	(select  * from spsgarantiaprestamo(pr.prestamoid)) as tipogar
       from precorte p,prestamos pr,socio s,tipoprestamo t, sujeto su, solicitudingreso si, domicilio d,
            ciudadesmex c, cat_finalidad_contable f

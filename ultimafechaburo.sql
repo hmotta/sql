@@ -35,7 +35,7 @@ begin
 		pprimer_nombre:=pnombre;
 		psegundo_nombre:='';
 	END IF;
-	raise notice '%,%,%,%,%,%,%',(ppaterno),(pmaterno),(pprimer_nombre),psegundo_nombre,(prfc),(pcurp),pfecha_nacimiento;
+	--raise notice '%,%,%,%,%,%,%',(ppaterno),(pmaterno),(pprimer_nombre),psegundo_nombre,(prfc),(pcurp),pfecha_nacimiento;
 	
 	select coalesce(ultimafecha,'2000-01-01') into dultimafecha from verificaconsultaburo(ppaterno,pmaterno,pprimer_nombre,psegundo_nombre,pfecha_nacimiento,prfc,pcurp,'');
 	--raise notice '%',dultimafecha;
