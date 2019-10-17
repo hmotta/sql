@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION tipo_prestamo_estimacion(integer) RETURNS integer
+﻿CREATE OR REPLACE FUNCTION tipo_prestamo_estimacion(integer) RETURNS integer
     AS $_$
 declare
 
@@ -30,7 +30,7 @@ begin
 		ntipo_cartera_est:=2;
 	end if;
 	
-	--si tiene un tipo 2 en el precorte y ademas est� activo
+	--si tiene un tipo 2 en el precorte y ademas está activo
 	select pr.prestamoid into nprestamoid_tipo2 from precorte p inner join prestamos pr on (p.prestamoid=pr.prestamoid) where p.tipo_cartera_est=2 and pr.socioid=nsocioid order by fechacierre desc limit 1;
 	nprestamoid_tipo2:=coalesce(nprestamoid_tipo2,0);
 	

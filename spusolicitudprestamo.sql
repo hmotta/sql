@@ -37,17 +37,17 @@ begin
 
   
   ------- >> Validar la finalidad del prestamo acorde con el tipo de producto [consumo, comercial, vivienda]
-   /*if pclavefinalidad='001' then--Comercial
-		if ptipoprestamoid not in ('R1','C1','C4','C9','T1') then
+   if pclavefinalidad='001' then--Comercial
+		if ptipoprestamoid in ('N8','N15','N16','N21','T2','P4','N7') then
 			raise exception 'Este tipo de credito no puede ser Comercial';
 		end if;
    elseif pclavefinalidad='002' then--Consumo
-		if ptipoprestamoid not in ('CAS','P4','N8','N20','R2','T2','N1','N4','N15','N21','N9','N16','P1','N13','N14','N7','N22','N5','N53','N54','CF', 'LN') then
+		if ptipoprestamoid in ('T1','T3') then
 			raise exception 'Este tipo de credito no puede Consumo';
 		end if;
    else --vivienda
 			raise exception 'Este tipo de credito no puede a la Vivienda';
-   end if;*/
+   end if;
    ------- <<
    
    select grupo into pgrupo from solicitudingreso where socioid=psocioid;
