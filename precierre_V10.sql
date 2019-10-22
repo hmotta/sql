@@ -209,7 +209,10 @@ group by p.prestamoid, p.tipoprestamoid,p.montoprestamo,
      finteresdevmormayor:=0;
      --if r.saldoprestamo>0 then
 			idiascapital:=dias_mora_linea(r.prestamoid,pfechacorte);
-			idiasinteres:=(case when (dias_interes_linea(r.prestamoid,pfechacorte)-r.frecuencia)>0 then (dias_interes_linea(r.prestamoid,pfechacorte)-r.frecuencia) else 0 end);
+			idiasinteres:=dias_interes_linea(r.prestamoid,pfechacorte)-r.frecuencia;
+			if idiasinteres<0 then 
+				idiasinteres:=0;
+			end if;
 			
 			-- Asignar a los dias vencidos lo que sea mayor interes o capital 
 			if idiascapital>idiasinteres then
