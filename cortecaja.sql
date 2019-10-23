@@ -1,5 +1,5 @@
-CREATE OR REPLACE FUNCTION cortecaja(character, date, integer) RETURNS SETOF rcortecaja
-    AS $_$
+CREATE OR REPLACE FUNCTION cortecaja(bpchar, date, int4)
+  RETURNS SETOF rcortecaja AS $BODY$
 declare
  pserie alias for $1;
  pfecha alias for $2;
@@ -99,8 +99,8 @@ for l in
           s.clavesocioint,
           p.fechapoliza as fecha, 0 as capital, 0 as interes, 0 as moratorio, 0 as iva,
           0 as deposito, 0 as retiro, m.tipomovimientoid, 0 as cobranza, p.polizaid,
-          t.cuentaactivo,t.cuentaintnormal,t.cuentaintmora,t.cuentaiva, pr.tipoprestamoid,t.cuentafondorecuperacion
-     from movicaja m, polizas p, movipolizas mp,socio s, prestamos pr, tipoprestamo t
+          ct.cta_cap_vig,ct.cta_int_vig_resultados,ct.cta_mora_vig_resultados,ct.cta_iva, pr.tipoprestamoid
+     from movicaja m, polizas p, movipolizas mp,socio s, prestamos pr, cat_cuentas_tipoprestamo ct
     where (m.seriecaja = pserie or pserie=' ') and
           p.polizaid = m.polizaid and
           p.fechapoliza = pfecha and
@@ -109,7 +109,7 @@ for l in
           s.socioid = m.socioid and
           m.tipomovimientoid='00' and
           pr.prestamoid = m.prestamoid and
-          t.tipoprestamoid = pr.tipoprestamoid
+          (ct.cat_cuentasid = ct.cat_cuentasid)
  order by m.referenciacaja
 
  loop 
@@ -118,30 +118,31 @@ for l in
    fnormal := 0;
    fmoratorio := 0;
    fiva := 0;
+   fcobranza:=0;
 
    select (case when l.tipoprestamoid <> 'CAS' then sum(coalesce(haber,0)) else abs(sum(coalesce(debe,0))-sum(coalesce(haber,0))) end) into fcapital
      from movipolizas
     where polizaid = l.polizaid and
-          cuentaid = l.cuentaactivo;
+          cuentaid = l.cta_cap_vig;
    select sum(coalesce(haber,0)) into fnormal
      from movipolizas
     where polizaid = l.polizaid and
-          cuentaid = l.cuentaintnormal;
+          cuentaid = l.cta_int_vig_resultados;
 
    select sum(coalesce(haber,0)) into fmoratorio
      from movipolizas
     where polizaid = l.polizaid and
-          cuentaid = l.cuentaintmora;
+          cuentaid = l.cta_mora_vig_resultados;
 
    select sum(coalesce(haber,0)) into fiva
      from movipolizas
     where polizaid = l.polizaid and
-          cuentaid = l.cuentaiva;
+          cuentaid = l.cta_iva;
 
-   select sum(coalesce(haber,0)) into fcobranza
-     from movipolizas
-    where polizaid = l.polizaid and
-          cuentaid = l.cuentafondorecuperacion;
+   --select sum(coalesce(haber,0)) into fcobranza
+     --from movipolizas
+    --where polizaid = l.polizaid and
+      --    cuentaid = l.cuentafondorecuperacion;
 
    -- Formar renglon
    r.folio := l.folio;
@@ -236,8 +237,5 @@ group by m.referenciacaja,p.numero_poliza,m.seriecaja,
 
 return;
 end;
-$_$
-    LANGUAGE plpgsql SECURITY DEFINER;
-
-
-ALTER FUNCTION public.cortecaja(character, date, integer) OWNER TO sistema;
+$BODY$
+  LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
