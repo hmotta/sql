@@ -125,7 +125,7 @@ declare
 	---
 	select dia_mes_cobro into ndias_limite from prestamos where prestamoid=pprestamoid;
 	dfecha_limite_pago:=pfecha+ndias_limite;
-	select max(po.fechapoliza) into dultimo_pago_capital from polizas po,movipolizas mp,prestamos p,cat_cuentas_tipoprestamo ct  where po.polizaid=mp.polizaid and mp.prestamoid=p.prestamoid and (ct.tipoprestamoid = p.tipoprestamoid and ct.clavefinalidad = p.clavefinalidad and ct.renovado = p.renovado) and mp.haber>0 and p.prestamoid=pprestamoid and (mp.cuentaid = ct.cuentaactivo) and po.fechapoliza<=pfecha;
+	select max(po.fechapoliza) into dultimo_pago_capital from polizas po,movipolizas mp,prestamos p,cat_cuentas_tipoprestamo ct  where po.polizaid=mp.polizaid and mp.prestamoid=p.prestamoid and (ct.tipoprestamoid = p.tipoprestamoid and ct.clavefinalidad = p.clavefinalidad and ct.renovado = p.renovado) and mp.haber>0 and p.prestamoid=pprestamoid and (mp.cuentaid = ct.cta_cap_vig) and po.fechapoliza<=pfecha;
 	
 	select dias_mora_linea into ndias_capital from dias_mora_linea(pprestamoid,pfecha);
 	ndias_capital:=coalesce(ndias_capital,0);
