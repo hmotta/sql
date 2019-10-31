@@ -112,7 +112,7 @@ for l in
 		  m.efectivo=1 and 
           m.tipomovimientoid='00' and
           pr.prestamoid = m.prestamoid and
-          (ct.cat_cuentasid = ct.cat_cuentasid)
+          (ct.cat_cuentasid = pr.cat_cuentasid)
  order by m.referenciacaja
 
  loop 
