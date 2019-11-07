@@ -118,7 +118,7 @@ select tipo_cartera_est into r.tipocartera from prestamos where prestamoid=r.pre
 				p.fecha_otorga,
 				p.montoprestamo,
 				--(case when (pfechacierre-fechaultimapagada(p.prestamoid,pfechacierre))-(case when p.dias_de_cobro > 0 then p.dias_de_cobro else p.meses_de_cobro*30 end) > 0 then (pfechacierre-fechaultimapagada(p.prestamoid,pfechacierre))-(case when p.dias_de_cobro > 0 then p.dias_de_cobro else p.meses_de_cobro*30 end) else 0 end) as dias,
-				(select diasmoracapital from diasmoracapital(p.prestamoid,pfechacierre)) as dias,--case when (pfechacierre-(select fechaprimeradeudo from fechaprimeradeudo(p.prestamoid,pfechacierre))) > 0 then (pfechacierre-(select fechaprimeradeudo from fechaprimeradeudo(p.prestamoid,pfechacierre))) else 0 end) as dias,
+				(select * from diasatrasocapital(p.prestamoid,pfechacierre)) as dias,--case when (pfechacierre-(select fechaprimeradeudo from fechaprimeradeudo(p.prestamoid,pfechacierre))) > 0 then (pfechacierre-(select fechaprimeradeudo from fechaprimeradeudo(p.prestamoid,pfechacierre))) else 0 end) as dias,
 				--Categoria_mora
 				'' as cat_mora,
 				--saldo_prestamo,
@@ -226,3 +226,5 @@ end
 
 $BODY$
   LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
+
+ALTER FUNCTION public.analisiscartera(date) OWNER TO sistema;
